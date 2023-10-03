@@ -26,4 +26,16 @@
     "permissions": [
       "activeTab",
       "tabs"
-    ]  }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "*"
+        ],
+        "matches": [
+          "<all_urls>"
+        ]
+      }
+    ]
+  }
+    
