@@ -3,7 +3,7 @@ function sendMessageToTabs(messageObj, tabId) {
   chrome.tabs.sendMessage(
     tabId,
     { message: messageObj.message },
-    {}, // Options should be passed here
+    {},
     function(response) {
       console.log("message sent");
     }
@@ -13,7 +13,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   console.log("message:", request.messages);
   console.log("data",request.data);
   if (request.messages === "canShowApp") {
-    getData();
     getRequest("get_todos",
     (response)=>{
       sendMessageToTabs({ message: {
@@ -51,9 +50,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         } }, sender.tab.id);
       console.log(response)
     }
-      
     },(error)=>{
-
       sendMessageToTabs({ message: {
         message:"login_error",
         data: error.error
@@ -62,32 +59,3 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     })
   }
 });
-
-function login(){
-  getRequest("login_user").then((data)=>{
-    console.log(data)
-  })
-}
-
-function logout(){
-  getRequest(
-    "logout",
-    (response) => {
-      console.log(response)
-    },
-    (error) => {
-      console.log(error,"something went wrong")
-    }
-    )
-}
-function getData(){
-  getRequest(
-    "getuser",
-    (response) => {
-      console.log(response)
-    },
-    (error) => {
-      console.log(error,"something went wrong")
-    }
-  )
-}
