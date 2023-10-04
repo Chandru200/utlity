@@ -138,7 +138,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Content__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Content */ "./src/content/components/Content.jsx");
 /* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header */ "./src/content/components/Header.jsx");
 /* harmony import */ var _Footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Footer */ "./src/content/components/Footer.jsx");
-/* harmony import */ var _styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./styles/styledUtility.style */ "./src/content/components/styles/styledUtility.style.js");
+/* harmony import */ var _Signin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Signin */ "./src/content/components/Signin.jsx");
+/* harmony import */ var _styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styles/styledUtility.style */ "./src/content/components/styles/styledUtility.style.js");
+/* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../message */ "./src/content/message.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -150,19 +152,50 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 function App() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     showUtility = _useState2[0],
     setShowUtility = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["tablimitter", "taskmanager", "limitwebsite"]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
-    contents = _useState4[0],
-    setContents = _useState4[1];
+    canShowApp = _useState4[0],
+    setCanShow = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["tablimitter", "taskmanager", "limitwebsite"]),
+    _useState6 = _slicedToArray(_useState5, 2),
+    contents = _useState6[0],
+    setContents = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState8 = _slicedToArray(_useState7, 2),
+    checkingStatus = _useState8[0],
+    setCheckingstatus = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState10 = _slicedToArray(_useState9, 2),
+    loginError = _useState10[0],
+    setLoginError = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState12 = _slicedToArray(_useState11, 2),
+    signin = _useState12[0],
+    setSignIn = _useState12[1];
   var leftarrow = chrome.runtime.getURL('assests/images/left-arrow-line-symbol.png');
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_4__.StyledUtility, {
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    switch (request.message.message) {
+      case "canShowApp":
+        setCanShow(request.message.data);
+        setCheckingstatus(false);
+        break;
+      case "login_error":
+        setLoginError(request.message.data);
+        break;
+      case "showsign":
+        setSignIn(true);
+    }
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_5__.StyledUtility, {
     showUtility: showUtility
-  }, showUtility ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "UtilityWraper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Content__WEBPACK_IMPORTED_MODULE_1__["default"], {
     contents: contents,
@@ -170,11 +203,18 @@ function App() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Footer__WEBPACK_IMPORTED_MODULE_3__["default"], {
     contents: contents,
     setContents: setContents
-  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })) : checkingStatus ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "UtilityWraper"
+  }, " Verifying Authenticity") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Signin__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    signin: signin,
+    setSignIn: setSignIn,
+    loginError: loginError
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     onClick: function onClick() {
-      return setShowUtility(true);
+      setShowUtility(!showUtility);
+      (0,_message__WEBPACK_IMPORTED_MODULE_6__.notifyBackgroundPage)("canShowApp");
     },
-    className: "openAppImgWrapper"
+    className: "openAppImgWrapper ".concat(showUtility && "showleft")
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "openAppImg",
     src: leftarrow,
@@ -301,6 +341,81 @@ function Header() {
 
 /***/ }),
 
+/***/ "./src/content/components/Input.jsx":
+/*!******************************************!*\
+  !*** ./src/content/components/Input.jsx ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Input)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/styledUtility.style */ "./src/content/components/styles/styledUtility.style.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+function Input(_ref) {
+  var name = _ref.name,
+    required = _ref.required,
+    label = _ref.label,
+    placeholder = _ref.placeholder,
+    loginDetails = _ref.loginDetails,
+    setLoginDetails = _ref.setLoginDetails;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    showPass = _useState2[0],
+    setShowPass = _useState2[1];
+  var handleFormdata = function handleFormdata(e, name) {
+    // {...loginDetails,name:e.currentTarget.value}
+    if (name == "text") {
+      setLoginDetails(_objectSpread(_objectSpread({}, loginDetails), {}, {
+        name: e.currentTarget.value
+      }));
+    } else if (name == "password") {
+      setLoginDetails(_objectSpread(_objectSpread({}, loginDetails), {}, {
+        password: e.currentTarget.value
+      }));
+    } else if (name == "email") {
+      setLoginDetails(_objectSpread(_objectSpread({}, loginDetails), {}, {
+        email: e.currentTarget.value
+      }));
+    }
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__.StyledInput, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__.StytledLabel, null, label), required && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    className: "required"
+  }, "*")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: showPass ? "text" : name,
+    placeholder: placeholder,
+    onChange: function onChange(e) {
+      handleFormdata(e, name);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    className: "showPass"
+  }, name === "password" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__.StytledLabel, null, "Show Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    onChange: function onChange(e) {
+      setShowPass(e.target.checked);
+    },
+    type: "checkbox"
+  }))));
+}
+
+/***/ }),
+
 /***/ "./src/content/components/LimitSites.jsx":
 /*!***********************************************!*\
   !*** ./src/content/components/LimitSites.jsx ***!
@@ -319,6 +434,91 @@ __webpack_require__.r(__webpack_exports__);
 
 function LimitWebsite() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleLimitSites_style__WEBPACK_IMPORTED_MODULE_1__.StyledLS, null, "Limit Website Urls");
+}
+
+/***/ }),
+
+/***/ "./src/content/components/Signin.jsx":
+/*!*******************************************!*\
+  !*** ./src/content/components/Signin.jsx ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Login)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Input */ "./src/content/components/Input.jsx");
+/* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../message */ "./src/content/message.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+function Login(_ref) {
+  var loginError = _ref.loginError,
+    setSignIn = _ref.setSignIn,
+    signin = _ref.signin;
+  console.log(loginError, "loginErrorloginErrorloginError");
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
+    _useState2 = _slicedToArray(_useState, 2),
+    loginDetails = _useState2[0],
+    setLoginDetails = _useState2[1];
+  var handleLogin = function handleLogin() {
+    setSignIn(!signin);
+  };
+  var login = function login() {
+    debugger;
+    (0,_message__WEBPACK_IMPORTED_MODULE_2__.notifyBackgroundPage)("login", loginDetails);
+  };
+  var register = function register() {
+    (0,_message__WEBPACK_IMPORTED_MODULE_2__.notifyBackgroundPage)("register", loginDetails);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "sign-in"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "".concat(signin ? "Sign in" : "Sign up", " to Continue")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "getdetails"
+  }, !signin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    name: "text",
+    label: "Fullname",
+    placeholder: "Enter your name",
+    required: true,
+    setLoginDetails: setLoginDetails,
+    loginDetails: loginDetails
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    name: "email",
+    label: "Email",
+    placeholder: "Enter Your Email",
+    required: true,
+    setLoginDetails: setLoginDetails,
+    loginDetails: loginDetails
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    name: "password",
+    label: "Password",
+    placeholder: "Enter Your Password",
+    required: true,
+    setLoginDetails: setLoginDetails,
+    loginDetails: loginDetails
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "sign-container"
+  }, signin ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: login
+  }, "Sign In"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Dont have an account? ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("u", {
+    onClick: handleLogin
+  }, "Sign Up"))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: register
+  }, "Sign Up"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Already have an account? ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("u", {
+    onClick: handleLogin
+  }, "Sign In"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "error"
+  }, loginError)));
 }
 
 /***/ }),
@@ -490,14 +690,48 @@ var StyledHeader = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   StyledUtility: () => (/* binding */ StyledUtility)
+/* harmony export */   StyledError: () => (/* binding */ StyledError),
+/* harmony export */   StyledInput: () => (/* binding */ StyledInput),
+/* harmony export */   StyledUtility: () => (/* binding */ StyledUtility),
+/* harmony export */   StytledLabel: () => (/* binding */ StytledLabel)
 /* harmony export */ });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    position: absolute;\n    top: ", ";\n    right: 0;\n    z-index: 11111111;\n    transition: right 0.5s ease; \n    .openAppImgWrapper{\n        background: chocolate;\n        padding: 10px;\n        cursor:pointer;\n        .openAppImg{\n            height:16px;\n            width:16px;\n        }\n    }\n    .UtilityWraper{\n        background: white;\n        width: 400px;\n        height: auto;\n        border-radius: 4px;\n        border: 2px solid blue;\n        right: -100%;\n        \n    }\n\n"])), function (props) {
+var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    position: fixed;\n    top: ", ";\n    right: 18px;\n    z-index: 11111111;\n    transition: right 0.5s ease; \n    .openAppImgWrapper{\n        display:flex;\n        background: chocolate;\n        padding: 10px;\n        cursor:pointer;\n        .openAppImg{\n            height:16px;\n            width:16px;\n        }\n    }\n    .showleft{\n      left: -36px;\n      position: absolute;\n      top: 50%;\n      transform: rotate(180deg);\n    }\n    .UtilityWraper{\n      background: sandybrown;\n      width: 400px;\n      height: auto;\n      border-radius: 4px;\n      border: 2px solid blue;\n      right: -100%;}\n    .sign-in{\n        background: sandybrown;\n        width: 400px;\n        height: auto;\n        border-radius: 4px;\n        border: 2px solid blue;\n        right: -100%;\n        padding:10px;\n        h2{\n            margin:0px;\n            margin-bottom:10px;\n        }\n        button{\n          margin-top:8px;\n          height:35px;\n          width:100px;\n          border: 1px solid cornsilk;\n          background: cornsilk;\n          border-radius: 8px;\n          cursor:pointer;\n        }\n      .sign-container{\n        display: flex;\n        align-items: center;\n        flex-direction: column;\n        gap: 8px;\n        u{\n          cursor:pointer;\n        }\n      }\n        \n    }"])), function (props) {
   return props.showUtility ? "30%" : "50%";
+});
+var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    display:flex;\n    flex-direction:column;\n    gap:4px;\n    position:relative;\n    input,\n    input::placeholder {\n      font-size: 16px;\n    }\n    input{\n      padding: 10px;\n      border-radius: 10px;\n      border:2px solid darkblue !important;  \n      background:whitesmoke;\n    }\n    input:focus-visible {\n      outline:none;\n    }\n\n    input[type=\"checkbox\"]{\n      margin:0px;\n      height:20px;\n      width:20px;\n    }\n\n    .showPass{\n      flex-direction: row-reverse;\n      justify-content:flex-end;\n      align-items:center;\n      cursor:pointer;\n    }\n\n    label{\n      display: flex;\n      gap: 4px;\n    }\n    .required{\n      color:red;\n    }"])));
+var StyledError = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    animation: horizontal-shaking 10s infinite;\n    color: brown;\n    font-family: inherit;\n    font-size: 14px;\n    @keyframes horizontal-shaking {\n    25% { transform: translateX(10px) }\n    75% { transform: translateX(100px) }\n}"])));
+var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  text-align:justify;\n  font-weight: 400;\n  font-size: 18px;\n  max-width: 329px;\n  label{\n    display: flex;\n    gap: 4px;\n  }\n"])));
+
+/***/ }),
+
+/***/ "./src/content/message.js":
+/*!********************************!*\
+  !*** ./src/content/message.js ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   notifyBackgroundPage: () => (/* binding */ notifyBackgroundPage)
+/* harmony export */ });
+function notifyBackgroundPage(message, data) {
+  chrome.runtime.sendMessage({
+    messages: message,
+    data: data
+  });
+}
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log("sent from tab.id=", sender.id);
+  if (request.message === "canshowapp") {
+    console.log("open app");
+  } else {
+    console.log("sign in to continue");
+  }
 });
 
 /***/ }),

@@ -14,7 +14,8 @@
       "default_icon": "images/dog.png"
     },
     "background": {
-      "service_worker": "background.js"
+      "service_worker": "background.js",
+      "module":true
     },
    
     "content_scripts": [
