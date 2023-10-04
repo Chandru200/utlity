@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   console.log("data",request.data);
   if (request.messages === "canShowApp") {
     getData();
-    getRequest("getuser",
+    getRequest("get_todos",
     (response)=>{
       sendMessageToTabs({ message: {
         message:"canShowApp",

@@ -27,7 +27,7 @@ export function App(){
                 setSignIn(true)
         }
       });
-    
+    console.log(canShowApp,"canShowApp")
     return(
         <StyledUtility showUtility={showUtility}>
             {showUtility &&

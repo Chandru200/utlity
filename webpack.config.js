@@ -8,8 +8,6 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: 'content_bundle.js',
   },
-  target: 'web',
-  devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx', '.json'],
   },
