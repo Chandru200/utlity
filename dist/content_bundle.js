@@ -163,7 +163,7 @@ function App() {
     _useState4 = _slicedToArray(_useState3, 2),
     canShowApp = _useState4[0],
     setCanShow = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["tablimitter", "taskmanager", "limitwebsite"]),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["taskmanager", "tablimitter", "limitwebsite"]),
     _useState6 = _slicedToArray(_useState5, 2),
     contents = _useState6[0],
     setContents = _useState6[1];
@@ -179,7 +179,7 @@ function App() {
     _useState12 = _slicedToArray(_useState11, 2),
     signin = _useState12[0],
     setSignIn = _useState12[1];
-  var leftarrow = chrome.runtime.getURL('assests/images/left-arrow-line-symbol.png');
+  var leftarrow = chrome.runtime.getURL("assests/images/left-arrow-line-symbol.png");
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch (request.message.message) {
       case "canShowApp":
@@ -199,6 +199,7 @@ function App() {
   }, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "UtilityWraper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Content__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    canShowApp: canShowApp,
     contents: contents,
     setContents: setContents
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Footer__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -206,7 +207,7 @@ function App() {
     setContents: setContents
   })) : checkingStatus ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "UtilityWraper"
-  }, " Verifying Authenticity") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Signin__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Verifying Authenticity")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Signin__WEBPACK_IMPORTED_MODULE_4__["default"], {
     signin: signin,
     setSignIn: setSignIn,
     loginError: loginError
@@ -238,19 +239,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _styles_styleContent_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/styleContent.style */ "./src/content/components/styles/styleContent.style.js");
-/* harmony import */ var _TaskManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TaskManager */ "./src/content/components/TaskManager.jsx");
-/* harmony import */ var _TabLimitter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TabLimitter */ "./src/content/components/TabLimitter.jsx");
-/* harmony import */ var _LimitSites__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./LimitSites */ "./src/content/components/LimitSites.jsx");
-
+/* harmony import */ var _TaskManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TaskManager */ "./src/content/components/TaskManager.jsx");
+/* harmony import */ var _TabLimitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TabLimitter */ "./src/content/components/TabLimitter.jsx");
+/* harmony import */ var _LimitSites__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LimitSites */ "./src/content/components/LimitSites.jsx");
 
 
 
 
 function Content(_ref) {
   var contents = _ref.contents,
-    setContents = _ref.setContents;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleContent_style__WEBPACK_IMPORTED_MODULE_1__.StyledContent, null, contents[0] === "taskmanager" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TaskManager__WEBPACK_IMPORTED_MODULE_2__["default"], null), contents[0] === "tablimitter" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TabLimitter__WEBPACK_IMPORTED_MODULE_3__["default"], null), contents[0] === "limitwebsite" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LimitSites__WEBPACK_IMPORTED_MODULE_4__["default"], null));
+    canShowApp = _ref.canShowApp;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, contents[0] === "taskmanager" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TaskManager__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    className: "ssss",
+    canShowApp: canShowApp
+  }), contents[0] === "tablimitter" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TabLimitter__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    canShowApp: canShowApp
+  }), contents[0] === "limitwebsite" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LimitSites__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    canShowApp: canShowApp
+  }));
 }
 
 /***/ }),
@@ -560,11 +566,109 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _styles_styleTM_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/styleTM.style */ "./src/content/components/styles/styleTM.style.js");
+/* harmony import */ var _Todo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Todo */ "./src/content/components/Todo.jsx");
+
+
 
 
 function TaskManager(_ref) {
-  var todos = _ref.todos;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleTM_style__WEBPACK_IMPORTED_MODULE_1__.StyledTM, null, "Task Manager Component");
+  var _canShowApp$todos_lis, _canShowApp$todos_lis2;
+  var canShowApp = _ref.canShowApp;
+  console.log(canShowApp, "canShowApp");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleTM_style__WEBPACK_IMPORTED_MODULE_1__.StyledTM, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tabname"
+  }, "Task Manager Tab"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "all_tasks"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tab-header"
+  }, "No of tasks-".concat(canShowApp !== null && canShowApp !== void 0 && (_canShowApp$todos_lis = canShowApp.todos_list) !== null && _canShowApp$todos_lis !== void 0 && _canShowApp$todos_lis.length ? canShowApp.todos_list.length : 0)), (canShowApp === null || canShowApp === void 0 || (_canShowApp$todos_lis2 = canShowApp.todos_list) === null || _canShowApp$todos_lis2 === void 0 ? void 0 : _canShowApp$todos_lis2.length) > 0 ? canShowApp.todos_list.map(function (todo) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Todo__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: todo.id,
+      todo: todo
+    });
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "empty_state"
+  }, "Crete New Tasks")));
+}
+
+/***/ }),
+
+/***/ "./src/content/components/Todo.jsx":
+/*!*****************************************!*\
+  !*** ./src/content/components/Todo.jsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Todo)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function Todo(_ref) {
+  var todo = _ref.todo;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    showDes = _useState2[0],
+    setSetShow = _useState2[1];
+  var handleshowDes = function handleshowDes(e, id) {
+    setSetShow(!showDes);
+    setTimeout(function () {
+      document.getElementById("taskdes".concat(id)).scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest"
+      });
+    });
+  };
+  var openEdit = function openEdit() {};
+  var openDelete = function openDelete() {};
+  var openNotify = function openNotify() {};
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "task-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: function onClick(e) {
+      return handleshowDes(e, todo.id);
+    },
+    className: "task-preview-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "todo-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "name"
+  }, todo.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "duedate"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Duedate:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, todo.duedate))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    },
+    className: "options"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: openEdit,
+    className: "edit"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: chrome.runtime.getURL("assests/images/edit.png")
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: openDelete,
+    className: "edit"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: chrome.runtime.getURL("assests/images/trash.png")
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: openNotify,
+    className: "edit"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: chrome.runtime.getURL("assests/images/notifyme.png")
+  })))), showDes && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    id: "taskdes".concat(todo.id),
+    className: "description"
+  }, todo.description));
 }
 
 /***/ }),
@@ -588,25 +692,6 @@ var StyledTL = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_te
 
 /***/ }),
 
-/***/ "./src/content/components/styles/styleContent.style.js":
-/*!*************************************************************!*\
-  !*** ./src/content/components/styles/styleContent.style.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   StyledContent: () => (/* binding */ StyledContent)
-/* harmony export */ });
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject;
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-var StyledContent = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\npadding:8px;\nheight: 200px;\ndiv{\n    cursor:pointer;\n}\n"])));
-
-/***/ }),
-
 /***/ "./src/content/components/styles/styleFooter.style.js":
 /*!************************************************************!*\
   !*** ./src/content/components/styles/styleFooter.style.js ***!
@@ -622,7 +707,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledFooter = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    padding: 8px;\n    background: bisque;\n    height: 30px;\n    padding: 8px 8px;\n    div{\n        cursor:pointer;\n    }\n}\n"])));
+var StyledFooter = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    padding: 8px;\n    background: #EDEADE;\n    height: 50px;\n    padding: 8px 8px;\n    box-sizing: border-box;\n    width: 100%;\n    align-items: center;\n    div{\n        cursor:pointer;\n    }\n}\n"])));
 
 /***/ }),
 
@@ -660,7 +745,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledTM = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\nbackground:orange;\n"])));
+var StyledTM = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  overflow-y: auto;\n  height: 100%;\n  width: 100%;\n  .tabname {\n    height: 50px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 20px;\n    font-weight: 500;\n  }\n  .all_tasks {\n    .tab-header {\n      padding-left:8px;\n      font-size-18px;\n      margin-bottom:20px;\n      font-weight:700;\n    }\n    display: flex;\n    flex-direction: column;\n    justify-content: start;\n    .task-wrapper:last-child .task-preview-wrapper {\n      border-bottom: 1px solid darkgoldenrod;\n    }\n    .task-wrapper {\n      .task-preview-wrapper {\n        cursor:pointer;\n        .todo-wrapper{\n          display:flex;\n          flex-direction:column;\n          gap:8px;\n        }\n        display: flex;\n        border: 1px solid darkgoldenrod;\n        border-bottom: none;\n        justify-content: center;\n        align-items: center;\n        padding: 0px 8px;\n        height: 10vh;\n        .name{\n          display: -webkit-box;\n          -webkit-box-orient: vertical;\n          max-width: 380px;\n          max-height: 50px;\n          overflow:hidden;\n          -webkit-line-clamp: 2;\n          font-weight:600;\n        }\n        .duedate{\n          display: flex;\n          gap: 4px;\n          margin: 0px;\n          align-items: center;\n        }\n        .options {\n          display: none;\n          align-items: center;\n          gap: 10px;\n          background: lightskyblue;\n          border-radius: 8px;\n          padding: 8px;\n          .edit{\n            cursor:pointer;\n            height: 21px;\n            width: 21px;\n            img {\n              height: 100%;\n              width: 100%;\n            }\n          } \n        }\n      }\n      .task-preview-wrapper:hover {\n        justify-content: space-between;\n        background-color: blanchedalmond;\n        .options {\n          display: flex;\n        }\n      }\n    }\n    .description {\n      padding:8px;\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -679,7 +764,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledHeader = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display:flex;\n    background: bisque;\n    height: 30px;\n    justify-content: space-between;\n    padding: 8px 8px;\n    p{\n        margin:0px;\n    }\n    .appname{\n        text-align: center;\n        width: 100%;\n    }\n    .notification{\n        height: 22px;\n        width: 22px;\n        cursor:pointer;\n        position: relative;\n        img{\n            position: relative;\n            height: 100%;\n            width: 100%;\n        }\n    }\n"])));
+var StyledHeader = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  display: flex;\n  background: green;\n  justify-content: space-between;\n  padding: 20px 8px 20px 8px;\n  width: 100%;\n  align-items: center;\n  box-sizing: border-box;\n  p {\n    margin: 0px;\n  } \n  .appname {\n    text-align: center;\n    width: 100%;\n    font-size: 20px;\n    font-weight: 500;\n    color:white;\n}\n  }\n  .notification {\n    height: 22px;\n    width: 22px;\n    cursor: pointer;\n    position: relative;\n    img {\n      position: relative;\n      height: 100%;\n      width: 100%;\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -701,12 +786,10 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    position: fixed;\n    top: ", ";\n    right: 18px;\n    z-index: 11111111;\n    transition: right 0.5s ease; \n    .openAppImgWrapper{\n        display:flex;\n        background: chocolate;\n        padding: 10px;\n        cursor:pointer;\n        .openAppImg{\n            height:16px;\n            width:16px;\n        }\n    }\n    .showleft{\n      left: -36px;\n      position: absolute;\n      top: 50%;\n      transform: rotate(180deg);\n    }\n    .UtilityWraper{\n      background: sandybrown;\n      width: 400px;\n      height: auto;\n      border-radius: 4px;\n      border: 2px solid blue;\n      right: -100%;}\n    .sign-in{\n        background: sandybrown;\n        width: 400px;\n        height: auto;\n        border-radius: 4px;\n        border: 2px solid blue;\n        right: -100%;\n        padding:10px;\n        h2{\n            margin:0px;\n            margin-bottom:10px;\n        }\n        button{\n          margin-top:8px;\n          height:35px;\n          width:100px;\n          border: 1px solid cornsilk;\n          background: cornsilk;\n          border-radius: 8px;\n          cursor:pointer;\n        }\n      .sign-container{\n        display: flex;\n        align-items: center;\n        flex-direction: column;\n        gap: 8px;\n        u{\n          cursor:pointer;\n        }\n      }\n        \n    }"])), function (props) {
-  return props.showUtility ? "30%" : "50%";
-});
-var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    display:flex;\n    flex-direction:column;\n    gap:4px;\n    position:relative;\n    input,\n    input::placeholder {\n      font-size: 16px;\n    }\n    input{\n      padding: 10px;\n      border-radius: 10px;\n      border:2px solid darkblue !important;  \n      background:whitesmoke;\n    }\n    input:focus-visible {\n      outline:none;\n    }\n\n    input[type=\"checkbox\"]{\n      margin:0px;\n      height:20px;\n      width:20px;\n    }\n\n    .showPass{\n      flex-direction: row-reverse;\n      justify-content:flex-end;\n      align-items:center;\n      cursor:pointer;\n    }\n\n    label{\n      display: flex;\n      gap: 4px;\n    }\n    .required{\n      color:red;\n    }"])));
-var StyledError = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    animation: horizontal-shaking 10s infinite;\n    color: brown;\n    font-family: inherit;\n    font-size: 14px;\n    @keyframes horizontal-shaking {\n    25% { transform: translateX(10px) }\n    75% { transform: translateX(100px) }\n}"])));
-var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  text-align:justify;\n  font-weight: 400;\n  font-size: 18px;\n  max-width: 329px;\n  label{\n    display: flex;\n    gap: 4px;\n  }\n"])));
+var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: chocolate;\n    padding: 10px;\n    cursor: pointer;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 50vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      height: 35px;\n      width: 100px;\n      border: 1px solid cornsilk;\n      background: cornsilk;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n"])));
+var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  input,\n  input::placeholder {\n    font-size: 16px;\n  }\n  input {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible {\n    outline: none;\n  }\n\n  input[type=\"checkbox\"] {\n    margin: 0px;\n    height: 20px;\n    width: 20px;\n  }\n\n  .showPass {\n    flex-direction: row-reverse;\n    justify-content: flex-end;\n    align-items: center;\n    cursor: pointer;\n  }\n\n  label {\n    display: flex;\n    gap: 4px;\n  }\n  .required {\n    color: red;\n  }\n"])));
+var StyledError = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  animation: horizontal-shaking 10s infinite;\n  color: brown;\n  font-family: inherit;\n  font-size: 14px;\n  @keyframes horizontal-shaking {\n    25% {\n      transform: translateX(10px);\n    }\n    75% {\n      transform: translateX(100px);\n    }\n  }\n"])));
+var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  text-align: justify;\n  font-weight: 400;\n  font-size: 18px;\n  max-width: 329px;\n  label {\n    display: flex;\n    gap: 4px;\n  }\n"])));
 
 /***/ }),
 
@@ -35804,7 +35887,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var dummyEle = document.createElement('div');
+var dummyEle = document.createElement("div");
 dummyEle.id = "utilityAppFromExtension";
 document.body.appendChild(dummyEle);
 var rootInstance = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(dummyEle);
