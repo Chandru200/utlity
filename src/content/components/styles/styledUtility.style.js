@@ -82,16 +82,22 @@ export const StyledInput = styled.div`
   gap: 4px;
   position: relative;
   input,
+  textarea,
   input::placeholder {
     font-size: 16px;
   }
-  input {
+  textarea {
+    height: 140px;
+  }
+  input,
+  textarea {
     padding: 10px;
     border-radius: 10px;
     border: 2px solid darkblue !important;
     background: whitesmoke;
   }
-  input:focus-visible {
+  input:focus-visible,
+  textarea:focus-visible {
     outline: none;
   }
 

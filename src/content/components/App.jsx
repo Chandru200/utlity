@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Content from "./Content";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -8,38 +8,50 @@ import { notifyBackgroundPage } from "../message";
 
 export function App() {
   const [showUtility, setShowUtility] = useState(false);
-  const [canShowApp, setCanShow] = useState(false);
   const [contents, setContents] = useState([
     "taskmanager",
     "tablimitter",
     "limitwebsite",
   ]);
+  const [canShowApp, setCanShow] = useState(false);
   const [checkingStatus, setCheckingstatus] = useState(true);
   const [loginError, setLoginError] = useState("");
   const [signin, setSignIn] = useState(true);
-  const leftarrow = chrome.runtime.getURL(
-    "assests/images/left-arrow-line-symbol.png"
-  );
+  const [message, setMessage] = useState({});
+
   chrome.runtime.onMessage.addListener(function (
     request,
     sender,
     sendResponse
   ) {
-    switch (request.message.message) {
-      case "canShowApp":
-        setCanShow(request.message.data);
-        setCheckingstatus(false);
-        break;
-      case "login_error":
-        setLoginError(request.message.data);
-        break;
-      case "showsign":
-        setSignIn(true);
-    }
+    setMessage({
+      request: request,
+      sender: sender,
+      sendResponse: sendResponse,
+    });
   });
-  console.log(canShowApp, "canShowApp");
+
+  useEffect(() => {
+    console.log(message);
+    if (message) {
+      let message_name = message.request?.message?.message;
+      let data = message.request?.message?.data;
+      switch (message_name) {
+        case "canShowApp":
+          setCanShow(data);
+          setCheckingstatus(false);
+          break;
+        case "login_error":
+          setLoginError(message_name);
+          break;
+        case "showsign":
+          setSignIn(true);
+      }
+    }
+  }, [message]);
+
   return (
-    <StyledUtility showUtility={showUtility}>
+    <StyledUtility>
       {showUtility &&
         (canShowApp ? (
           <div className="UtilityWraper">
@@ -70,7 +82,13 @@ export function App() {
         }}
         className={`openAppImgWrapper ${showUtility && "showleft"}`}
       >
-        <img className="openAppImg" src={leftarrow} alt="U" />
+        <img
+          className="openAppImg"
+          src={chrome.runtime.getURL(
+            "assests/images/left-arrow-line-symbol.png"
+          )}
+          alt="U"
+        />
       </div>
     </StyledUtility>
   );

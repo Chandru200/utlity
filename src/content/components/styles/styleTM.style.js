@@ -4,6 +4,7 @@ export const StyledTM = styled.div`
   overflow-y: auto;
   height: 100%;
   width: 100%;
+  position:relative;
   .tabname {
     height: 50px;
     display: flex;

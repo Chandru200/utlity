@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { StyledPopup } from "./stylePopup.style";
-function Popup({ isOpen, onClose, onYes, onNo, Content }) {
+
+export function Popup({ textcomponent, PopupComponent, closePopop }) {
+  console.log(closePopop, "closePopop");
   return (
     <StyledPopup>
-      <div className={`popup ${isOpen ? "open" : ""}`}>
-        <div className="popup-content">
-          <span className="popup-close" onClick={onClose}>
-            {/* <img src={chrome.runtime.getURL("assests/images/close.png")}></img> */}
-            X
-          </span>
-          <Content />
-          <div className="popup-buttons">
-            <button onClick={onYes}>Yes</button>
-            <button onClick={onNo}>No</button>
-          </div>
-        </div>
+      <PopupComponent />
+      <div className="popup-footer">
+        <button onClick={() => closePopop()} className="no">
+          {textcomponent.no ? textcomponent.no : "Yes"}
+        </button>
+        <button className="yes">
+          {textcomponent.yes ? textcomponent.yes : "No"}
+        </button>
       </div>
     </StyledPopup>
   );

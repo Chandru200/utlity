@@ -159,14 +159,14 @@ function App() {
     _useState2 = _slicedToArray(_useState, 2),
     showUtility = _useState2[0],
     setShowUtility = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["taskmanager", "tablimitter", "limitwebsite"]),
     _useState4 = _slicedToArray(_useState3, 2),
-    canShowApp = _useState4[0],
-    setCanShow = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["taskmanager", "tablimitter", "limitwebsite"]),
+    contents = _useState4[0],
+    setContents = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
-    contents = _useState6[0],
-    setContents = _useState6[1];
+    canShowApp = _useState6[0],
+    setCanShow = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState8 = _slicedToArray(_useState7, 2),
     checkingStatus = _useState8[0],
@@ -179,24 +179,37 @@ function App() {
     _useState12 = _slicedToArray(_useState11, 2),
     signin = _useState12[0],
     setSignIn = _useState12[1];
-  var leftarrow = chrome.runtime.getURL("assests/images/left-arrow-line-symbol.png");
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState14 = _slicedToArray(_useState13, 2),
+    message = _useState14[0],
+    setMessage = _useState14[1];
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    switch (request.message.message) {
-      case "canShowApp":
-        setCanShow(request.message.data);
-        setCheckingstatus(false);
-        break;
-      case "login_error":
-        setLoginError(request.message.data);
-        break;
-      case "showsign":
-        setSignIn(true);
-    }
+    setMessage({
+      request: request,
+      sender: sender,
+      sendResponse: sendResponse
+    });
   });
-  console.log(canShowApp, "canShowApp");
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_5__.StyledUtility, {
-    showUtility: showUtility
-  }, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    console.log(message);
+    if (message) {
+      var _message$request, _message$request2;
+      var message_name = (_message$request = message.request) === null || _message$request === void 0 || (_message$request = _message$request.message) === null || _message$request === void 0 ? void 0 : _message$request.message;
+      var data = (_message$request2 = message.request) === null || _message$request2 === void 0 || (_message$request2 = _message$request2.message) === null || _message$request2 === void 0 ? void 0 : _message$request2.data;
+      switch (message_name) {
+        case "canShowApp":
+          setCanShow(data);
+          setCheckingstatus(false);
+          break;
+        case "login_error":
+          setLoginError(message_name);
+          break;
+        case "showsign":
+          setSignIn(true);
+      }
+    }
+  }, [message]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_5__.StyledUtility, null, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "UtilityWraper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Content__WEBPACK_IMPORTED_MODULE_1__["default"], {
     canShowApp: canShowApp,
@@ -219,7 +232,7 @@ function App() {
     className: "openAppImgWrapper ".concat(showUtility && "showleft")
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: "openAppImg",
-    src: leftarrow,
+    src: chrome.runtime.getURL("assests/images/left-arrow-line-symbol.png"),
     alt: "U"
   })));
 }
@@ -256,6 +269,42 @@ function Content(_ref) {
     canShowApp: canShowApp
   }), contents[0] === "limitwebsite" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LimitSites__WEBPACK_IMPORTED_MODULE_3__["default"], {
     canShowApp: canShowApp
+  }));
+}
+
+/***/ }),
+
+/***/ "./src/content/components/CreateTodo.jsx":
+/*!***********************************************!*\
+  !*** ./src/content/components/CreateTodo.jsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ OperationTodo)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Input */ "./src/content/components/Input.jsx");
+
+
+function OperationTodo() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    name: "email",
+    label: "Task",
+    placeholder: "Task Name",
+    required: true,
+    ChangeParentState: "setLoginDetails",
+    loginDetails: "loginDetails"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    name: "textarea",
+    label: "Password",
+    placeholder: "About Your Task...",
+    required: true,
+    ChangeParentState: "setLoginDetails",
+    loginDetails: "loginDetails"
   }));
 }
 
@@ -381,29 +430,31 @@ function Input(_ref) {
     required = _ref.required,
     label = _ref.label,
     placeholder = _ref.placeholder,
-    loginDetails = _ref.loginDetails,
-    setLoginDetails = _ref.setLoginDetails;
+    ParentState = _ref.ParentState,
+    ChangeParentState = _ref.ChangeParentState;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     showPass = _useState2[0],
     setShowPass = _useState2[1];
   var handleFormdata = function handleFormdata(e, name) {
-    // {...loginDetails,name:e.currentTarget.value}
+    // {...ParentState,name:e.currentTarget.value}
     if (name == "text") {
-      setLoginDetails(_objectSpread(_objectSpread({}, loginDetails), {}, {
+      ChangeParentState(_objectSpread(_objectSpread({}, ParentState), {}, {
         name: e.currentTarget.value
       }));
     } else if (name == "password") {
-      setLoginDetails(_objectSpread(_objectSpread({}, loginDetails), {}, {
+      ChangeParentState(_objectSpread(_objectSpread({}, ParentState), {}, {
         password: e.currentTarget.value
       }));
     } else if (name == "email") {
-      setLoginDetails(_objectSpread(_objectSpread({}, loginDetails), {}, {
+      ChangeParentState(_objectSpread(_objectSpread({}, ParentState), {}, {
         email: e.currentTarget.value
       }));
     }
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__.StyledInput, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__.StytledLabel, null, label), required && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__.StyledInput, null, name === "textarea" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+    placeholder: placeholder
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__.StytledLabel, null, label), required && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "required"
   }, "*")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: showPass ? "text" : name,
@@ -418,7 +469,7 @@ function Input(_ref) {
       setShowPass(e.target.checked);
     },
     type: "checkbox"
-  }))));
+  })))));
 }
 
 /***/ }),
@@ -442,6 +493,100 @@ __webpack_require__.r(__webpack_exports__);
 function LimitWebsite() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleLimitSites_style__WEBPACK_IMPORTED_MODULE_1__.StyledLS, null, "Limit Website Urls");
 }
+
+/***/ }),
+
+/***/ "./src/content/components/Popup/Popup.jsx":
+/*!************************************************!*\
+  !*** ./src/content/components/Popup/Popup.jsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Popup: () => (/* binding */ Popup),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _stylePopup_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stylePopup.style */ "./src/content/components/Popup/stylePopup.style.js");
+
+
+function Popup(_ref) {
+  var textcomponent = _ref.textcomponent,
+    PopupComponent = _ref.PopupComponent,
+    closePopop = _ref.closePopop;
+  console.log(closePopop, "closePopop");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_stylePopup_style__WEBPACK_IMPORTED_MODULE_1__.StyledPopup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(PopupComponent, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "popup-footer"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: function onClick() {
+      return closePopop();
+    },
+    className: "no"
+  }, textcomponent.no ? textcomponent.no : "Yes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "yes"
+  }, textcomponent.yes ? textcomponent.yes : "No")));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Popup);
+
+/***/ }),
+
+/***/ "./src/content/components/Popup/popup.js":
+/*!***********************************************!*\
+  !*** ./src/content/components/Popup/popup.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   OpenPopUp: () => (/* binding */ OpenPopUp)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
+/* harmony import */ var _Popup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Popup */ "./src/content/components/Popup/Popup.jsx");
+
+
+
+function OpenPopUp(_ref) {
+  var elementID = _ref.elementID,
+    textcomponent = _ref.textcomponent,
+    PopupComponent = _ref.PopupComponent;
+  var dummyEle = document.createElement("div");
+  dummyEle.id = "popupfromextension";
+  dummyEle.style = "position: absolute;top: 0px;left: 0px;height: 100%;width: 100%;display: flex;align-items: center;justify-content: center";
+  document.getElementById(elementID).appendChild(dummyEle);
+  var rootInstance = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(dummyEle);
+  rootInstance.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Popup__WEBPACK_IMPORTED_MODULE_2__.Popup, {
+    textcomponent: textcomponent,
+    PopupComponent: PopupComponent,
+    closePopop: function closePopop() {
+      dummyEle.remove();
+    }
+  }));
+}
+
+/***/ }),
+
+/***/ "./src/content/components/Popup/stylePopup.style.js":
+/*!**********************************************************!*\
+  !*** ./src/content/components/Popup/stylePopup.style.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   StyledPopup: () => (/* binding */ StyledPopup)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject;
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 1%;\n  max-height: 41%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  border-radius: 10px;\n  overflow: hidden;\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -482,7 +627,6 @@ function Login(_ref) {
     setSignIn(!signin);
   };
   var login = function login() {
-    debugger;
     (0,_message__WEBPACK_IMPORTED_MODULE_2__.notifyBackgroundPage)("login", loginDetails);
   };
   var register = function register() {
@@ -497,22 +641,22 @@ function Login(_ref) {
     label: "Fullname",
     placeholder: "Enter your name",
     required: true,
-    setLoginDetails: setLoginDetails,
-    loginDetails: loginDetails
+    ChangeParentState: setLoginDetails,
+    ParentState: loginDetails
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_1__["default"], {
     name: "email",
     label: "Email",
     placeholder: "Enter Your Email",
     required: true,
-    setLoginDetails: setLoginDetails,
-    loginDetails: loginDetails
+    ChangeParentState: setLoginDetails,
+    ParentState: loginDetails
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_1__["default"], {
     name: "password",
     label: "Password",
     placeholder: "Enter Your Password",
     required: true,
-    setLoginDetails: setLoginDetails,
-    loginDetails: loginDetails
+    ChangeParentState: setLoginDetails,
+    ParentState: loginDetails
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "sign-container"
   }, signin ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
@@ -567,6 +711,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _styles_styleTM_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/styleTM.style */ "./src/content/components/styles/styleTM.style.js");
 /* harmony import */ var _Todo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Todo */ "./src/content/components/Todo.jsx");
+/* harmony import */ var _CreateTodo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateTodo */ "./src/content/components/CreateTodo.jsx");
+/* harmony import */ var _components_Popup_popup__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Popup/popup */ "./src/content/components/Popup/popup.js");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
 
 
 
@@ -574,8 +728,25 @@ __webpack_require__.r(__webpack_exports__);
 function TaskManager(_ref) {
   var _canShowApp$todos_lis, _canShowApp$todos_lis2;
   var canShowApp = _ref.canShowApp;
-  console.log(canShowApp, "canShowApp");
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleTM_style__WEBPACK_IMPORTED_MODULE_1__.StyledTM, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState2 = _slicedToArray(_useState, 2),
+    openCeateTodo = _useState2[0],
+    setCreateTodo = _useState2[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (openCeateTodo) {
+      console.log(openCeateTodo.text, "openCeateTodo");
+      (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_4__.OpenPopUp)({
+        elementID: openCeateTodo.id,
+        textcomponent: openCeateTodo.text,
+        PopupComponent: function PopupComponent() {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CreateTodo__WEBPACK_IMPORTED_MODULE_3__["default"], null);
+        }
+      });
+    }
+  }, [openCeateTodo]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleTM_style__WEBPACK_IMPORTED_MODULE_1__.StyledTM, {
+    id: "task-manager"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "tabname"
   }, "Task Manager Tab"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "all_tasks"
@@ -583,6 +754,8 @@ function TaskManager(_ref) {
     className: "tab-header"
   }, "No of tasks-".concat(canShowApp !== null && canShowApp !== void 0 && (_canShowApp$todos_lis = canShowApp.todos_list) !== null && _canShowApp$todos_lis !== void 0 && _canShowApp$todos_lis.length ? canShowApp.todos_list.length : 0)), (canShowApp === null || canShowApp === void 0 || (_canShowApp$todos_lis2 = canShowApp.todos_list) === null || _canShowApp$todos_lis2 === void 0 ? void 0 : _canShowApp$todos_lis2.length) > 0 ? canShowApp.todos_list.map(function (todo) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Todo__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      openCeateTodo: openCeateTodo,
+      setCreateTodo: setCreateTodo,
       key: todo.id,
       todo: todo
     });
@@ -614,7 +787,8 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function Todo(_ref) {
-  var todo = _ref.todo;
+  var todo = _ref.todo,
+    setCreateTodo = _ref.setCreateTodo;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     showDes = _useState2[0],
@@ -629,7 +803,15 @@ function Todo(_ref) {
       });
     });
   };
-  var openEdit = function openEdit() {};
+  var openEdit = function openEdit() {
+    setCreateTodo({
+      id: "task-manager",
+      text: {
+        yes: "Create",
+        no: "Cancel"
+      }
+    });
+  };
   var openDelete = function openDelete() {};
   var openNotify = function openNotify() {};
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -745,7 +927,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledTM = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  overflow-y: auto;\n  height: 100%;\n  width: 100%;\n  .tabname {\n    height: 50px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 20px;\n    font-weight: 500;\n  }\n  .all_tasks {\n    .tab-header {\n      padding-left:8px;\n      font-size-18px;\n      margin-bottom:20px;\n      font-weight:700;\n    }\n    display: flex;\n    flex-direction: column;\n    justify-content: start;\n    .task-wrapper:last-child .task-preview-wrapper {\n      border-bottom: 1px solid darkgoldenrod;\n    }\n    .task-wrapper {\n      .task-preview-wrapper {\n        cursor:pointer;\n        .todo-wrapper{\n          display:flex;\n          flex-direction:column;\n          gap:8px;\n        }\n        display: flex;\n        border: 1px solid darkgoldenrod;\n        border-bottom: none;\n        justify-content: center;\n        align-items: center;\n        padding: 0px 8px;\n        height: 10vh;\n        .name{\n          display: -webkit-box;\n          -webkit-box-orient: vertical;\n          max-width: 380px;\n          max-height: 50px;\n          overflow:hidden;\n          -webkit-line-clamp: 2;\n          font-weight:600;\n        }\n        .duedate{\n          display: flex;\n          gap: 4px;\n          margin: 0px;\n          align-items: center;\n        }\n        .options {\n          display: none;\n          align-items: center;\n          gap: 10px;\n          background: lightskyblue;\n          border-radius: 8px;\n          padding: 8px;\n          .edit{\n            cursor:pointer;\n            height: 21px;\n            width: 21px;\n            img {\n              height: 100%;\n              width: 100%;\n            }\n          } \n        }\n      }\n      .task-preview-wrapper:hover {\n        justify-content: space-between;\n        background-color: blanchedalmond;\n        .options {\n          display: flex;\n        }\n      }\n    }\n    .description {\n      padding:8px;\n    }\n  }\n"])));
+var StyledTM = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  overflow-y: auto;\n  height: 100%;\n  width: 100%;\n  position:relative;\n  .tabname {\n    height: 50px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 20px;\n    font-weight: 500;\n  }\n  .all_tasks {\n    .tab-header {\n      padding-left:8px;\n      font-size-18px;\n      margin-bottom:20px;\n      font-weight:700;\n    }\n    display: flex;\n    flex-direction: column;\n    justify-content: start;\n    .task-wrapper:last-child .task-preview-wrapper {\n      border-bottom: 1px solid darkgoldenrod;\n    }\n    .task-wrapper {\n      .task-preview-wrapper {\n        cursor:pointer;\n        .todo-wrapper{\n          display:flex;\n          flex-direction:column;\n          gap:8px;\n        }\n        display: flex;\n        border: 1px solid darkgoldenrod;\n        border-bottom: none;\n        justify-content: center;\n        align-items: center;\n        padding: 0px 8px;\n        height: 10vh;\n        .name{\n          display: -webkit-box;\n          -webkit-box-orient: vertical;\n          max-width: 380px;\n          max-height: 50px;\n          overflow:hidden;\n          -webkit-line-clamp: 2;\n          font-weight:600;\n        }\n        .duedate{\n          display: flex;\n          gap: 4px;\n          margin: 0px;\n          align-items: center;\n        }\n        .options {\n          display: none;\n          align-items: center;\n          gap: 10px;\n          background: lightskyblue;\n          border-radius: 8px;\n          padding: 8px;\n          .edit{\n            cursor:pointer;\n            height: 21px;\n            width: 21px;\n            img {\n              height: 100%;\n              width: 100%;\n            }\n          } \n        }\n      }\n      .task-preview-wrapper:hover {\n        justify-content: space-between;\n        background-color: blanchedalmond;\n        .options {\n          display: flex;\n        }\n      }\n    }\n    .description {\n      padding:8px;\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -787,7 +969,7 @@ var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: chocolate;\n    padding: 10px;\n    cursor: pointer;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 50vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      height: 35px;\n      width: 100px;\n      border: 1px solid cornsilk;\n      background: cornsilk;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n"])));
-var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  input,\n  input::placeholder {\n    font-size: 16px;\n  }\n  input {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible {\n    outline: none;\n  }\n\n  input[type=\"checkbox\"] {\n    margin: 0px;\n    height: 20px;\n    width: 20px;\n  }\n\n  .showPass {\n    flex-direction: row-reverse;\n    justify-content: flex-end;\n    align-items: center;\n    cursor: pointer;\n  }\n\n  label {\n    display: flex;\n    gap: 4px;\n  }\n  .required {\n    color: red;\n  }\n"])));
+var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  input,\n  textarea,\n  input::placeholder {\n    font-size: 16px;\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n\n  input[type=\"checkbox\"] {\n    margin: 0px;\n    height: 20px;\n    width: 20px;\n  }\n\n  .showPass {\n    flex-direction: row-reverse;\n    justify-content: flex-end;\n    align-items: center;\n    cursor: pointer;\n  }\n\n  label {\n    display: flex;\n    gap: 4px;\n  }\n  .required {\n    color: red;\n  }\n"])));
 var StyledError = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  animation: horizontal-shaking 10s infinite;\n  color: brown;\n  font-family: inherit;\n  font-size: 14px;\n  @keyframes horizontal-shaking {\n    25% {\n      transform: translateX(10px);\n    }\n    75% {\n      transform: translateX(100px);\n    }\n  }\n"])));
 var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  text-align: justify;\n  font-weight: 400;\n  font-size: 18px;\n  max-width: 329px;\n  label {\n    display: flex;\n    gap: 4px;\n  }\n"])));
 
@@ -810,14 +992,6 @@ function notifyBackgroundPage(message, data) {
     data: data
   });
 }
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log("sent from tab.id=", sender.id);
-  if (request.message === "canshowapp") {
-    console.log("open app");
-  } else {
-    console.log("sign in to continue");
-  }
-});
 
 /***/ }),
 

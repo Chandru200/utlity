@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-export default function Todo({ todo }) {
+import React, { useState } from "react";
+export default function Todo({ todo, setCreateTodo }) {
   const [showDes, setSetShow] = useState(false);
 
   const handleshowDes = (e, id) => {
@@ -13,7 +13,12 @@ export default function Todo({ todo }) {
     });
   };
 
-  const openEdit = () => {};
+  const openEdit = () => {
+    setCreateTodo({
+      id: "task-manager",
+      text: { yes: "Create", no: "Cancel" },
+    });
+  };
   const openDelete = () => {};
   const openNotify = () => {};
 
