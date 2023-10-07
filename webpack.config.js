@@ -18,6 +18,10 @@ module.exports = {
         exclude: /node_modules/,
         use: "babel-loader",
       },
+      {
+        test: /\.css$/, // Apply loaders only to .css files
+        use: ["style-loader", "css-loader"], // Use style-loader and css-loader
+      },
     ],
   },
 };

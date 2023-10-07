@@ -40,7 +40,6 @@ export default function TaskManager({
   useEffect(() => {
     if (checkValidation) {
       setcheckValidation(false);
-      console.log(sharedData.name.trim().length);
       if (sharedData.name && sharedData.name.trim().length > 0) {
         console.log("submitted");
         closePopUp();
