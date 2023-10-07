@@ -19,6 +19,14 @@ export const StyledTM = styled.div`
       font-size-18px;
       margin-bottom:20px;
       font-weight:700;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      .create{
+        background:brown;
+        cursor:pointer;
+        padding:8px;
+      }
     }
     display: flex;
     flex-direction: column;

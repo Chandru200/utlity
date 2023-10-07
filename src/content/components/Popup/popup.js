@@ -19,3 +19,6 @@ export function OpenPopUp({ elementID, textcomponent, PopupComponent, onYes }) {
     />
   );
 }
+export function closePopUp() {
+  document.getElementById("popupfromextension")?.remove();
+}

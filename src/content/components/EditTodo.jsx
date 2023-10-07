@@ -19,6 +19,7 @@ export default function OperationTodo() {
         required={true}
         ChangeParentState={setTodo}
         ParentState={todo}
+        value={todo.name ? todo.name : ""}
       />
       <Input
         name="textarea"
@@ -26,6 +27,7 @@ export default function OperationTodo() {
         placeholder="About Your Task..."
         ChangeParentState={setTodo}
         ParentState={todo}
+        value={todo.description ? todo.description : ""}
       />
     </div>
   );

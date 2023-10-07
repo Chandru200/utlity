@@ -10,7 +10,7 @@ export default function Input({
   value,
 }) {
   const [showPass, setShowPass] = useState(false);
-  const [valueToField, SetValueToField] = useState(value);
+  // const [valueToField, SetValueToField] = useState(value);
   const handleFormdata = (e, name) => {
     if (name == "text") {
       ChangeParentState({ ...ParentState, name: e.currentTarget.value });
@@ -22,7 +22,7 @@ export default function Input({
       ChangeParentState({ ...ParentState, description: e.currentTarget.value });
     }
     console.log("1st");
-    SetValueToField(e.currentTarget.value);
+    // SetValueToField(e.currentTarget.value);
   };
   return (
     <StyledInput>
@@ -43,7 +43,7 @@ export default function Input({
           <input
             type={showPass ? "text" : name}
             placeholder={placeholder}
-            value={valueToField}
+            value={value}
             onChange={(e) => {
               handleFormdata(e, name);
             }}

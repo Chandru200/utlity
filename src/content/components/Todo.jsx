@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import OperationTodo from "./CreateTodo";
-import { OpenPopUp } from "../components/Popup/popup";
-import Input from "./Input";
+import OperationTodo from "./EditTodo";
+import { OpenPopUp, closePopUp } from "../components/Popup/popup";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSharedData } from "../redux/manager";
+import { Provider } from "react-redux";
+import store from "../redux/store";
 export default function Todo({ todo }) {
   const [showDes, setSetShow] = useState(false);
-  const [editTodo, SetTodo] = useState({ ...todo });
+  const [checkValidation, setcheckValidation] = useState(false);
   const handleshowDes = (e, id) => {
     setSetShow(!showDes);
     setTimeout(() => {
@@ -16,42 +19,44 @@ export default function Todo({ todo }) {
     });
   };
 
-  function getname() {
-    return editTodo.name;
-  }
+  var sharedData = useSelector((state) => state.sharedData);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (checkValidation) {
+      setcheckValidation(false);
+      console.log(sharedData.name.trim().length);
+      if (sharedData.name && sharedData.name.trim().length > 0) {
+        console.log("submitted");
+        closePopUp();
+      } else {
+        console.log("task field is empty");
+      }
+    }
+  }, [checkValidation]);
 
   const openEdit = () => {
+    dispatch(updateSharedData({ ...todo }));
     OpenPopUp({
       elementID: "task-manager",
       textcomponent: { yes: "Edit", no: "Cancel" },
       PopupComponent: () => {
         return (
-          <OperationTodo action={"edit"} todo={editTodo} SetTodo={SetTodo} />
+          <Provider store={store}>
+            <OperationTodo action={"edit"} />
+          </Provider>
         );
       },
       onYes: () => {
-        console.log(getname(), "editTodo");
-        // console.log(todoOperation, "todoOperation");
-        // todoOperation.name.trim() && close();
+        setcheckValidation(true);
       },
     });
   };
   const openDelete = () => {};
   const openNotify = () => {};
-  useEffect(() => {
-    console.log(editTodo);
-  }, [editTodo]);
+
   return (
     <div className="task-wrapper">
-      {/* <Input
-        name="text"
-        label=""
-        placeholder="About Your Task..."
-        ChangeParentState={SetTodo}
-        ParentState={editTodo}
-        value={editTodo.name ? editTodo.name : ""}
-      /> */}
-
       <div
         onClick={(e) => handleshowDes(e, todo.id)}
         className="task-preview-wrapper"
