@@ -1,42 +1,34 @@
 {
-    "manifest_version": 3,
-    "name": "Utily",
-    "version": "1.0",
-    "description": "Very useful for day to day works",
-    "icons": {
-      "16": "images/dog.png",
-      "32": "images/dog2.png",
-      "48": "images/dog3.png",
-      "128": "images/dog4.png"
-    },
-    "action": {
-      "default_popup": "popup/index.html",
-      "default_icon": "images/dog.png"
-    },
-    "background": {
-      "service_worker": "background.js",
-      "module":true
-    },
-   
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["dist/content_bundle.js"]
-      }
-    ],
-    "permissions": [
-      "activeTab",
-      "tabs"
-    ],
-    "web_accessible_resources": [
-      {
-        "resources": [
-          "*"
-        ],
-        "matches": [
-          "<all_urls>"
-        ]
-      }
-    ]
-  }
-    
+  "manifest_version": 3,
+  "name": "ProductivityMaster",
+  "version": "1.0",
+  "description": "Very useful for day to day works",
+  "icons": {
+    "16": "images/dog.png",
+    "32": "images/dog2.png",
+    "48": "images/dog3.png",
+    "128": "images/dog4.png"
+  },
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_icon": "images/dog.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "module": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/content_bundle.js"]
+    }
+  ],
+  "permissions": ["activeTab", "tabs"],
+  "web_accessible_resources": [
+    {
+      "resources": ["*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
