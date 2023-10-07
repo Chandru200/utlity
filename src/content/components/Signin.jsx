@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Input from "./Input";
 import { notifyBackgroundPage } from "./../message";
 export default function Login({ loginError, setSignIn, signin }) {
-  console.log(loginError, "loginErrorloginErrorloginError");
-
   const [loginDetails, setLoginDetails] = useState();
   const handleLogin = () => {
     setSignIn(!signin);

@@ -183,6 +183,10 @@ function App() {
     _useState14 = _slicedToArray(_useState13, 2),
     message = _useState14[0],
     setMessage = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState16 = _slicedToArray(_useState15, 2),
+    todoOperation = _useState16[0],
+    SetTodoOperation = _useState16[1];
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     setMessage({
       request: request,
@@ -214,7 +218,9 @@ function App() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Content__WEBPACK_IMPORTED_MODULE_1__["default"], {
     canShowApp: canShowApp,
     contents: contents,
-    setContents: setContents
+    setContents: setContents,
+    todoOperation: todoOperation,
+    SetTodoOperation: SetTodoOperation
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Footer__WEBPACK_IMPORTED_MODULE_3__["default"], {
     contents: contents,
     setContents: setContents
@@ -261,9 +267,12 @@ __webpack_require__.r(__webpack_exports__);
 
 function Content(_ref) {
   var contents = _ref.contents,
-    canShowApp = _ref.canShowApp;
+    canShowApp = _ref.canShowApp,
+    todoOperation = _ref.todoOperation,
+    SetTodoOperation = _ref.SetTodoOperation;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, contents[0] === "taskmanager" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TaskManager__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    className: "ssss",
+    SetTodoOperation: SetTodoOperation,
+    todoOperation: todoOperation,
     canShowApp: canShowApp
   }), contents[0] === "tablimitter" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TabLimitter__WEBPACK_IMPORTED_MODULE_2__["default"], {
     canShowApp: canShowApp
@@ -290,21 +299,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Input */ "./src/content/components/Input.jsx");
 
 
-function OperationTodo() {
+function OperationTodo(_ref) {
+  var SetTodo = _ref.SetTodo,
+    todo = _ref.todo;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    name: "email",
+    name: "text",
     label: "Task",
     placeholder: "Task Name",
     required: true,
-    ChangeParentState: "setLoginDetails",
-    loginDetails: "loginDetails"
+    ChangeParentState: SetTodo,
+    ParentState: todo,
+    value: todo.name ? todo.name : ""
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_1__["default"], {
     name: "textarea",
     label: "Password",
     placeholder: "About Your Task...",
-    required: true,
-    ChangeParentState: "setLoginDetails",
-    loginDetails: "loginDetails"
+    ChangeParentState: SetTodo,
+    ParentState: todo,
+    value: todo.description ? todo.description : ""
   }));
 }
 
@@ -431,13 +443,17 @@ function Input(_ref) {
     label = _ref.label,
     placeholder = _ref.placeholder,
     ParentState = _ref.ParentState,
-    ChangeParentState = _ref.ChangeParentState;
+    ChangeParentState = _ref.ChangeParentState,
+    value = _ref.value;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     showPass = _useState2[0],
     setShowPass = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(value),
+    _useState4 = _slicedToArray(_useState3, 2),
+    valueToField = _useState4[0],
+    SetValueToField = _useState4[1];
   var handleFormdata = function handleFormdata(e, name) {
-    // {...ParentState,name:e.currentTarget.value}
     if (name == "text") {
       ChangeParentState(_objectSpread(_objectSpread({}, ParentState), {}, {
         name: e.currentTarget.value
@@ -450,15 +466,26 @@ function Input(_ref) {
       ChangeParentState(_objectSpread(_objectSpread({}, ParentState), {}, {
         email: e.currentTarget.value
       }));
+    } else if (name == "textarea") {
+      ChangeParentState(_objectSpread(_objectSpread({}, ParentState), {}, {
+        description: e.currentTarget.value
+      }));
     }
+    console.log("1st");
+    SetValueToField(e.currentTarget.value);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__.StyledInput, null, name === "textarea" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
-    placeholder: placeholder
+    placeholder: placeholder,
+    value: value,
+    onChange: function onChange(e) {
+      handleFormdata(e, name);
+    }
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_1__.StytledLabel, null, label), required && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
     className: "required"
   }, "*")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     type: showPass ? "text" : name,
     placeholder: placeholder,
+    value: valueToField,
     onChange: function onChange(e) {
       handleFormdata(e, name);
     }
@@ -516,16 +543,15 @@ __webpack_require__.r(__webpack_exports__);
 function Popup(_ref) {
   var textcomponent = _ref.textcomponent,
     PopupComponent = _ref.PopupComponent,
-    closePopop = _ref.closePopop;
-  console.log(closePopop, "closePopop");
+    closePopop = _ref.closePopop,
+    onYes = _ref.onYes;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_stylePopup_style__WEBPACK_IMPORTED_MODULE_1__.StyledPopup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(PopupComponent, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "popup-footer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: function onClick() {
-      return closePopop();
-    },
+    onClick: closePopop,
     className: "no"
   }, textcomponent.no ? textcomponent.no : "Yes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: onYes,
     className: "yes"
   }, textcomponent.yes ? textcomponent.yes : "No")));
 }
@@ -554,7 +580,8 @@ __webpack_require__.r(__webpack_exports__);
 function OpenPopUp(_ref) {
   var elementID = _ref.elementID,
     textcomponent = _ref.textcomponent,
-    PopupComponent = _ref.PopupComponent;
+    PopupComponent = _ref.PopupComponent,
+    onYes = _ref.onYes;
   var dummyEle = document.createElement("div");
   dummyEle.id = "popupfromextension";
   dummyEle.style = "position: absolute;top: 0px;left: 0px;height: 100%;width: 100%;display: flex;align-items: center;justify-content: center";
@@ -565,7 +592,8 @@ function OpenPopUp(_ref) {
     PopupComponent: PopupComponent,
     closePopop: function closePopop() {
       dummyEle.remove();
-    }
+    },
+    onYes: onYes
   }));
 }
 
@@ -586,7 +614,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 1%;\n  max-height: 41%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  border-radius: 10px;\n  overflow: hidden;\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n  }\n"])));
+var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 1%;\n  max-height: 41%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 10px;\n  overflow: hidden;\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -618,7 +646,6 @@ function Login(_ref) {
   var loginError = _ref.loginError,
     setSignIn = _ref.setSignIn,
     signin = _ref.signin;
-  console.log(loginError, "loginErrorloginErrorloginError");
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(),
     _useState2 = _slicedToArray(_useState, 2),
     loginDetails = _useState2[0],
@@ -711,39 +738,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _styles_styleTM_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/styleTM.style */ "./src/content/components/styles/styleTM.style.js");
 /* harmony import */ var _Todo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Todo */ "./src/content/components/Todo.jsx");
-/* harmony import */ var _CreateTodo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CreateTodo */ "./src/content/components/CreateTodo.jsx");
-/* harmony import */ var _components_Popup_popup__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Popup/popup */ "./src/content/components/Popup/popup.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
-function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
 
 
 
 
 function TaskManager(_ref) {
   var _canShowApp$todos_lis, _canShowApp$todos_lis2;
-  var canShowApp = _ref.canShowApp;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState2 = _slicedToArray(_useState, 2),
-    openCeateTodo = _useState2[0],
-    setCreateTodo = _useState2[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    if (openCeateTodo) {
-      console.log(openCeateTodo.text, "openCeateTodo");
-      (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_4__.OpenPopUp)({
-        elementID: openCeateTodo.id,
-        textcomponent: openCeateTodo.text,
-        PopupComponent: function PopupComponent() {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CreateTodo__WEBPACK_IMPORTED_MODULE_3__["default"], null);
-        }
-      });
-    }
-  }, [openCeateTodo]);
+  var canShowApp = _ref.canShowApp,
+    todoOperation = _ref.todoOperation,
+    SetTodoOperation = _ref.SetTodoOperation;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleTM_style__WEBPACK_IMPORTED_MODULE_1__.StyledTM, {
     id: "task-manager"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -754,10 +757,10 @@ function TaskManager(_ref) {
     className: "tab-header"
   }, "No of tasks-".concat(canShowApp !== null && canShowApp !== void 0 && (_canShowApp$todos_lis = canShowApp.todos_list) !== null && _canShowApp$todos_lis !== void 0 && _canShowApp$todos_lis.length ? canShowApp.todos_list.length : 0)), (canShowApp === null || canShowApp === void 0 || (_canShowApp$todos_lis2 = canShowApp.todos_list) === null || _canShowApp$todos_lis2 === void 0 ? void 0 : _canShowApp$todos_lis2.length) > 0 ? canShowApp.todos_list.map(function (todo) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Todo__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      openCeateTodo: openCeateTodo,
-      setCreateTodo: setCreateTodo,
       key: todo.id,
-      todo: todo
+      todo: todo,
+      todoOperation: todoOperation,
+      SetTodoOperation: SetTodoOperation
     });
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "empty_state"
@@ -779,6 +782,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _CreateTodo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateTodo */ "./src/content/components/CreateTodo.jsx");
+/* harmony import */ var _components_Popup_popup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Popup/popup */ "./src/content/components/Popup/popup.js");
+/* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Input */ "./src/content/components/Input.jsx");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -786,13 +798,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+
+
+
 function Todo(_ref) {
-  var todo = _ref.todo,
-    setCreateTodo = _ref.setCreateTodo;
+  var todo = _ref.todo;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     showDes = _useState2[0],
     setSetShow = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(_objectSpread({}, todo)),
+    _useState4 = _slicedToArray(_useState3, 2),
+    editTodo = _useState4[0],
+    SetTodo = _useState4[1];
   var handleshowDes = function handleshowDes(e, id) {
     setSetShow(!showDes);
     setTimeout(function () {
@@ -803,17 +821,36 @@ function Todo(_ref) {
       });
     });
   };
+  function getname() {
+    return editTodo.name;
+  }
   var openEdit = function openEdit() {
-    setCreateTodo({
-      id: "task-manager",
-      text: {
-        yes: "Create",
+    (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_2__.OpenPopUp)({
+      elementID: "task-manager",
+      textcomponent: {
+        yes: "Edit",
         no: "Cancel"
+      },
+      PopupComponent: function PopupComponent() {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CreateTodo__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          action: "edit",
+          todo: editTodo,
+          SetTodo: SetTodo
+        });
+      },
+      onYes: function onYes() {
+        console.log(getname(), "editTodo");
+        // console.log(todoOperation, "todoOperation");
+        // todoOperation.name.trim() && close();
       }
     });
   };
+
   var openDelete = function openDelete() {};
   var openNotify = function openNotify() {};
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    console.log(editTodo);
+  }, [editTodo]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "task-wrapper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -833,7 +870,9 @@ function Todo(_ref) {
     },
     className: "options"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    onClick: openEdit,
+    onClick: function onClick(e) {
+      return openEdit(todo);
+    },
     className: "edit"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: chrome.runtime.getURL("assests/images/edit.png")

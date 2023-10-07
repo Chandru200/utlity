@@ -1,7 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Popup } from "./Popup";
-export function OpenPopUp({ elementID, textcomponent, PopupComponent }) {
+export function OpenPopUp({ elementID, textcomponent, PopupComponent, onYes }) {
   const dummyEle = document.createElement("div");
   dummyEle.id = "popupfromextension";
   dummyEle.style =
@@ -15,6 +15,7 @@ export function OpenPopUp({ elementID, textcomponent, PopupComponent }) {
       closePopop={() => {
         dummyEle.remove();
       }}
+      onYes={onYes}
     />
   );
 }

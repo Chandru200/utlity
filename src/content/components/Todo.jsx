@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-export default function Todo({ todo, setCreateTodo }) {
+import React, { useState, useEffect } from "react";
+import OperationTodo from "./CreateTodo";
+import { OpenPopUp } from "../components/Popup/popup";
+import Input from "./Input";
+export default function Todo({ todo }) {
   const [showDes, setSetShow] = useState(false);
-
+  const [editTodo, SetTodo] = useState({ ...todo });
   const handleshowDes = (e, id) => {
     setSetShow(!showDes);
     setTimeout(() => {
@@ -13,17 +16,42 @@ export default function Todo({ todo, setCreateTodo }) {
     });
   };
 
+  function getname() {
+    return editTodo.name;
+  }
+
   const openEdit = () => {
-    setCreateTodo({
-      id: "task-manager",
-      text: { yes: "Create", no: "Cancel" },
+    OpenPopUp({
+      elementID: "task-manager",
+      textcomponent: { yes: "Edit", no: "Cancel" },
+      PopupComponent: () => {
+        return (
+          <OperationTodo action={"edit"} todo={editTodo} SetTodo={SetTodo} />
+        );
+      },
+      onYes: () => {
+        console.log(getname(), "editTodo");
+        // console.log(todoOperation, "todoOperation");
+        // todoOperation.name.trim() && close();
+      },
     });
   };
   const openDelete = () => {};
   const openNotify = () => {};
-
+  useEffect(() => {
+    console.log(editTodo);
+  }, [editTodo]);
   return (
     <div className="task-wrapper">
+      {/* <Input
+        name="text"
+        label=""
+        placeholder="About Your Task..."
+        ChangeParentState={SetTodo}
+        ParentState={editTodo}
+        value={editTodo.name ? editTodo.name : ""}
+      /> */}
+
       <div
         onClick={(e) => handleshowDes(e, todo.id)}
         className="task-preview-wrapper"
@@ -37,7 +65,7 @@ export default function Todo({ todo, setCreateTodo }) {
         </div>
 
         <div onClick={(e) => e.stopPropagation()} className="options">
-          <div onClick={openEdit} className="edit">
+          <div onClick={(e) => openEdit(todo)} className="edit">
             <img src={chrome.runtime.getURL("assests/images/edit.png")}></img>
           </div>
           <div onClick={openDelete} className="edit">

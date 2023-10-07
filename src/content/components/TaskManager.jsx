@@ -2,22 +2,11 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { StyledTM } from "./styles/styleTM.style";
 import Todo from "./Todo";
-import OperationTodo from "./CreateTodo";
-import { OpenPopUp } from "../components/Popup/popup";
-export default function TaskManager({ canShowApp }) {
-  const [openCeateTodo, setCreateTodo] = useState(false);
-  useEffect(() => {
-    if (openCeateTodo) {
-      console.log(openCeateTodo.text, "openCeateTodo");
-      OpenPopUp({
-        elementID: openCeateTodo.id,
-        textcomponent: openCeateTodo.text,
-        PopupComponent: () => {
-          return <OperationTodo />;
-        },
-      });
-    }
-  }, [openCeateTodo]);
+export default function TaskManager({
+  canShowApp,
+  todoOperation,
+  SetTodoOperation,
+}) {
   return (
     <StyledTM id="task-manager">
       <div className="tabname">Task Manager Tab</div>
@@ -29,10 +18,10 @@ export default function TaskManager({ canShowApp }) {
           canShowApp.todos_list.map((todo) => {
             return (
               <Todo
-                openCeateTodo={openCeateTodo}
-                setCreateTodo={setCreateTodo}
                 key={todo.id}
                 todo={todo}
+                todoOperation={todoOperation}
+                SetTodoOperation={SetTodoOperation}
               />
             );
           })

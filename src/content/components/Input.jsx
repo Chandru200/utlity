@@ -7,22 +7,33 @@ export default function Input({
   placeholder,
   ParentState,
   ChangeParentState,
+  value,
 }) {
   const [showPass, setShowPass] = useState(false);
+  const [valueToField, SetValueToField] = useState(value);
   const handleFormdata = (e, name) => {
-    // {...ParentState,name:e.currentTarget.value}
     if (name == "text") {
       ChangeParentState({ ...ParentState, name: e.currentTarget.value });
     } else if (name == "password") {
       ChangeParentState({ ...ParentState, password: e.currentTarget.value });
     } else if (name == "email") {
       ChangeParentState({ ...ParentState, email: e.currentTarget.value });
+    } else if (name == "textarea") {
+      ChangeParentState({ ...ParentState, description: e.currentTarget.value });
     }
+    console.log("1st");
+    SetValueToField(e.currentTarget.value);
   };
   return (
     <StyledInput>
       {name === "textarea" ? (
-        <textarea placeholder={placeholder}></textarea>
+        <textarea
+          placeholder={placeholder}
+          value={value}
+          onChange={(e) => {
+            handleFormdata(e, name);
+          }}
+        ></textarea>
       ) : (
         <>
           <label>
@@ -32,6 +43,7 @@ export default function Input({
           <input
             type={showPass ? "text" : name}
             placeholder={placeholder}
+            value={valueToField}
             onChange={(e) => {
               handleFormdata(e, name);
             }}

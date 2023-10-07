@@ -18,7 +18,7 @@ export function App() {
   const [loginError, setLoginError] = useState("");
   const [signin, setSignIn] = useState(true);
   const [message, setMessage] = useState({});
-
+  const [todoOperation, SetTodoOperation] = useState({});
   chrome.runtime.onMessage.addListener(function (
     request,
     sender,
@@ -60,6 +60,8 @@ export function App() {
               canShowApp={canShowApp}
               contents={contents}
               setContents={setContents}
+              todoOperation={todoOperation}
+              SetTodoOperation={SetTodoOperation}
             />
             <Footer contents={contents} setContents={setContents} />
           </div>

@@ -7,6 +7,7 @@ export const StyledPopup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 300px;
   border-radius: 10px;
   overflow: hidden;
   .popup-footer {
