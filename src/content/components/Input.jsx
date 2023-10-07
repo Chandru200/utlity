@@ -8,9 +8,9 @@ export default function Input({
   ParentState,
   ChangeParentState,
   value,
+  id,
 }) {
   const [showPass, setShowPass] = useState(false);
-  // const [valueToField, SetValueToField] = useState(value);
   const handleFormdata = (e, name) => {
     if (name == "text") {
       ChangeParentState({ ...ParentState, name: e.currentTarget.value });
@@ -21,8 +21,6 @@ export default function Input({
     } else if (name == "textarea") {
       ChangeParentState({ ...ParentState, description: e.currentTarget.value });
     }
-    console.log("1st");
-    // SetValueToField(e.currentTarget.value);
   };
   return (
     <StyledInput>
@@ -44,6 +42,7 @@ export default function Input({
             type={showPass ? "text" : name}
             placeholder={placeholder}
             value={value}
+            id={id ? id : ""}
             onChange={(e) => {
               handleFormdata(e, name);
             }}

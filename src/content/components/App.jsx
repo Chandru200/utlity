@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+
 import Content from "./Content";
 import Header from "./Header";
 import Footer from "./Footer";
 import Login from "./Signin";
 import { StyledUtility } from "./styles/styledUtility.style";
 import { notifyBackgroundPage } from "../message";
+import { closePopUp } from "../components/Popup/popup";
 
 export function App() {
   const [showUtility, setShowUtility] = useState(false);
@@ -19,6 +22,8 @@ export function App() {
   const [signin, setSignIn] = useState(true);
   const [message, setMessage] = useState({});
   const [todoOperation, SetTodoOperation] = useState({});
+  const sharedData = useSelector((state) => state.sharedData);
+
   chrome.runtime.onMessage.addListener(function (
     request,
     sender,
@@ -34,8 +39,8 @@ export function App() {
   useEffect(() => {
     console.log(message);
     if (message) {
-      let message_name = message.request?.message?.message;
-      let data = message.request?.message?.data;
+      let message_name = message.request?.message;
+      let data = message.request?.data;
       switch (message_name) {
         case "canShowApp":
           setCanShow(data);
@@ -46,9 +51,39 @@ export function App() {
           break;
         case "showsign":
           setSignIn(true);
+          break;
+        case "todo_created":
+          addTodo();
+        case "todo_edited":
+          editTodo();
+        case "todo_deleted":
+          deleteTodo(data.id);
       }
     }
   }, [message]);
+
+  const addTodo = () => {
+    setCanShow({ todos_list: [...canShowApp.todos_list, sharedData] });
+    closePopUp();
+  };
+
+  const editTodo = () => {
+    let old_todos = [...canShowApp.todos_list];
+    let new_todoos = old_todos.map((todo) => {
+      return todo.id === sharedData.id ? sharedData : todo;
+    });
+    setCanShow({ todos_list: new_todoos });
+    closePopUp();
+  };
+
+  const deleteTodo = (id) => {
+    let old_todos = [...canShowApp.todos_list];
+    let new_todoos = old_todos.map((todo) => {
+      return todo.id !== id && todo;
+    });
+    setCanShow({ todos_list: new_todoos });
+    closePopUp();
+  };
 
   return (
     <StyledUtility>

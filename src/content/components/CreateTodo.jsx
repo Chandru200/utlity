@@ -1,7 +1,7 @@
 import React from "react";
 import Input from "./Input";
 import { updateSharedData } from "../redux/manager";
-
+import DateTimePicker from "./dateTimePicker";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function OperationTodo() {
@@ -14,9 +14,7 @@ export default function OperationTodo() {
     <div>
       <Input
         name="text"
-        label="Task"
         placeholder="Task Name"
-        required={true}
         ChangeParentState={setTodo}
         ParentState={todo}
       />
@@ -24,6 +22,11 @@ export default function OperationTodo() {
         name="textarea"
         label="Password"
         placeholder="About Your Task..."
+        ChangeParentState={setTodo}
+        ParentState={todo}
+      />
+      <DateTimePicker
+        placeholder="Select Duedate"
         ChangeParentState={setTodo}
         ParentState={todo}
       />

@@ -1,6 +1,6 @@
 export function notifyBackgroundPage(message, data) {
   chrome.runtime.sendMessage({
-    messages: message,
+    message: message,
     data: data,
   });
 }

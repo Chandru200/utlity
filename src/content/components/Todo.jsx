@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import OperationTodo from "./EditTodo";
-import { OpenPopUp, closePopUp } from "../components/Popup/popup";
+import { OpenPopUp } from "../components/Popup/popup";
+import { notifyBackgroundPage } from "../message";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSharedData } from "../redux/manager";
 import { Provider } from "react-redux";
@@ -28,7 +29,8 @@ export default function Todo({ todo }) {
       console.log(sharedData.name.trim().length);
       if (sharedData.name && sharedData.name.trim().length > 0) {
         console.log("submitted");
-        closePopUp();
+        notifyBackgroundPage("editTodo", sharedData);
+        // closePopUp();
       } else {
         console.log("task field is empty");
       }
@@ -39,7 +41,7 @@ export default function Todo({ todo }) {
     dispatch(updateSharedData({ ...todo }));
     OpenPopUp({
       elementID: "task-manager",
-      textcomponent: { yes: "Edit", no: "Cancel" },
+      textcomponent: { header: "Edit Task", yes: "Edit", no: "Cancel" },
       PopupComponent: () => {
         return (
           <Provider store={store}>
@@ -52,7 +54,18 @@ export default function Todo({ todo }) {
       },
     });
   };
-  const openDelete = () => {};
+  const openDelete = () => {
+    OpenPopUp({
+      elementID: "task-manager",
+      textcomponent: { header: "Are You Sure", yes: "Delete", no: "Cancel" },
+      PopupComponent: () => {
+        <></>;
+      },
+      onYes: (id) => {
+        notifyBackgroundPage("deleteTodo", { id: todo.id });
+      },
+    });
+  };
   const openNotify = () => {};
 
   return (

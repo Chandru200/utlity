@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { StyledTM } from "./styles/styleTM.style";
 import Todo from "./Todo";
-
+import { notifyBackgroundPage } from "../message";
 //redux and popup imports - need to optimize
 import OperationTodo from "./CreateTodo";
 import { OpenPopUp, closePopUp } from "../components/Popup/popup";
@@ -23,11 +23,11 @@ export default function TaskManager({
     dispatch(updateSharedData({}));
     OpenPopUp({
       elementID: "task-manager",
-      textcomponent: { yes: "Create", no: "Cancel" },
+      textcomponent: { header: "Create Task", yes: "Create", no: "Cancel" },
       PopupComponent: () => {
         return (
           <Provider store={store}>
-            <OperationTodo action={"edit"} />
+            <OperationTodo />
           </Provider>
         );
       },
@@ -40,11 +40,16 @@ export default function TaskManager({
   useEffect(() => {
     if (checkValidation) {
       setcheckValidation(false);
-      if (sharedData.name && sharedData.name.trim().length > 0) {
+      if (
+        sharedData.name &&
+        sharedData.name.trim().length > 0 &&
+        sharedData.duedate &&
+        sharedData.duedate.trim().length > 0
+      ) {
         console.log("submitted");
-        closePopUp();
+        notifyBackgroundPage("createTodo", sharedData);
       } else {
-        console.log("task field is empty");
+        console.log(sharedData, "some field is empty");
       }
     }
   }, [checkValidation]);

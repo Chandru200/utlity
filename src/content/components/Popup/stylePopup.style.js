@@ -10,6 +10,12 @@ export const StyledPopup = styled.div`
   width: 300px;
   border-radius: 10px;
   overflow: hidden;
+  .popup-header {
+    font-size: 25px;
+    text-align: center;
+    font-weight: 600;
+    color: cornflowerblue;
+  }
   .popup-footer {
     display: flex;
     align-items: center;
