@@ -12,9 +12,9 @@ import { closePopUp } from "../components/Popup/popup";
 export function App() {
   const [showUtility, setShowUtility] = useState(false);
   const [contents, setContents] = useState([
-    "taskmanager",
-    "tablimitter",
-    "limitwebsite",
+    "Task Manager",
+    "Tab Limitter",
+    "Limit Website",
   ]);
   const [canShowApp, setCanShow] = useState(false);
   const [checkingStatus, setCheckingstatus] = useState(true);
@@ -53,24 +53,31 @@ export function App() {
           setSignIn(true);
           break;
         case "todo_created":
-          addTodo();
+          addTodo(data.id);
+          break;
         case "todo_edited":
           editTodo();
+          break;
         case "todo_deleted":
           deleteTodo(data.id);
+          break;
       }
     }
   }, [message]);
 
-  const addTodo = () => {
-    setCanShow({ todos_list: [...canShowApp.todos_list, sharedData] });
+  const addTodo = (id) => {
+    console.log(id, "wwwwwwwww");
+    setCanShow({
+      todos_list: [...canShowApp.todos_list, { ...sharedData, id: id }],
+    });
+    console.log({ ...sharedData, id: id });
     closePopUp();
   };
 
   const editTodo = () => {
     let old_todos = [...canShowApp.todos_list];
     let new_todoos = old_todos.map((todo) => {
-      return todo.id === sharedData.id ? sharedData : todo;
+      return todo.id === sharedData.id ? { ...sharedData } : todo;
     });
     setCanShow({ todos_list: new_todoos });
     closePopUp();
@@ -78,7 +85,7 @@ export function App() {
 
   const deleteTodo = (id) => {
     let old_todos = [...canShowApp.todos_list];
-    let new_todoos = old_todos.map((todo) => {
+    let new_todoos = old_todos.filter((todo) => {
       return todo.id !== id && todo;
     });
     setCanShow({ todos_list: new_todoos });
@@ -115,7 +122,7 @@ export function App() {
       <div
         onClick={() => {
           setShowUtility(!showUtility);
-          notifyBackgroundPage("canShowApp");
+          !showUtility && notifyBackgroundPage("canShowApp");
         }}
         className={`openAppImgWrapper ${showUtility && "showleft"}`}
       >

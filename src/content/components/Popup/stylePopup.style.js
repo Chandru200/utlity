@@ -2,7 +2,7 @@ import styled from "styled-components";
 export const StyledPopup = styled.div`
   position: fixed;
   background: burlywood;
-  padding: 1%;
+  padding: 32px;
   max-height: 41%;
   display: flex;
   flex-direction: column;
@@ -13,8 +13,8 @@ export const StyledPopup = styled.div`
   .popup-header {
     font-size: 25px;
     text-align: center;
-    font-weight: 600;
-    color: cornflowerblue;
+    font-weight: 400;
+    color: teal;
   }
   .popup-footer {
     display: flex;
@@ -25,6 +25,10 @@ export const StyledPopup = styled.div`
       border-radius: 8px;
       padding: 8px;
       cursor: pointer;
+      border: none;
+      min-width: 100px;
+      font-size: medium;
+      font-weight: 700;
     }
     .yes {
       background: green;

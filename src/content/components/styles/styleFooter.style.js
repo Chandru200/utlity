@@ -4,9 +4,11 @@ export const StyledFooter = styled.div`
     justify-content: space-between;
     padding: 8px;
     background: #EDEADE;
-    height: 50px;
+    min-height: 50px;
     padding: 8px 8px;
     box-sizing: border-box;
+    background: green;
+    color: white;
     width: 100%;
     align-items: center;
     div{

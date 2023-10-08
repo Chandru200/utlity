@@ -26,11 +26,9 @@ export default function Todo({ todo }) {
   useEffect(() => {
     if (checkValidation) {
       setcheckValidation(false);
-      console.log(sharedData.name.trim().length);
       if (sharedData.name && sharedData.name.trim().length > 0) {
-        console.log("submitted");
+        console.log(sharedData, "submitted");
         notifyBackgroundPage("editTodo", sharedData);
-        // closePopUp();
       } else {
         console.log("task field is empty");
       }
@@ -41,7 +39,11 @@ export default function Todo({ todo }) {
     dispatch(updateSharedData({ ...todo }));
     OpenPopUp({
       elementID: "task-manager",
-      textcomponent: { header: "Edit Task", yes: "Edit", no: "Cancel" },
+      textcomponent: {
+        header: "Update Task Details",
+        yes: "Edit",
+        no: "Cancel",
+      },
       PopupComponent: () => {
         return (
           <Provider store={store}>
@@ -57,7 +59,11 @@ export default function Todo({ todo }) {
   const openDelete = () => {
     OpenPopUp({
       elementID: "task-manager",
-      textcomponent: { header: "Are You Sure", yes: "Delete", no: "Cancel" },
+      textcomponent: {
+        header: "Are You Sure You Want to Delete This Task?",
+        yes: "Delete",
+        no: "Cancel",
+      },
       PopupComponent: () => {
         <></>;
       },

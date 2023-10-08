@@ -143,6 +143,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styles/styledUtility.style */ "./src/content/components/styles/styledUtility.style.js");
 /* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../message */ "./src/content/message.js");
 /* harmony import */ var _components_Popup_popup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/Popup/popup */ "./src/content/components/Popup/popup.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
@@ -167,7 +173,7 @@ function App() {
     _useState2 = _slicedToArray(_useState, 2),
     showUtility = _useState2[0],
     setShowUtility = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["taskmanager", "tablimitter", "limitwebsite"]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["Task Manager", "Tab Limitter", "Limit Website"]),
     _useState4 = _slicedToArray(_useState3, 2),
     contents = _useState4[0],
     setContents = _useState4[1];
@@ -223,24 +229,33 @@ function App() {
           setSignIn(true);
           break;
         case "todo_created":
-          addTodo();
+          addTodo(data.id);
+          break;
         case "todo_edited":
           editTodo();
+          break;
         case "todo_deleted":
           deleteTodo(data.id);
+          break;
       }
     }
   }, [message]);
-  var addTodo = function addTodo() {
+  var addTodo = function addTodo(id) {
+    console.log(id, "wwwwwwwww");
     setCanShow({
-      todos_list: [].concat(_toConsumableArray(canShowApp.todos_list), [sharedData])
+      todos_list: [].concat(_toConsumableArray(canShowApp.todos_list), [_objectSpread(_objectSpread({}, sharedData), {}, {
+        id: id
+      })])
     });
+    console.log(_objectSpread(_objectSpread({}, sharedData), {}, {
+      id: id
+    }));
     (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_8__.closePopUp)();
   };
   var editTodo = function editTodo() {
     var old_todos = _toConsumableArray(canShowApp.todos_list);
     var new_todoos = old_todos.map(function (todo) {
-      return todo.id === sharedData.id ? sharedData : todo;
+      return todo.id === sharedData.id ? _objectSpread({}, sharedData) : todo;
     });
     setCanShow({
       todos_list: new_todoos
@@ -249,7 +264,7 @@ function App() {
   };
   var deleteTodo = function deleteTodo(id) {
     var old_todos = _toConsumableArray(canShowApp.todos_list);
-    var new_todoos = old_todos.map(function (todo) {
+    var new_todoos = old_todos.filter(function (todo) {
       return todo.id !== id && todo;
     });
     setCanShow({
@@ -277,7 +292,7 @@ function App() {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     onClick: function onClick() {
       setShowUtility(!showUtility);
-      (0,_message__WEBPACK_IMPORTED_MODULE_7__.notifyBackgroundPage)("canShowApp");
+      !showUtility && (0,_message__WEBPACK_IMPORTED_MODULE_7__.notifyBackgroundPage)("canShowApp");
     },
     className: "openAppImgWrapper ".concat(showUtility && "showleft")
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
@@ -314,13 +329,13 @@ function Content(_ref) {
     canShowApp = _ref.canShowApp,
     todoOperation = _ref.todoOperation,
     SetTodoOperation = _ref.SetTodoOperation;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, contents[0] === "taskmanager" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TaskManager__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, contents[0] === "Task Manager" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TaskManager__WEBPACK_IMPORTED_MODULE_1__["default"], {
     SetTodoOperation: SetTodoOperation,
     todoOperation: todoOperation,
     canShowApp: canShowApp
-  }), contents[0] === "tablimitter" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TabLimitter__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }), contents[0] === "Tab Limitter" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_TabLimitter__WEBPACK_IMPORTED_MODULE_2__["default"], {
     canShowApp: canShowApp
-  }), contents[0] === "limitwebsite" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LimitSites__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }), contents[0] === "Limit Website" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_LimitSites__WEBPACK_IMPORTED_MODULE_3__["default"], {
     canShowApp: canShowApp
   }));
 }
@@ -474,7 +489,6 @@ function Footer(_ref) {
     setContents(changedContents);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleFooter_style__WEBPACK_IMPORTED_MODULE_1__.StyledFooter, null, contents.map(function (items, index) {
-    console.log(index);
     if (index !== 0) return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: index,
       onClick: function onClick(e) {
@@ -725,7 +739,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 1%;\n  max-height: 41%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 10px;\n  overflow: hidden;\n  .popup-header {\n    font-size: 25px;\n    text-align: center;\n    font-weight: 600;\n    color: cornflowerblue;\n  }\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n  }\n"])));
+var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 32px;\n  max-height: 41%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 10px;\n  overflow: hidden;\n  .popup-header {\n    font-size: 25px;\n    text-align: center;\n    font-weight: 400;\n    color: teal;\n  }\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -891,7 +905,7 @@ function TaskManager(_ref) {
     (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_5__.OpenPopUp)({
       elementID: "task-manager",
       textcomponent: {
-        header: "Create Task",
+        header: "Start a New Task",
         yes: "Create",
         no: "Cancel"
       },
@@ -924,10 +938,10 @@ function TaskManager(_ref) {
     className: "all_tasks"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "tab-header"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "No of tasks-".concat(canShowApp !== null && canShowApp !== void 0 && (_canShowApp$todos_lis = canShowApp.todos_list) !== null && _canShowApp$todos_lis !== void 0 && _canShowApp$todos_lis.length ? canShowApp.todos_list.length : 0)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Total Tasks: ".concat(canShowApp !== null && canShowApp !== void 0 && (_canShowApp$todos_lis = canShowApp.todos_list) !== null && _canShowApp$todos_lis !== void 0 && _canShowApp$todos_lis.length ? canShowApp.todos_list.length : 0)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     onClick: createTodo,
     className: "create"
-  }, "+Create")), (canShowApp === null || canShowApp === void 0 || (_canShowApp$todos_lis2 = canShowApp.todos_list) === null || _canShowApp$todos_lis2 === void 0 ? void 0 : _canShowApp$todos_lis2.length) > 0 ? canShowApp.todos_list.map(function (todo) {
+  }, "New Task")), (canShowApp === null || canShowApp === void 0 || (_canShowApp$todos_lis2 = canShowApp.todos_list) === null || _canShowApp$todos_lis2 === void 0 ? void 0 : _canShowApp$todos_lis2.length) > 0 ? canShowApp.todos_list.map(function (todo) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Todo__WEBPACK_IMPORTED_MODULE_2__["default"], {
       key: todo.id,
       todo: todo,
@@ -1007,11 +1021,9 @@ function Todo(_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (checkValidation) {
       setcheckValidation(false);
-      console.log(sharedData.name.trim().length);
       if (sharedData.name && sharedData.name.trim().length > 0) {
-        console.log("submitted");
+        console.log(sharedData, "submitted");
         (0,_message__WEBPACK_IMPORTED_MODULE_3__.notifyBackgroundPage)("editTodo", sharedData);
-        // closePopUp();
       } else {
         console.log("task field is empty");
       }
@@ -1022,7 +1034,7 @@ function Todo(_ref) {
     (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_2__.OpenPopUp)({
       elementID: "task-manager",
       textcomponent: {
-        header: "Edit Task",
+        header: "Update Task Details",
         yes: "Edit",
         no: "Cancel"
       },
@@ -1042,7 +1054,7 @@ function Todo(_ref) {
     (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_2__.OpenPopUp)({
       elementID: "task-manager",
       textcomponent: {
-        header: "Are You Sure",
+        header: "Are You Sure You Want to Delete This Task?",
         yes: "Delete",
         no: "Cancel"
       },
@@ -1202,7 +1214,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledFooter = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    padding: 8px;\n    background: #EDEADE;\n    height: 50px;\n    padding: 8px 8px;\n    box-sizing: border-box;\n    width: 100%;\n    align-items: center;\n    div{\n        cursor:pointer;\n    }\n}\n"])));
+var StyledFooter = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    padding: 8px;\n    background: #EDEADE;\n    min-height: 50px;\n    padding: 8px 8px;\n    box-sizing: border-box;\n    background: green;\n    color: white;\n    width: 100%;\n    align-items: center;\n    div{\n        cursor:pointer;\n    }\n}\n"])));
 
 /***/ }),
 
@@ -1240,7 +1252,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledTM = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  overflow-y: auto;\n  height: 100%;\n  width: 100%;\n  position:relative;\n  .tabname {\n    height: 50px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 20px;\n    font-weight: 500;\n  }\n  .all_tasks {\n    .tab-header {\n      padding-left:8px;\n      font-size-18px;\n      margin-bottom:20px;\n      font-weight:700;\n      display:flex;\n      justify-content:space-between;\n      align-items:center;\n      .create{\n        background:brown;\n        cursor:pointer;\n        padding:8px;\n      }\n    }\n    display: flex;\n    flex-direction: column;\n    justify-content: start;\n    .task-wrapper:last-child .task-preview-wrapper {\n      border-bottom: 1px solid darkgoldenrod;\n    }\n    .task-wrapper {\n      .task-preview-wrapper {\n        cursor:pointer;\n        .todo-wrapper{\n          display:flex;\n          flex-direction:column;\n          gap:8px;\n        }\n        display: flex;\n        border: 1px solid darkgoldenrod;\n        border-bottom: none;\n        justify-content: center;\n        align-items: center;\n        padding: 0px 8px;\n        height: 10vh;\n        .name{\n          display: -webkit-box;\n          -webkit-box-orient: vertical;\n          max-width: 380px;\n          max-height: 50px;\n          overflow:hidden;\n          -webkit-line-clamp: 2;\n          font-weight:600;\n        }\n        .duedate{\n          display: flex;\n          gap: 4px;\n          margin: 0px;\n          align-items: center;\n        }\n        .options {\n          display: none;\n          align-items: center;\n          gap: 10px;\n          background: lightskyblue;\n          border-radius: 8px;\n          padding: 8px;\n          .edit{\n            cursor:pointer;\n            height: 21px;\n            width: 21px;\n            img {\n              height: 100%;\n              width: 100%;\n            }\n          } \n        }\n      }\n      .task-preview-wrapper:hover {\n        justify-content: space-between;\n        background-color: blanchedalmond;\n        .options {\n          display: flex;\n        }\n      }\n    }\n    .description {\n      padding:8px;\n    }\n  }\n"])));
+var StyledTM = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  overflow-y: auto;\n  height: 100%;\n  width: 100%;\n  position:relative;\n  .tabname {\n    height: 50px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 20px;\n    font-weight: 500;\n  }\n  .all_tasks {\n    .tab-header {\n      padding: 8px;\n      font-size-18px;\n      font-weight:700;\n      display:flex;\n      justify-content:space-between;\n      align-items:center;\n      div{\n        font-size:20px;\n        font-weight:400;\n      }\n      .create{\n        background: turquoise;\n        cursor: pointer;\n        padding: 10px;\n        font-size: 18px;\n        font-weight: 400;\n        border-radius: 16px;\n      }\n    }\n    display: flex;\n    flex-direction: column;\n    justify-content: start;\n    .task-wrapper:last-child .task-preview-wrapper {\n      border-bottom: 1px solid darkgoldenrod;\n    }\n    .task-wrapper {\n      .task-preview-wrapper {\n        cursor:pointer;\n        .todo-wrapper{\n          display:flex;\n          flex-direction:column;\n          gap:8px;\n          word-break:break-word;\n        }\n        display: flex;\n        border: 1px solid darkgoldenrod;\n        border-bottom: none;\n        justify-content: start;\n        align-items: center;\n        padding: 0px 8px;\n        height: 10vh;\n        .name{\n          display: -webkit-box;\n          -webkit-box-orient: vertical;\n          max-width: 380px;\n          max-height: 50px;\n          overflow:hidden;\n          -webkit-line-clamp: 2;\n          font-weight:500;\n          font-size: 16px;\n        }\n        .duedate{\n          display: flex;\n          gap: 4px;\n          margin: 0px;\n          align-items: center;\n        }\n        .options {\n          display: none;\n          align-items: center;\n          gap: 10px;\n          background: lightskyblue;\n          border-radius: 8px;\n          padding: 8px;\n          .edit{\n            cursor:pointer;\n            height: 21px;\n            width: 21px;\n            img {\n              height: 100%;\n              width: 100%;\n            }\n          } \n        }\n      }\n      .task-preview-wrapper:hover {\n        justify-content: space-between;\n        background-color: blanchedalmond;\n        .options {\n          display: flex;\n        }\n      }\n    }\n    .description {\n      padding:8px;\n      word-break:break-word;\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -1281,7 +1293,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: chocolate;\n    padding: 10px;\n    cursor: pointer;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 50vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      height: 35px;\n      width: 100px;\n      border: 1px solid cornsilk;\n      background: cornsilk;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n"])));
+var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: chocolate;\n    padding: 10px;\n    cursor: pointer;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 50vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      height: 35px;\n      width: 100px;\n      border: 1px solid cornsilk;\n      background: cornsilk;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,\n    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;\n"])));
 var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  input,\n  textarea,\n  input::placeholder {\n    font-size: 16px;\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n\n  input[type=\"checkbox\"] {\n    margin: 0px;\n    height: 20px;\n    width: 20px;\n  }\n\n  .showPass {\n    flex-direction: row-reverse;\n    justify-content: flex-end;\n    align-items: center;\n    cursor: pointer;\n  }\n\n  label {\n    display: flex;\n    gap: 4px;\n  }\n  .required {\n    color: red;\n  }\n"])));
 var StyledError = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  animation: horizontal-shaking 10s infinite;\n  color: brown;\n  font-family: inherit;\n  font-size: 14px;\n  @keyframes horizontal-shaking {\n    25% {\n      transform: translateX(10px);\n    }\n    75% {\n      transform: translateX(100px);\n    }\n  }\n"])));
 var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  text-align: justify;\n  font-weight: 400;\n  font-size: 18px;\n  max-width: 329px;\n  label {\n    display: flex;\n    gap: 4px;\n  }\n"])));

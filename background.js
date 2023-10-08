@@ -23,13 +23,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       request.data,
       (response) => {
         if (response.msg === "logged in") {
-          sendMessageToTabs(
-            {
-              message: "canShowApp",
-              data: response,
-            },
-            sender.tab.id
-          );
+          getRequest("get_todos", (response) => {
+            sendMessageToTabs(
+              {
+                message: "canShowApp",
+                data: response,
+              },
+              sender.tab.id
+            );
+          });
         } else {
           sendMessageToTabs(
             {
@@ -63,7 +65,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             },
             sender.tab.id
           );
-          console.log(response);
         }
       },
       (error) => {
@@ -87,12 +88,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       "create_todo",
       data,
       (response) => {
-        console.log(response);
         if (response.status) {
           sendMessageToTabs(
             {
               message: "todo_created",
-              data: {},
+              data: { id: response.id },
             },
             sender.tab.id
           );
@@ -113,7 +113,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       "edit_todo",
       data,
       (response) => {
-        console.log(response);
         if (response.status) {
           sendMessageToTabs(
             {

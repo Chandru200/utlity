@@ -23,7 +23,11 @@ export default function TaskManager({
     dispatch(updateSharedData({}));
     OpenPopUp({
       elementID: "task-manager",
-      textcomponent: { header: "Create Task", yes: "Create", no: "Cancel" },
+      textcomponent: {
+        header: "Start a New Task",
+        yes: "Create",
+        no: "Cancel",
+      },
       PopupComponent: () => {
         return (
           <Provider store={store}>
@@ -59,11 +63,11 @@ export default function TaskManager({
       <div className="tabname">Task Manager Tab</div>
       <div className="all_tasks">
         <div className="tab-header">
-          <div>{`No of tasks-${
+          <div>{`Total Tasks: ${
             canShowApp?.todos_list?.length ? canShowApp.todos_list.length : 0
           }`}</div>
           <div onClick={createTodo} className="create">
-            +Create
+            New Task
           </div>
         </div>
         {canShowApp?.todos_list?.length > 0 ? (

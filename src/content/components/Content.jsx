@@ -10,15 +10,17 @@ export default function Content({
 }) {
   return (
     <>
-      {contents[0] === "taskmanager" && (
+      {contents[0] === "Task Manager" && (
         <TaskManager
           SetTodoOperation={SetTodoOperation}
           todoOperation={todoOperation}
           canShowApp={canShowApp}
         />
       )}
-      {contents[0] === "tablimitter" && <TabLimitter canShowApp={canShowApp} />}
-      {contents[0] === "limitwebsite" && (
+      {contents[0] === "Tab Limitter" && (
+        <TabLimitter canShowApp={canShowApp} />
+      )}
+      {contents[0] === "Limit Website" && (
         <LimitWebsite canShowApp={canShowApp} />
       )}
     </>

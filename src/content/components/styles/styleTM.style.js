@@ -15,17 +15,23 @@ export const StyledTM = styled.div`
   }
   .all_tasks {
     .tab-header {
-      padding-left:8px;
+      padding: 8px;
       font-size-18px;
-      margin-bottom:20px;
       font-weight:700;
       display:flex;
       justify-content:space-between;
       align-items:center;
+      div{
+        font-size:20px;
+        font-weight:400;
+      }
       .create{
-        background:brown;
-        cursor:pointer;
-        padding:8px;
+        background: turquoise;
+        cursor: pointer;
+        padding: 10px;
+        font-size: 18px;
+        font-weight: 400;
+        border-radius: 16px;
       }
     }
     display: flex;
@@ -41,11 +47,12 @@ export const StyledTM = styled.div`
           display:flex;
           flex-direction:column;
           gap:8px;
+          word-break:break-word;
         }
         display: flex;
         border: 1px solid darkgoldenrod;
         border-bottom: none;
-        justify-content: center;
+        justify-content: start;
         align-items: center;
         padding: 0px 8px;
         height: 10vh;
@@ -56,7 +63,8 @@ export const StyledTM = styled.div`
           max-height: 50px;
           overflow:hidden;
           -webkit-line-clamp: 2;
-          font-weight:600;
+          font-weight:500;
+          font-size: 16px;
         }
         .duedate{
           display: flex;
@@ -92,6 +100,7 @@ export const StyledTM = styled.div`
     }
     .description {
       padding:8px;
+      word-break:break-word;
     }
   }
 `;
