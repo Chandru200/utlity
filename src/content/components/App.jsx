@@ -108,9 +108,9 @@ export function App() {
             <Footer contents={contents} setContents={setContents} />
           </div>
         ) : checkingStatus ? (
-          <div className="UtilityWraper">
-            {" "}
-            <span>Verifying Authenticity</span>
+          <div className="UtilityWraper loader-wrapper">
+            <div className="loader"></div>
+            <span>Verifying Your Authenticity...</span>
           </div>
         ) : (
           <Login

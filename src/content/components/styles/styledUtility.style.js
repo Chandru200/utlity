@@ -11,9 +11,10 @@ export const StyledUtility = styled.div`
   align-items: center;
   .openAppImgWrapper {
     display: flex;
-    background: chocolate;
+    background: green;
     padding: 10px;
     cursor: pointer;
+    border-radius: 50%;
     .openAppImg {
       height: 16px;
       width: 16px;
@@ -24,6 +25,45 @@ export const StyledUtility = styled.div`
     position: absolute;
     top: 50%;
     transform: rotate(180deg);
+  }
+  .loader-wrapper {
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 500;
+    span {
+      text-align: center;
+    }
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite; /* Safari */
+      animation: spin 2s linear infinite;
+
+      /* Safari */
+      @-webkit-keyframes spin {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
   }
   .UtilityWraper {
     display: flex;
