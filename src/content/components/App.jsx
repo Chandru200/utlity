@@ -12,8 +12,8 @@ import { closePopUp } from "../components/Popup/popup";
 export function App() {
   const [showUtility, setShowUtility] = useState(false);
   const [contents, setContents] = useState([
-    "Task Manager",
     "Tab Limitter",
+    "Task Manager",
     "Limit Website",
   ]);
   const [canShowApp, setCanShow] = useState(false);

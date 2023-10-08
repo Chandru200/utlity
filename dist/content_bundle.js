@@ -173,7 +173,7 @@ function App() {
     _useState2 = _slicedToArray(_useState, 2),
     showUtility = _useState2[0],
     setShowUtility = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["Task Manager", "Tab Limitter", "Limit Website"]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["Tab Limitter", "Task Manager", "Limit Website"]),
     _useState4 = _slicedToArray(_useState3, 2),
     contents = _useState4[0],
     setContents = _useState4[1];
@@ -842,10 +842,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _styles_StyleTL_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/StyleTL.style */ "./src/content/components/styles/StyleTL.style.js");
+/* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Input */ "./src/content/components/Input.jsx");
+
 
 
 function TabLimitter() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_StyleTL_style__WEBPACK_IMPORTED_MODULE_1__.StyledTL, null, "Tab Limitter compo");
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_StyleTL_style__WEBPACK_IMPORTED_MODULE_1__.StyledTL, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tabname"
+  }, "Tab Limitter"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    name: "input",
+    label: "Number of Tabs",
+    ChangeParentState: "setTodo",
+    ParentState: "todo"
+  })));
 }
 
 /***/ }),
@@ -1197,7 +1206,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledTL = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\nbackground:green;\n"])));
+var StyledTL = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  .tabname {\n    font-size: 20px;\n    margin-bottom: 14px;\n    text-align: center;\n  }\n"])));
 
 /***/ }),
 
