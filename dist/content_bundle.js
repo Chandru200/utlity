@@ -237,19 +237,21 @@ function App() {
         case "todo_deleted":
           deleteTodo(data.id);
           break;
+        case "newTabLimit":
+          setTablimt(data.value);
+          break;
+        case "setUpdatedTabs":
+          setAllTabs(data.tabs);
+          break;
       }
     }
   }, [message]);
   var addTodo = function addTodo(id) {
-    console.log(id, "wwwwwwwww");
     setCanShow({
       todos_list: [].concat(_toConsumableArray(canShowApp.todos_list), [_objectSpread(_objectSpread({}, sharedData), {}, {
         id: id
       })])
     });
-    console.log(_objectSpread(_objectSpread({}, sharedData), {}, {
-      id: id
-    }));
     (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_8__.closePopUp)();
   };
   var editTodo = function editTodo() {
@@ -271,6 +273,16 @@ function App() {
       todos_list: new_todoos
     });
     (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_8__.closePopUp)();
+  };
+  var setTablimt = function setTablimt(value) {
+    setCanShow(_objectSpread(_objectSpread({}, canShowApp), {}, {
+      tablimit: value
+    }));
+  };
+  var setAllTabs = function setAllTabs(tabs) {
+    setCanShow(_objectSpread(_objectSpread({}, canShowApp), {}, {
+      tabs: tabs
+    }));
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_6__.StyledUtility, null, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "UtilityWraper"
@@ -664,7 +676,7 @@ function Popup(_ref) {
     closePopop = _ref.closePopop,
     onYes = _ref.onYes;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_stylePopup_style__WEBPACK_IMPORTED_MODULE_1__.StyledPopup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    className: "popup-header"
+    className: "popup-header ".concat(textcomponent.font && "semibold")
   }, textcomponent.header), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(PopupComponent, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "popup-footer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
@@ -741,7 +753,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 32px;\n  max-height: 41%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 10px;\n  overflow: hidden;\n  .popup-header {\n    font-size: 25px;\n    text-align: center;\n    font-weight: 400;\n    color: teal;\n  }\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n  }\n"])));
+var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 26px;\n  max-height: 50%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 20px;\n  overflow: hidden;\n  .popup-header {\n    font-size: 25px;\n    text-align: center;\n    font-weight: 400;\n    color: black;\n  }\n  .semibold {\n    font-weight: 300 !important;\n  }\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -842,18 +854,98 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _styles_StyleTL_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/StyleTL.style */ "./src/content/components/styles/StyleTL.style.js");
-/* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Input */ "./src/content/components/Input.jsx");
+/* harmony import */ var _Taboperations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Taboperations */ "./src/content/components/Taboperations.jsx");
+/* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../message */ "./src/content/message.js");
 
 
 
-function TabLimitter() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_StyleTL_style__WEBPACK_IMPORTED_MODULE_1__.StyledTL, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+
+function TabLimitter(_ref) {
+  var canShowApp = _ref.canShowApp;
+  console.log(canShowApp.tabs);
+  var setTablimit = function setTablimit(e) {
+    canShowApp.limit != e.target.parentElement.children[0].value && e.target.parentElement.children[0].value.trim().length > 0 && (0,_message__WEBPACK_IMPORTED_MODULE_3__.notifyBackgroundPage)("setLimit", {
+      limit: e.target.parentElement.children[0].value
+    });
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_StyleTL_style__WEBPACK_IMPORTED_MODULE_1__.StyledTL, {
+    id: "tab-limitter"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "tabname"
-  }, "Tab Limitter"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    name: "input",
-    label: "Number of Tabs",
-    ChangeParentState: "setTodo",
-    ParentState: "todo"
+  }, "Tab Limitter"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tab-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tab-form"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "number"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: setTablimit
+  }, "Set Tab Limit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tab-limit"
+  }, "Current Limt:", canShowApp.tablimit)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "taboperations"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "list-tabs"
+  }, "Currently Opened Tabs :", canShowApp.tabs.length), canShowApp.tabs && canShowApp.tabs.map(function (tab) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Taboperations__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      key: tab.id,
+      tab: tab
+    });
+  })));
+}
+
+/***/ }),
+
+/***/ "./src/content/components/Taboperations.jsx":
+/*!**************************************************!*\
+  !*** ./src/content/components/Taboperations.jsx ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ TabOperations)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Popup_popup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Popup/popup */ "./src/content/components/Popup/popup.js");
+/* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../message */ "./src/content/message.js");
+
+
+
+function TabOperations(_ref) {
+  var tab = _ref.tab;
+  var closeTab = function closeTab(e) {
+    (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_1__.OpenPopUp)({
+      elementID: "tab-limitter",
+      textcomponent: {
+        header: "Are you sure,Do you want to close?",
+        yes: "Close",
+        no: "Cancel",
+        font: "300"
+      },
+      PopupComponent: function PopupComponent() {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null);
+      },
+      onYes: function onYes() {
+        console.log("done working");
+        (0,_message__WEBPACK_IMPORTED_MODULE_2__.notifyBackgroundPage)("closetab", {
+          id: tab.id
+        });
+        (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_1__.closePopUp)();
+      }
+    });
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tabs-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tab-details"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Website:"), new URL(tab.url ? tab.url : tab.pendingUrl).origin), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, "Title:"), tab.title)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: closeTab,
+    className: "close"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: chrome.runtime.getURL("assests/images/close.png")
   })));
 }
 
@@ -1206,7 +1298,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledTL = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  .tabname {\n    font-size: 20px;\n    margin-bottom: 14px;\n    text-align: center;\n  }\n"])));
+var StyledTL = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  overflow: auto;\n  .tabname {\n    font-size: 20px;\n    text-align: center;\n  }\n  .tab-wrapper {\n    display: flex;\n    gap: 12px;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n    .tab-form {\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      gap: 12px;\n    }\n    .tab-limit {\n      font-size: 20px;\n    }\n    input {\n      max-width: 100px;\n      font-size: 30px;\n      text-align: center;\n      height: 45px;\n    }\n  }\n\n  .taboperations {\n    display: flex;\n    flex-direction: column;\n    gap: 8px;\n    .list-tabs {\n      font-size: 20px;\n      font-weight: 500;\n    }\n    .tabs-wrapper:hover {\n      background-color: blanchedalmond;\n      .close {\n        display: flex;\n      }\n    }\n\n    .tabs-wrapper {\n      display: flex;\n      justify-content: space-between;\n      align-items: center;\n      border-bottom: 1px solid darkgoldenrod;\n      border-radius: 10px;\n      padding: 12px;\n      .tab-details {\n        width: 100%;\n        span {\n          font-size: 18px;\n          font-weight: 500;\n        }\n        div {\n          overflow-wrap: anywhere;\n        }\n      }\n      .close {\n        height: 25px;\n        width: 25px !important;\n        background: none;\n        border-radius: 50%;\n        display: flex;\n        min-width: 0px;\n        display: none;\n        align-items: center;\n        justify-content: center;\n        color: black;\n        padding: 0px;\n        img {\n          width: 100%;\n          height: 100%;\n        }\n      }\n      .tab {\n        display: flex;\n        flex-direction: column;\n      }\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -1304,7 +1396,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: green;\n    padding: 10px;\n    cursor: pointer;\n    border-radius: 50%;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .loader-wrapper {\n    display: flex;\n    align-items: center !important;\n    justify-content: center !important;\n    gap: 10px;\n    font-size: 20px;\n    font-weight: 500;\n    span {\n      text-align: center;\n    }\n    .loader {\n      border: 16px solid #f3f3f3;\n      border-radius: 50%;\n      border-top: 16px solid #3498db;\n      width: 120px;\n      height: 120px;\n      -webkit-animation: spin 2s linear infinite; /* Safari */\n      animation: spin 2s linear infinite;\n\n      /* Safari */\n      @-webkit-keyframes spin {\n        0% {\n          -webkit-transform: rotate(0deg);\n        }\n        100% {\n          -webkit-transform: rotate(360deg);\n        }\n      }\n\n      @keyframes spin {\n        0% {\n          transform: rotate(0deg);\n        }\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n    }\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 50vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      height: 35px;\n      width: 100px;\n      border: 1px solid cornsilk;\n      background: cornsilk;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,\n    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;\n"])));
+var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: green;\n    padding: 10px;\n    cursor: pointer;\n    border-radius: 50%;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .loader-wrapper {\n    display: flex;\n    align-items: center !important;\n    justify-content: center !important;\n    gap: 10px;\n    font-size: 20px;\n    font-weight: 500;\n    span {\n      text-align: center;\n    }\n    .loader {\n      border: 16px solid #f3f3f3;\n      border-radius: 50%;\n      border-top: 16px solid #3498db;\n      width: 120px;\n      height: 120px;\n      -webkit-animation: spin 2s linear infinite; /* Safari */\n      animation: spin 2s linear infinite;\n\n      /* Safari */\n      @-webkit-keyframes spin {\n        0% {\n          -webkit-transform: rotate(0deg);\n        }\n        100% {\n          -webkit-transform: rotate(360deg);\n        }\n      }\n\n      @keyframes spin {\n        0% {\n          transform: rotate(0deg);\n        }\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n    }\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 50vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      height: 35px;\n      width: 100px;\n      border: 1px solid cornsilk;\n      background: cornsilk;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,\n    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;\n\n  input::placeholder {\n    font-size: 16px;\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n  button {\n    color: white;\n    border-radius: 8px;\n    padding: 8px;\n    cursor: pointer;\n    border: none;\n    min-width: 100px;\n    font-size: medium;\n    font-weight: 700;\n    background-color: green;\n  }\n"])));
 var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  input,\n  textarea,\n  input::placeholder {\n    font-size: 16px;\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n\n  input[type=\"checkbox\"] {\n    margin: 0px;\n    height: 20px;\n    width: 20px;\n  }\n\n  .showPass {\n    flex-direction: row-reverse;\n    justify-content: flex-end;\n    align-items: center;\n    cursor: pointer;\n  }\n\n  label {\n    display: flex;\n    gap: 4px;\n  }\n  .required {\n    color: red;\n  }\n"])));
 var StyledError = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  animation: horizontal-shaking 10s infinite;\n  color: brown;\n  font-family: inherit;\n  font-size: 14px;\n  @keyframes horizontal-shaking {\n    25% {\n      transform: translateX(10px);\n    }\n    75% {\n      transform: translateX(100px);\n    }\n  }\n"])));
 var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  text-align: justify;\n  font-weight: 400;\n  font-size: 18px;\n  max-width: 329px;\n  label {\n    display: flex;\n    gap: 4px;\n  }\n"])));

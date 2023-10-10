@@ -118,6 +118,35 @@ export const StyledUtility = styled.div`
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;
+
+  input::placeholder {
+    font-size: 16px;
+  }
+  textarea {
+    height: 140px;
+  }
+  input,
+  textarea {
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid darkblue !important;
+    background: whitesmoke;
+  }
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+  }
+  button {
+    color: white;
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    min-width: 100px;
+    font-size: medium;
+    font-weight: 700;
+    background-color: green;
+  }
 `;
 
 export const StyledInput = styled.div`

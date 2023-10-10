@@ -4,7 +4,9 @@ import { StyledPopup } from "./stylePopup.style";
 export function Popup({ textcomponent, PopupComponent, closePopop, onYes }) {
   return (
     <StyledPopup>
-      <div className="popup-header">{textcomponent.header}</div>
+      <div className={`popup-header ${textcomponent.font && "semibold"}`}>
+        {textcomponent.header}
+      </div>
       <PopupComponent />
       <div className="popup-footer">
         <button onClick={closePopop} className="no">

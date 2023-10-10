@@ -61,16 +61,20 @@ export function App() {
         case "todo_deleted":
           deleteTodo(data.id);
           break;
+        case "newTabLimit":
+          setTablimt(data.value);
+          break;
+        case "setUpdatedTabs":
+          setAllTabs(data.tabs);
+          break;
       }
     }
   }, [message]);
 
   const addTodo = (id) => {
-    console.log(id, "wwwwwwwww");
     setCanShow({
       todos_list: [...canShowApp.todos_list, { ...sharedData, id: id }],
     });
-    console.log({ ...sharedData, id: id });
     closePopUp();
   };
 
@@ -90,6 +94,14 @@ export function App() {
     });
     setCanShow({ todos_list: new_todoos });
     closePopUp();
+  };
+
+  const setTablimt = (value) => {
+    setCanShow({ ...canShowApp, tablimit: value });
+  };
+
+  const setAllTabs = (tabs) => {
+    setCanShow({ ...canShowApp, tabs: tabs });
   };
 
   return (
