@@ -82,7 +82,7 @@ export default function TaskManager({
             );
           })
         ) : (
-          <div className="empty_state">Crete New Tasks</div>
+          <div className="empty_state">Currently,You have no tasks.</div>
         )}
       </div>
     </StyledTM>

@@ -173,7 +173,7 @@ function App() {
     _useState2 = _slicedToArray(_useState, 2),
     showUtility = _useState2[0],
     setShowUtility = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["Tab Limitter", "Task Manager", "Limit Website"]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(["Limit Website", "Tab Limitter", "Task Manager"]),
     _useState4 = _slicedToArray(_useState3, 2),
     contents = _useState4[0],
     setContents = _useState4[1];
@@ -645,10 +645,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _styles_styleLimitSites_style__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles/styleLimitSites.style */ "./src/content/components/styles/styleLimitSites.style.js");
+/* harmony import */ var _WebsiteStats__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./WebsiteStats */ "./src/content/components/WebsiteStats.jsx");
+/* harmony import */ var _SetWebsiteLimit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SetWebsiteLimit */ "./src/content/components/SetWebsiteLimit.jsx");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
-function LimitWebsite() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleLimitSites_style__WEBPACK_IMPORTED_MODULE_1__.StyledLS, null, "Limit Website Urls");
+
+
+function LimitWebsite(_ref) {
+  var canShowApp = _ref.canShowApp;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("stats"),
+    _useState2 = _slicedToArray(_useState, 2),
+    options = _useState2[0],
+    setOptions = _useState2[1];
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleLimitSites_style__WEBPACK_IMPORTED_MODULE_1__.StyledLS, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "tabname"
+  }, "Limit Website Urls"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "options-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: function onClick() {
+      return setOptions("stats");
+    },
+    className: "options ".concat(options === "stats" && "selected")
+  }, "Website Usage Statistics"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    onClick: function onClick() {
+      return setOptions("limits");
+    },
+    className: "options ".concat(options === "limits" && "selected")
+  }, "Set Website Limit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "content-weblimit"
+  }, options === "stats" ? canShowApp.view_time ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_WebsiteStats__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    viewTime: canShowApp.view_time
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "No data recorded.Please refresh") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SetWebsiteLimit__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
 }
 
 /***/ }),
@@ -754,6 +787,98 @@ var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 26px;\n  max-height: 50%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 20px;\n  overflow: hidden;\n  .popup-header {\n    font-size: 25px;\n    text-align: center;\n    font-weight: 400;\n    color: black;\n  }\n  .semibold {\n    font-weight: 300 !important;\n  }\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n  }\n"])));
+
+/***/ }),
+
+/***/ "./src/content/components/SetWebsiteLimit.jsx":
+/*!****************************************************!*\
+  !*** ./src/content/components/SetWebsiteLimit.jsx ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ SetWebsiteLimit)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../message */ "./src/content/message.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+function SetWebsiteLimit() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      time: "00:00"
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    limitData = _useState2[0],
+    setLimitData = _useState2[1];
+  var validateUrl = function validateUrl(url) {
+    var pattern = /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/\S*)?$/;
+    return pattern.test(url);
+  };
+  var setWebiteLimit = function setWebiteLimit() {
+    if (validateUrl(limitData.url) && limitData.time !== "00:00") {
+      console.log(limitData);
+      (0,_message__WEBPACK_IMPORTED_MODULE_1__.notifyBackgroundPage)("addwebsitelimit", limitData);
+    }
+  };
+  var setLimit = function setLimit(e) {
+    if (e.currentTarget.id == "url") {
+      var url = e.currentTarget.value;
+      var isValidURL = e.currentTarget.validity.valid;
+      if (isValidURL) {
+        e.currentTarget.classList.remove("red-border");
+        setLimitData(_objectSpread(_objectSpread({}, limitData), {}, {
+          url: url
+        }));
+      } else {
+        e.currentTarget.classList.add("red-border");
+      }
+      e.currentTarget.style.border = isValidURL;
+    } else {
+      setLimitData(_objectSpread(_objectSpread({}, limitData), {}, {
+        time: e.currentTarget.value
+      }));
+    }
+    console.log(e.currentTarget.value);
+  };
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "setWebsiteTab-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "setWebForm"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    id: "url",
+    type: "url",
+    pattern: " /^(https?:\\/\\/)?[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}(\\/\\S*)?$/",
+    placeholder: "http://www.example.com",
+    onChange: setLimit
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "time-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    type: "time",
+    id: "time",
+    min: "00:00",
+    max: "23:59",
+    step: "1",
+    value: limitData.time,
+    onChange: setLimit
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    onClick: setWebiteLimit
+  }, "SetLimit"))));
+}
 
 /***/ }),
 
@@ -1053,7 +1178,7 @@ function TaskManager(_ref) {
     });
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "empty_state"
-  }, "Crete New Tasks")));
+  }, "Currently,You have no tasks.")));
 }
 
 /***/ }),
@@ -1215,6 +1340,83 @@ function Todo(_ref) {
 
 /***/ }),
 
+/***/ "./src/content/components/WebsiteStats.jsx":
+/*!*************************************************!*\
+  !*** ./src/content/components/WebsiteStats.jsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ WebsiteStats)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function WebsiteStats(_ref) {
+  var viewTime = _ref.viewTime;
+  function toTime(seconds) {
+    var date = new Date(null);
+    date.setSeconds(seconds);
+    return date.toISOString().substr(11, 8);
+  }
+  function formTimeDate(time) {
+    var constant = {
+      0: "hr",
+      1: "min",
+      2: "sec"
+    };
+    var str = "";
+    var time_split = time.split(":");
+    for (var i = 0; i < time_split.length; i++) {
+      if (time_split[i] != "00") {
+        str = "".concat(str, " ").concat(time_split[i]).concat(constant[i]);
+      }
+    }
+    return str.trim();
+  }
+  function formArray(obj) {
+    var sortedObj = Object.fromEntries(Object.entries(obj).sort(function (_ref2, _ref3) {
+      var _ref4 = _slicedToArray(_ref2, 2),
+        valueA = _ref4[1];
+      var _ref5 = _slicedToArray(_ref3, 2),
+        valueB = _ref5[1];
+      return valueB - valueA;
+    }));
+    var array = [];
+    for (var key in sortedObj) {
+      var newobj = {
+        url: key,
+        time: formTimeDate(toTime(sortedObj[key]))
+      };
+      array.push(newobj);
+    }
+    return array;
+  }
+  viewTime = formArray(viewTime);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "weblimit-wrapper"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "head"
+  }, "Website Usage for ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, new Date().toISOString().split("T")[0])), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "stats-tab"
+  }, viewTime.map(function (data) {
+    return data.url && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      key: data.url,
+      className: "stats-wrapper"
+    }, data.url, ":", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, data.time));
+  })));
+}
+
+/***/ }),
+
 /***/ "./src/content/components/dateTimePicker.jsx":
 /*!***************************************************!*\
   !*** ./src/content/components/dateTimePicker.jsx ***!
@@ -1336,7 +1538,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledLS = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\nbackground:yellow;\n"])));
+var StyledLS = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  overflow: auto;\n  .tabname {\n    font-size: 20px;\n    text-align: center;\n  }\n  .options-wrapper {\n    display: flex;\n    justify-content: space-between;\n    font-size: 16px;\n    .options {\n      cursor: pointer;\n      background: blanchedalmond;\n      padding: 12px;\n      border-radius: 8px;\n    }\n    .selected,\n    .options:hover {\n      background-color: burlywood;\n    }\n  }\n  .content-weblimit {\n    height: calc(100% - 150px);\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    span{\n        color: black;\n        font-weight: 500;\n    }\n    .setWebsiteTab-wrapper{\n        .setWebForm{\n            display: flex;\n            justify-content: center;\n            width: 100%;\n            flex-direction: column;\n            gap: 12px;  \n            .red-border{\n                border:2px solid red !important;\n            }\n         }\n         .time-wrapper{\n            display: flex;\n            width: 100%;\n            justify-content: space-around;\n         }\n        }\n    }\n    .weblimit-wrapper{\n        height:100%;\n        .head{\n            font-size: 18px;\n            font-weight: 400;\n        }\n        .stats-tab{\n            display: flex;\n            flex-direction: column;\n            gap: 8px;\n            padding: 10px;\n            overflow: auto;\n            height: 100%;\n            background: antiquewhite;\n            .stats-wrapper{\n                display: flex;\n                align-items: center;\n                gap: 10px;\n                padding: 4px;\n                word-break:break-all;\n            }\n        }\n    }\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -1355,7 +1557,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledTM = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  overflow-y: auto;\n  height: 100%;\n  width: 100%;\n  position:relative;\n  .tabname {\n    height: 50px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 20px;\n    font-weight: 500;\n  }\n  .all_tasks {\n    .tab-header {\n      padding: 8px;\n      font-size-18px;\n      font-weight:700;\n      display:flex;\n      justify-content:space-between;\n      align-items:center;\n      div{\n        font-size:20px;\n        font-weight:400;\n      }\n      .create{\n        background: turquoise;\n        cursor: pointer;\n        padding: 10px;\n        font-size: 18px;\n        font-weight: 400;\n        border-radius: 16px;\n      }\n    }\n    display: flex;\n    flex-direction: column;\n    justify-content: start;\n    .task-wrapper:last-child .task-preview-wrapper {\n      border-bottom: 1px solid darkgoldenrod;\n    }\n    .task-wrapper {\n      .task-preview-wrapper {\n        cursor:pointer;\n        .todo-wrapper{\n          display:flex;\n          flex-direction:column;\n          gap:8px;\n          word-break:break-word;\n        }\n        display: flex;\n        border: 1px solid darkgoldenrod;\n        border-bottom: none;\n        justify-content: start;\n        align-items: center;\n        padding: 0px 8px;\n        height: 10vh;\n        .name{\n          display: -webkit-box;\n          -webkit-box-orient: vertical;\n          max-width: 380px;\n          max-height: 50px;\n          overflow:hidden;\n          -webkit-line-clamp: 2;\n          font-weight:500;\n          font-size: 16px;\n        }\n        .duedate{\n          display: flex;\n          gap: 4px;\n          margin: 0px;\n          align-items: center;\n        }\n        .options {\n          display: none;\n          align-items: center;\n          gap: 10px;\n          background: lightskyblue;\n          border-radius: 8px;\n          padding: 8px;\n          .edit{\n            cursor:pointer;\n            height: 21px;\n            width: 21px;\n            img {\n              height: 100%;\n              width: 100%;\n            }\n          } \n        }\n      }\n      .task-preview-wrapper:hover {\n        justify-content: space-between;\n        background-color: blanchedalmond;\n        .options {\n          display: flex;\n        }\n      }\n    }\n    .description {\n      padding:8px;\n      word-break:break-word;\n    }\n  }\n"])));
+var StyledTM = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  overflow-y: auto;\n  height: 100%;\n  width: 100%;\n  position:relative;\n  .tabname {\n    height: 50px;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 20px;\n    font-weight: 500;\n  }\n  .all_tasks {\n    .empty_state{\n      padding: 8px;\n      text-align: center;\n      font-size: larger;\n      font-weight: 500;\n      margin-top: 10vh; \n\n    }\n    .tab-header {\n      padding: 8px;\n      font-size-18px;\n      font-weight:700;\n      display:flex;\n      justify-content:space-between;\n      align-items:center;\n      div{\n        font-size:20px;\n        font-weight:400;\n      }\n      .create{\n        background: turquoise;\n        cursor: pointer;\n        padding: 10px;\n        font-size: 18px;\n        font-weight: 400;\n        border-radius: 16px;\n      }\n    }\n    display: flex;\n    flex-direction: column;\n    justify-content: start;\n    max-height:100%;\n    .task-wrapper:last-child .task-preview-wrapper {\n      border-bottom: 1px solid darkgoldenrod;\n    }\n    .task-wrapper {\n      .task-preview-wrapper {\n        cursor:pointer;\n        .todo-wrapper{\n          display:flex;\n          flex-direction:column;\n          gap:8px;\n          word-break:break-word;\n        }\n        display: flex;\n        border: 1px solid darkgoldenrod;\n        border-bottom: none;\n        justify-content: start;\n        align-items: center;\n        padding: 0px 8px;\n        height: 10vh;\n        .name{\n          display: -webkit-box;\n          -webkit-box-orient: vertical;\n          max-width: 380px;\n          max-height: 50px;\n          overflow:hidden;\n          -webkit-line-clamp: 2;\n          font-weight:500;\n          font-size: 16px;\n        }\n        .duedate{\n          display: flex;\n          gap: 4px;\n          margin: 0px;\n          align-items: center;\n        }\n        .options {\n          display: none;\n          align-items: center;\n          gap: 10px;\n          background: lightskyblue;\n          border-radius: 8px;\n          padding: 8px;\n          .edit{\n            cursor:pointer;\n            height: 21px;\n            width: 21px;\n            img {\n              height: 100%;\n              width: 100%;\n            }\n          } \n        }\n      }\n      .task-preview-wrapper:hover {\n        justify-content: space-between;\n        background-color: blanchedalmond;\n        .options {\n          display: flex;\n        }\n      }\n    }\n    .description {\n      padding:8px;\n      word-break:break-word;\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -1396,7 +1598,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: green;\n    padding: 10px;\n    cursor: pointer;\n    border-radius: 50%;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .loader-wrapper {\n    display: flex;\n    align-items: center !important;\n    justify-content: center !important;\n    gap: 10px;\n    font-size: 20px;\n    font-weight: 500;\n    span {\n      text-align: center;\n    }\n    .loader {\n      border: 16px solid #f3f3f3;\n      border-radius: 50%;\n      border-top: 16px solid #3498db;\n      width: 120px;\n      height: 120px;\n      -webkit-animation: spin 2s linear infinite; /* Safari */\n      animation: spin 2s linear infinite;\n\n      /* Safari */\n      @-webkit-keyframes spin {\n        0% {\n          -webkit-transform: rotate(0deg);\n        }\n        100% {\n          -webkit-transform: rotate(360deg);\n        }\n      }\n\n      @keyframes spin {\n        0% {\n          transform: rotate(0deg);\n        }\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n    }\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 50vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      height: 35px;\n      width: 100px;\n      border: 1px solid cornsilk;\n      background: cornsilk;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,\n    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;\n\n  input::placeholder {\n    font-size: 16px;\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n  button {\n    color: white;\n    border-radius: 8px;\n    padding: 8px;\n    cursor: pointer;\n    border: none;\n    min-width: 100px;\n    font-size: medium;\n    font-weight: 700;\n    background-color: green;\n  }\n"])));
+var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: green;\n    padding: 10px;\n    cursor: pointer;\n    border-radius: 50%;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .loader-wrapper {\n    display: flex;\n    align-items: center !important;\n    justify-content: center !important;\n    gap: 10px;\n    font-size: 20px;\n    font-weight: 500;\n    span {\n      text-align: center;\n    }\n    .loader {\n      border: 16px solid #f3f3f3;\n      border-radius: 50%;\n      border-top: 16px solid #3498db;\n      width: 120px;\n      height: 120px;\n      -webkit-animation: spin 2s linear infinite; /* Safari */\n      animation: spin 2s linear infinite;\n\n      /* Safari */\n      @-webkit-keyframes spin {\n        0% {\n          -webkit-transform: rotate(0deg);\n        }\n        100% {\n          -webkit-transform: rotate(360deg);\n        }\n      }\n\n      @keyframes spin {\n        0% {\n          transform: rotate(0deg);\n        }\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n    }\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 60vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,\n    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;\n\n  input::placeholder {\n    font-size: 16px;\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n  button {\n    color: white;\n    border-radius: 8px;\n    padding: 8px;\n    cursor: pointer;\n    border: none;\n    min-width: 100px;\n    font-size: medium;\n    font-weight: 700;\n    background-color: green;\n  }\n"])));
 var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  input,\n  textarea,\n  input::placeholder {\n    font-size: 16px;\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n\n  input[type=\"checkbox\"] {\n    margin: 0px;\n    height: 20px;\n    width: 20px;\n  }\n\n  .showPass {\n    flex-direction: row-reverse;\n    justify-content: flex-end;\n    align-items: center;\n    cursor: pointer;\n  }\n\n  label {\n    display: flex;\n    gap: 4px;\n  }\n  .required {\n    color: red;\n  }\n"])));
 var StyledError = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  animation: horizontal-shaking 10s infinite;\n  color: brown;\n  font-family: inherit;\n  font-size: 14px;\n  @keyframes horizontal-shaking {\n    25% {\n      transform: translateX(10px);\n    }\n    75% {\n      transform: translateX(100px);\n    }\n  }\n"])));
 var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  text-align: justify;\n  font-weight: 400;\n  font-size: 18px;\n  max-width: 329px;\n  label {\n    display: flex;\n    gap: 4px;\n  }\n"])));

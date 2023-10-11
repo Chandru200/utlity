@@ -86,7 +86,7 @@ export const StyledUtility = styled.div`
     border: 2px solid blue;
     right: -100%;
     padding: 10px;
-    height: 50vh;
+    height: 60vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -97,10 +97,6 @@ export const StyledUtility = styled.div`
     }
     button {
       margin-top: 8px;
-      height: 35px;
-      width: 100px;
-      border: 1px solid cornsilk;
-      background: cornsilk;
       border-radius: 8px;
       cursor: pointer;
     }

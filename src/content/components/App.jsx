@@ -12,9 +12,9 @@ import { closePopUp } from "../components/Popup/popup";
 export function App() {
   const [showUtility, setShowUtility] = useState(false);
   const [contents, setContents] = useState([
+    "Limit Website",
     "Tab Limitter",
     "Task Manager",
-    "Limit Website",
   ]);
   const [canShowApp, setCanShow] = useState(false);
   const [checkingStatus, setCheckingstatus] = useState(true);

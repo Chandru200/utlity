@@ -14,6 +14,14 @@ export const StyledTM = styled.div`
     font-weight: 500;
   }
   .all_tasks {
+    .empty_state{
+      padding: 8px;
+      text-align: center;
+      font-size: larger;
+      font-weight: 500;
+      margin-top: 10vh; 
+
+    }
     .tab-header {
       padding: 8px;
       font-size-18px;
@@ -37,6 +45,7 @@ export const StyledTM = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: start;
+    max-height:100%;
     .task-wrapper:last-child .task-preview-wrapper {
       border-bottom: 1px solid darkgoldenrod;
     }
