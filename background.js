@@ -1,15 +1,5 @@
 importScripts("apiwrapper.js");
-function sendMessageToTabs(messageObj, tabId) {
-  chrome.tabs.sendMessage(tabId, { ...messageObj }, {}, function (response) {
-    console.log("message sent");
-  });
-}
-
-function setLimit(value, tabid) {
-  chrome.storage.local.set({ tablimit: value }).then((result) => {
-    sendMessageToTabs({ message: "newTabLimit", data: { value } }, tabid);
-  });
-}
+importScripts("jobscheduler.js");
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("message:", request.message);
   console.log("data", request.data);
@@ -170,11 +160,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
-function getTabCount() {
-  return chrome.storage.local.get(["tablimit"]);
-}
-
-var count = 10;
+let activeTabId = null;
+var activeUrl = "";
+// Completely Tab Limitter
 var tabCreated = false;
 var blockTabId = "";
 chrome.tabs.onCreated.addListener(function (tab) {
@@ -211,26 +199,11 @@ chrome.tabs.onCreated.addListener(function (tab) {
   });
 });
 
-chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
-  getCurrentWindowTabs().then((tabs) => {
-    console.log("s");
-    sendMessageToAllTabs("setUpdatedTabs", { tabs: tabs });
-  });
-});
-
-chrome.tabs.onUpdated.addListener(() => {
-  getCurrentWindowTabs().then((tabs) => {
-    console.log("s");
-    sendMessageToAllTabs("setUpdatedTabs", { tabs: tabs });
-  });
-});
-
 function getCurrentWindowTabs() {
   return chrome.tabs.query({ currentWindow: true });
 }
 function sendMessageToAllTabs(message, data) {
   chrome.tabs.query({ currentWindow: true }, function (tabs) {
-    debugger;
     for (var i = 0; i < tabs.length; i++) {
       chrome.tabs.sendMessage(tabs[i].id, {
         message: message,
@@ -239,3 +212,36 @@ function sendMessageToAllTabs(message, data) {
     }
   });
 }
+
+// Website Limitter
+
+chrome.tabs.onActivated.addListener((activeInfo) => {
+  activeTabId = activeInfo.tabId;
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    if (tabs[0].url) {
+      activeUrl = new URL(tabs[0].url).hostname;
+    }
+  });
+});
+
+chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+  getCurrentWindowTabs().then((tabs) => {
+    sendMessageToAllTabs("setUpdatedTabs", { tabs: tabs });
+  });
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (tabId === activeTabId && changeInfo.url) {
+    activeUrl = new URL(changeInfo.url).hostname;
+  }
+
+  getCurrentWindowTabs().then((tabs) => {
+    sendMessageToAllTabs("setUpdatedTabs", { tabs: tabs });
+  });
+});
+// setting all view-time
+setInterval(() => {
+  addTasks(() => {
+    return updateViewTime(activeUrl);
+  });
+}, 1000);
