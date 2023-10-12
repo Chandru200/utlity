@@ -29,7 +29,7 @@ export const StyledLS = styled.div`
     }
   }
   .content-weblimit {
-    height: calc(100% - 150px);
+    height: calc(100% - 140px);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -52,8 +52,18 @@ export const StyledLS = styled.div`
             display: flex;
             width: 100%;
             justify-content: space-around;
+            input{
+              cursor:pointer;
+            }
          }
         }
+    }
+    .overflow{
+      overflow:auto;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
     .weblimit-wrapper{
         height:100%;

@@ -67,6 +67,9 @@ export function App() {
         case "setUpdatedTabs":
           setAllTabs(data.tabs);
           break;
+        case "setUpdatedWebLimit":
+          setUpdatedWebLimit(data.website_time_limit);
+          break;
       }
     }
   }, [message]);
@@ -102,6 +105,9 @@ export function App() {
 
   const setAllTabs = (tabs) => {
     setCanShow({ ...canShowApp, tabs: tabs });
+  };
+  const setUpdatedWebLimit = (website_time_limit) => {
+    setCanShow({ ...canShowApp, website_time_limit: website_time_limit });
   };
 
   return (

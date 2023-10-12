@@ -243,6 +243,9 @@ function App() {
         case "setUpdatedTabs":
           setAllTabs(data.tabs);
           break;
+        case "setUpdatedWebLimit":
+          setUpdatedWebLimit(data.website_time_limit);
+          break;
       }
     }
   }, [message]);
@@ -282,6 +285,11 @@ function App() {
   var setAllTabs = function setAllTabs(tabs) {
     setCanShow(_objectSpread(_objectSpread({}, canShowApp), {}, {
       tabs: tabs
+    }));
+  };
+  var setUpdatedWebLimit = function setUpdatedWebLimit(website_time_limit) {
+    setCanShow(_objectSpread(_objectSpread({}, canShowApp), {}, {
+      website_time_limit: website_time_limit
     }));
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_6__.StyledUtility, null, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -531,13 +539,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function Header() {
-  var notification_icon = chrome.runtime.getURL('assests/images/notification.png');
+  var notification_icon = "";
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledHeader_style__WEBPACK_IMPORTED_MODULE_1__.StyledHeader, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "appname"
-  }, "Utility App"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Productivity Master"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "notification"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: notification_icon
+    src: chrome.runtime.getURL("assests/images/productivity.jpeg")
   })));
 }
 
@@ -681,7 +689,9 @@ function LimitWebsite(_ref) {
     className: "content-weblimit"
   }, options === "stats" ? canShowApp.view_time ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_WebsiteStats__WEBPACK_IMPORTED_MODULE_2__["default"], {
     viewTime: canShowApp.view_time
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "No data recorded.Please refresh") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SetWebsiteLimit__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "No data recorded.Please refresh") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SetWebsiteLimit__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    website_time_limit: canShowApp.website_time_limit
+  })));
 }
 
 /***/ }),
@@ -818,7 +828,8 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
-function SetWebsiteLimit() {
+function SetWebsiteLimit(_ref) {
+  var website_time_limit = _ref.website_time_limit;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       time: "00:00"
     }),
@@ -855,7 +866,84 @@ function SetWebsiteLimit() {
     }
     console.log(e.currentTarget.value);
   };
+  function formTimeDate(time) {
+    var constant = {
+      0: "hr",
+      1: "min",
+      2: "sec"
+    };
+    var str = "";
+    var time_split = time.split(":");
+    for (var i = 0; i < time_split.length; i++) {
+      if (time_split[i] != "00") {
+        str = "".concat(str, " ").concat(time_split[i]).concat(constant[i]);
+      }
+    }
+    return str.trim();
+  }
+  function secondsToTime(seconds) {
+    var date = new Date(seconds * 1000);
+    return date.toISOString().substr(11, 8);
+  }
+  function formArray(obj) {
+    var sortedObj = Object.fromEntries(Object.entries(obj).sort(function (_ref2, _ref3) {
+      var _ref4 = _slicedToArray(_ref2, 2),
+        valueA = _ref4[1];
+      var _ref5 = _slicedToArray(_ref3, 2),
+        valueB = _ref5[1];
+      return valueB - valueA;
+    }));
+    var array = [];
+    for (var key in sortedObj) {
+      var newobj = {
+        url: key,
+        time: formTimeDate(secondsToTime(sortedObj[key]))
+      };
+      array.push(newobj);
+    }
+    return array;
+  }
+  website_time_limit = formArray(website_time_limit);
+
+  //   return (
+  //     <div className="setWebsiteTab-wrapper">
+  //       <div className="setWebForm">
+  //         <input
+  //           id="url"
+  //           type="url"
+  //           pattern=" /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/\S*)?$/"
+  //           placeholder="http://www.example.com"
+  //           onChange={setLimit}
+  //         />
+  //         <div className="time-wrapper">
+  //           <input
+  //             type="time"
+  //             id="time"
+  //             min="00:00"
+  //             max="23:59"
+  //             step="1"
+  //             value={limitData.time}
+  //             onChange={setLimit}
+  //           />
+  //           <button onClick={setWebiteLimit}>SetLimit</button>
+  //         </div>
+  //       </div>
+  //       <div>
+  //         <div>Curernt Limits </div>
+  //         {website_time_limit.map((webdata) => {
+  //           return (
+  //             <div>
+  //               {webdata.url}
+  //               <span>{webdata.time}</span>
+  //             </div>
+  //           );
+  //         })}
+  //       </div>
+  //     </div>
+  //   );
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "weblimit-wrapper overflow"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "setWebsiteTab-wrapper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "setWebForm"
@@ -877,7 +965,16 @@ function SetWebsiteLimit() {
     onChange: setLimit
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: setWebiteLimit
-  }, "SetLimit"))));
+  }, "SetLimit")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "head"
+  }, "Website Usage for ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, new Date().toISOString().split("T")[0])), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "stats-tab"
+  }, website_time_limit.map(function (data) {
+    return data.url && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      key: data.url,
+      className: "stats-wrapper"
+    }, data.url, ":", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, data.time));
+  })));
 }
 
 /***/ }),
@@ -1538,7 +1635,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledLS = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  overflow: auto;\n  .tabname {\n    font-size: 20px;\n    text-align: center;\n  }\n  .options-wrapper {\n    display: flex;\n    justify-content: space-between;\n    font-size: 16px;\n    .options {\n      cursor: pointer;\n      background: blanchedalmond;\n      padding: 12px;\n      border-radius: 8px;\n    }\n    .selected,\n    .options:hover {\n      background-color: burlywood;\n    }\n  }\n  .content-weblimit {\n    height: calc(100% - 150px);\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    span{\n        color: black;\n        font-weight: 500;\n    }\n    .setWebsiteTab-wrapper{\n        .setWebForm{\n            display: flex;\n            justify-content: center;\n            width: 100%;\n            flex-direction: column;\n            gap: 12px;  \n            .red-border{\n                border:2px solid red !important;\n            }\n         }\n         .time-wrapper{\n            display: flex;\n            width: 100%;\n            justify-content: space-around;\n         }\n        }\n    }\n    .weblimit-wrapper{\n        height:100%;\n        .head{\n            font-size: 18px;\n            font-weight: 400;\n        }\n        .stats-tab{\n            display: flex;\n            flex-direction: column;\n            gap: 8px;\n            padding: 10px;\n            overflow: auto;\n            height: 100%;\n            background: antiquewhite;\n            .stats-wrapper{\n                display: flex;\n                align-items: center;\n                gap: 10px;\n                padding: 4px;\n                word-break:break-all;\n            }\n        }\n    }\n    }\n  }\n"])));
+var StyledLS = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  overflow: auto;\n  .tabname {\n    font-size: 20px;\n    text-align: center;\n  }\n  .options-wrapper {\n    display: flex;\n    justify-content: space-between;\n    font-size: 16px;\n    .options {\n      cursor: pointer;\n      background: blanchedalmond;\n      padding: 12px;\n      border-radius: 8px;\n    }\n    .selected,\n    .options:hover {\n      background-color: burlywood;\n    }\n  }\n  .content-weblimit {\n    height: calc(100% - 140px);\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    span{\n        color: black;\n        font-weight: 500;\n    }\n    .setWebsiteTab-wrapper{\n        .setWebForm{\n            display: flex;\n            justify-content: center;\n            width: 100%;\n            flex-direction: column;\n            gap: 12px;  \n            .red-border{\n                border:2px solid red !important;\n            }\n         }\n         .time-wrapper{\n            display: flex;\n            width: 100%;\n            justify-content: space-around;\n            input{\n              cursor:pointer;\n            }\n         }\n        }\n    }\n    .overflow{\n      overflow:auto;\n      height: 100%;\n      display: flex;\n      flex-direction: column;\n      gap: 10px;\n    }\n    .weblimit-wrapper{\n        height:100%;\n        .head{\n            font-size: 18px;\n            font-weight: 400;\n        }\n        .stats-tab{\n            display: flex;\n            flex-direction: column;\n            gap: 8px;\n            padding: 10px;\n            overflow: auto;\n            height: 100%;\n            background: antiquewhite;\n            .stats-wrapper{\n                display: flex;\n                align-items: center;\n                gap: 10px;\n                padding: 4px;\n                word-break:break-all;\n            }\n        }\n    }\n    }\n  }\n"])));
 
 /***/ }),
 

@@ -29,7 +29,7 @@ export default function LimitWebsite({ canShowApp }) {
             <div>No data recorded.Please refresh</div>
           )
         ) : (
-          <SetWebsiteLimit />
+          <SetWebsiteLimit website_time_limit={canShowApp.website_time_limit} />
         )}
       </div>
     </StyledLS>

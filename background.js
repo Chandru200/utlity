@@ -7,16 +7,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     getRequest("get_todos", (response) => {
       getCurrentWindowTabs().then((tabs) => {
         response["tabs"] = tabs;
-        chrome.storage.local.get(["tablimit"]).then((result) => {
-          response["tablimit"] = result.tablimit;
-          sendMessageToTabs(
-            {
-              message: "canShowApp",
-              data: response,
-            },
-            sender.tab.id
-          );
-        });
+        chrome.storage.local
+          .get(["tablimit", "website_time_limit"])
+          .then((result) => {
+            response["tablimit"] = result.tablimit;
+            response["website_time_limit"] = result.website_time_limit;
+            sendMessageToTabs(
+              {
+                message: "canShowApp",
+                data: response,
+              },
+              sender.tab.id
+            );
+          });
       });
     });
   } else if (request.message === "login") {
@@ -157,6 +160,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     chrome.tabs.remove(request.data.id);
   } else if (request.message === "setLimit") {
     setLimit(request.data.limit, sender.tab.id);
+  } else if (request.message === "addwebsitelimit") {
+    setWebsiteTimeLimit(request.data);
   }
 });
 
@@ -165,6 +170,10 @@ var activeUrl = "";
 // Completely Tab Limitter
 var tabCreated = false;
 var blockTabId = "";
+var check_websites = [];
+chrome.storage.local.get(["websites"]).then((result) => {
+  check_websites = result.websites ? result.websites : [];
+});
 chrome.tabs.onCreated.addListener(function (tab) {
   getCurrentWindowTabs().then((tabs) => {
     //update all tabs
@@ -245,3 +254,49 @@ setInterval(() => {
     return updateViewTime(activeUrl);
   });
 }, 1000);
+
+function setWebsiteTimeLimit(web_info) {
+  console.log(web_info);
+  web_info.url = new URL(web_info.url).host;
+  web_info.time = convertStrTimeToSec(web_info.time);
+  const info = {};
+  info[web_info.url] = web_info.time;
+  console.log(web_info);
+  chrome.storage.local
+    .get(["websites", "website_time_limit"])
+    .then((result) => {
+      if (result.websites && result.website_time_limit) {
+        if (!result.websites.includes(web_info.url)) {
+          updateCheckwebsites(web_info.url);
+          chrome.storage.local.set({
+            websites: [...result.websites, web_info.url],
+          });
+        }
+        result.website_time_limit[web_info.url] = web_info.time;
+        chrome.storage.local.set({
+          website_time_limit: { ...result.website_time_limit },
+        });
+      } else {
+        updateCheckwebsites(web_info.url);
+        chrome.storage.local.set({ websites: [web_info.url] });
+        chrome.storage.local.set({
+          website_time_limit: info,
+        });
+      }
+    });
+}
+
+function convertStrTimeToSec(timeString) {
+  const timeParts = timeString.split(":");
+  const hours = parseInt(timeParts[0]);
+  const minutes = parseInt(timeParts[1]);
+  const seconds = parseInt(timeParts[2]);
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+function updateCheckwebsites(url) {
+  console.log(check_websites);
+  if (!check_websites.includes(url)) {
+    check_websites.push(url);
+  }
+}

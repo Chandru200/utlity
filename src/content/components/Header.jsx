@@ -1,15 +1,14 @@
 import React from "react";
-import {StyledHeader} from './styles/styledHeader.style'
-export default function Header(){
-    const notification_icon = chrome.runtime.getURL('assests/images/notification.png'); 
+import { StyledHeader } from "./styles/styledHeader.style";
+export default function Header() {
+  const notification_icon = "";
 
-    return(
-        <StyledHeader>
-            <div className="appname">Utility App</div>
-            <div className="notification">
-                <img src={notification_icon}/>
-            </div>
-
-        </StyledHeader>
-    )
+  return (
+    <StyledHeader>
+      <div className="appname">Productivity Master</div>
+      <div className="notification">
+        <img src={chrome.runtime.getURL("assests/images/productivity.jpeg")} />
+      </div>
+    </StyledHeader>
+  );
 }
