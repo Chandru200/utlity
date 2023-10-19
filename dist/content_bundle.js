@@ -726,8 +726,10 @@ function Popup(_ref) {
     onClick: closePopop,
     className: "no"
   }, textcomponent.no ? textcomponent.no : "Yes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: function onClick() {
-      return onYes(closePopop);
+    onClick: function onClick(event) {
+      event.currentTarget.classList.add("yes-loader");
+      event.currentTarget.disabled = true;
+      onYes(closePopop);
     },
     className: "yes"
   }, textcomponent.yes ? textcomponent.yes : "No")));
@@ -796,7 +798,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 26px;\n  max-height: 50%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 20px;\n  overflow: hidden;\n  .popup-header {\n    font-size: 25px;\n    text-align: center;\n    font-weight: 400;\n    color: black;\n  }\n  .semibold {\n    font-weight: 300 !important;\n  }\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n  }\n"])));
+var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 26px;\n  max-height: 50%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 20px;\n  overflow: hidden;\n  .popup-header {\n    font-size: 25px;\n    text-align: center;\n    font-weight: 400;\n    color: black;\n  }\n  .semibold {\n    font-weight: 300 !important;\n  }\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n    .yes-loader {\n      font-size: 0;\n      height: 40px;\n    }\n    .yes-loader::after {\n      content: \"\";\n      display: flex;\n      position: relative;\n      width: 16px;\n      height: 16px;\n      top: 0;\n      left: 0;\n      right: 0;\n      bottom: 0;\n      margin: auto;\n      border: 4px solid transparent;\n      border-top-color: #ffffff;\n      border-radius: 50%;\n      animation: button-loading-spinner 1s ease infinite;\n    }\n\n    @keyframes button-loading-spinner {\n      from {\n        transform: rotate(0turn);\n      }\n\n      to {\n        transform: rotate(1turn);\n      }\n    }\n  }\n"])));
 
 /***/ }),
 

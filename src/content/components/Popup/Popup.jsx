@@ -12,7 +12,14 @@ export function Popup({ textcomponent, PopupComponent, closePopop, onYes }) {
         <button onClick={closePopop} className="no">
           {textcomponent.no ? textcomponent.no : "Yes"}
         </button>
-        <button onClick={() => onYes(closePopop)} className="yes">
+        <button
+          onClick={(event) => {
+            event.currentTarget.classList.add("yes-loader");
+            event.currentTarget.disabled = true;
+            onYes(closePopop);
+          }}
+          className="yes"
+        >
           {textcomponent.yes ? textcomponent.yes : "No"}
         </button>
       </div>
