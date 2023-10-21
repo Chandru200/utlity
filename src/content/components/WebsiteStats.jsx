@@ -34,7 +34,7 @@ export default function WebsiteStats({ viewTime }) {
     }
     return array;
   }
-  viewTime = formArray(viewTime);
+  viewTime = viewTime && formArray(viewTime);
   return (
     <div className="weblimit-wrapper">
       <div className="head">

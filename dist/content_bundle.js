@@ -291,6 +291,7 @@ function App() {
     setCanShow(_objectSpread(_objectSpread({}, canShowApp), {}, {
       website_time_limit: website_time_limit
     }));
+    (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_8__.closePopUp)();
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_6__.StyledUtility, null, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "UtilityWraper"
@@ -545,7 +546,7 @@ function Header() {
   }, "Productivity Master"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "notification"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: chrome.runtime.getURL("assests/images/productivity.jpeg")
+    src: chrome.runtime.getURL("assests/images/productivity.jpg")
   })));
 }
 
@@ -671,7 +672,9 @@ function LimitWebsite(_ref) {
     _useState2 = _slicedToArray(_useState, 2),
     options = _useState2[0],
     setOptions = _useState2[1];
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleLimitSites_style__WEBPACK_IMPORTED_MODULE_1__.StyledLS, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styleLimitSites_style__WEBPACK_IMPORTED_MODULE_1__.StyledLS, {
+    id: "limitwebsite"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "tabname"
   }, "Limit Website Urls"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "options-wrapper"
@@ -816,6 +819,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../message */ "./src/content/message.js");
+/* harmony import */ var _components_Popup_popup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Popup/popup */ "./src/content/components/Popup/popup.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -830,10 +834,12 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
+
 function SetWebsiteLimit(_ref) {
   var website_time_limit = _ref.website_time_limit;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      time: "00:00"
+      url: "",
+      time: "00:00:00"
     }),
     _useState2 = _slicedToArray(_useState, 2),
     limitData = _useState2[0],
@@ -844,7 +850,6 @@ function SetWebsiteLimit(_ref) {
   };
   var setWebiteLimit = function setWebiteLimit() {
     if (validateUrl(limitData.url) && limitData.time !== "00:00") {
-      console.log(limitData);
       (0,_message__WEBPACK_IMPORTED_MODULE_1__.notifyBackgroundPage)("addwebsitelimit", limitData);
     }
   };
@@ -859,6 +864,9 @@ function SetWebsiteLimit(_ref) {
         }));
       } else {
         e.currentTarget.classList.add("red-border");
+        setLimitData(_objectSpread(_objectSpread({}, limitData), {}, {
+          url: url
+        }));
       }
       e.currentTarget.style.border = isValidURL;
     } else {
@@ -866,8 +874,53 @@ function SetWebsiteLimit(_ref) {
         time: e.currentTarget.value
       }));
     }
-    console.log(e.currentTarget.value);
   };
+  var editLimit = function editLimit(data) {
+    var time_rec = data.time.split(" ");
+    var time_obj = ["00", "00", "00"];
+    time_rec.map(function (time) {
+      if (time.slice(-2) == "hr") {
+        time_obj[0] = time.slice(0, -2);
+      } else if (time.slice(-3) == "min") {
+        time_obj[1] = time.slice(0, -3);
+      } else {
+        time_obj[2] = time.slice(0, -3);
+      }
+    });
+    setLimitData(_objectSpread(_objectSpread({}, limitData), {}, {
+      url: "https://" + data.url,
+      time: time_obj.join(":")
+    }));
+    var Spinning = [{
+      transform: "rotate(0) scale(1)"
+    }, {
+      transform: "rotate(10deg) scale(1)"
+    }];
+    var Timing = {
+      duration: 200,
+      iterations: 1
+    };
+    document.querySelector(".setWebForm").animate(Spinning, Timing);
+  };
+  var deleteLimit = function deleteLimit(data) {
+    (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_2__.OpenPopUp)({
+      elementID: "limitwebsite",
+      textcomponent: {
+        header: "Are you sure,Do you want to remove limit for this site?",
+        yes: "Remove",
+        no: "Cancel",
+        font: "300"
+      },
+      PopupComponent: function PopupComponent() {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null);
+      },
+      onYes: function onYes() {
+        (0,_message__WEBPACK_IMPORTED_MODULE_1__.notifyBackgroundPage)("delete", data.url);
+        // closePopUp();
+      }
+    });
+  };
+
   function formTimeDate(time) {
     var constant = {
       0: "hr",
@@ -905,44 +958,7 @@ function SetWebsiteLimit(_ref) {
     }
     return array;
   }
-  website_time_limit = formArray(website_time_limit);
-
-  //   return (
-  //     <div className="setWebsiteTab-wrapper">
-  //       <div className="setWebForm">
-  //         <input
-  //           id="url"
-  //           type="url"
-  //           pattern=" /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/\S*)?$/"
-  //           placeholder="http://www.example.com"
-  //           onChange={setLimit}
-  //         />
-  //         <div className="time-wrapper">
-  //           <input
-  //             type="time"
-  //             id="time"
-  //             min="00:00"
-  //             max="23:59"
-  //             step="1"
-  //             value={limitData.time}
-  //             onChange={setLimit}
-  //           />
-  //           <button onClick={setWebiteLimit}>SetLimit</button>
-  //         </div>
-  //       </div>
-  //       <div>
-  //         <div>Curernt Limits </div>
-  //         {website_time_limit.map((webdata) => {
-  //           return (
-  //             <div>
-  //               {webdata.url}
-  //               <span>{webdata.time}</span>
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </div>
-  //   );
+  website_time_limit = website_time_limit && formArray(website_time_limit);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "weblimit-wrapper overflow"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -954,7 +970,10 @@ function SetWebsiteLimit(_ref) {
     type: "url",
     pattern: " /^(https?:\\/\\/)?[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}(\\/\\S*)?$/",
     placeholder: "http://www.example.com",
-    onChange: setLimit
+    onChange: function onChange(e) {
+      setLimit(e);
+    },
+    value: limitData.url
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "time-wrapper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
@@ -969,13 +988,31 @@ function SetWebsiteLimit(_ref) {
     onClick: setWebiteLimit
   }, "SetLimit")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "head"
-  }, "Website Usage for ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, new Date().toISOString().split("T")[0])), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, website_time_limit ? "Time Remaining" : "Currently no restriction"), website_time_limit && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "stats-tab"
   }, website_time_limit.map(function (data) {
     return data.url && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: data.url,
+      className: "limit-wrapper"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       className: "stats-wrapper"
-    }, data.url, ":", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, data.time));
+    }, data.url, ":", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, data.time)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "options-wrapper"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      onClick: function onClick() {
+        return editLimit(data);
+      },
+      className: "edit_limit"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+      src: chrome.runtime.getURL("assests/images/edit.png")
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      onClick: function onClick() {
+        return deleteLimit(data);
+      },
+      className: "delete_limit"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+      src: chrome.runtime.getURL("assests/images/close.png")
+    }))));
   })));
 }
 
@@ -1101,6 +1138,7 @@ function TabLimitter(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "tab-form"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    min: "1",
     type: "number"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: setTablimit
@@ -1499,7 +1537,7 @@ function WebsiteStats(_ref) {
     }
     return array;
   }
-  viewTime = formArray(viewTime);
+  viewTime = viewTime && formArray(viewTime);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "weblimit-wrapper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -1637,7 +1675,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledLS = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  overflow: auto;\n  .tabname {\n    font-size: 20px;\n    text-align: center;\n  }\n  .options-wrapper {\n    display: flex;\n    justify-content: space-between;\n    font-size: 16px;\n    .options {\n      cursor: pointer;\n      background: blanchedalmond;\n      padding: 12px;\n      border-radius: 8px;\n    }\n    .selected,\n    .options:hover {\n      background-color: burlywood;\n    }\n  }\n  .content-weblimit {\n    height: calc(100% - 140px);\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    span{\n        color: black;\n        font-weight: 500;\n    }\n    .setWebsiteTab-wrapper{\n        .setWebForm{\n            display: flex;\n            justify-content: center;\n            width: 100%;\n            flex-direction: column;\n            gap: 12px;  \n            .red-border{\n                border:2px solid red !important;\n            }\n         }\n         .time-wrapper{\n            display: flex;\n            width: 100%;\n            justify-content: space-around;\n            input{\n              cursor:pointer;\n            }\n         }\n        }\n    }\n    .overflow{\n      overflow:auto;\n      height: 100%;\n      display: flex;\n      flex-direction: column;\n      gap: 10px;\n    }\n    .weblimit-wrapper{\n        height:100%;\n        .head{\n            font-size: 18px;\n            font-weight: 400;\n        }\n        .stats-tab{\n            display: flex;\n            flex-direction: column;\n            gap: 8px;\n            padding: 10px;\n            overflow: auto;\n            height: 100%;\n            background: antiquewhite;\n            .stats-wrapper{\n                display: flex;\n                align-items: center;\n                gap: 10px;\n                padding: 4px;\n                word-break:break-all;\n            }\n        }\n    }\n    }\n  }\n"])));
+var StyledLS = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  overflow: auto;\n  .tabname {\n    font-size: 20px;\n    text-align: center;\n  }\n  .options-wrapper {\n    display: flex;\n    justify-content: space-between;\n    font-size: 16px;\n    .options {\n      cursor: pointer;\n      background: blanchedalmond;\n      padding: 12px;\n      border-radius: 8px;\n    }\n    .selected,\n    .options:hover {\n      background-color: burlywood;\n    }\n  }\n  .content-weblimit {\n    height: calc(100% - 140px);\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    span{\n        color: black;\n        font-weight: 500;\n    }\n    .setWebsiteTab-wrapper{\n        .setWebForm{\n            display: flex;\n            justify-content: center;\n            width: 100%;\n            flex-direction: column;\n            gap: 12px;  \n            .red-border{\n                border:2px solid red !important;\n            }\n         }\n         .time-wrapper{\n            display: flex;\n            width: 100%;\n            justify-content: space-around;\n            input{\n              cursor:pointer;\n            }\n         }\n        }\n    }\n    .overflow{\n      overflow:auto;\n      height: 100%;\n      display: flex;\n      flex-direction: column;\n      gap: 10px;\n    }\n    .weblimit-wrapper{\n        height:100%;\n        .head{\n            font-size: 18px;\n            font-weight: 500;\n            text-align:center;\n        }\n        .stats-tab{\n            display: flex;\n            flex-direction: column;\n            gap: 8px;\n            padding: 10px;\n            overflow: auto;\n            height: 100%;\n            background: antiquewhite;\n            .limit-wrapper:hover{\n              .options-wrapper{\n                display:flex;\n              }\n            }\n            .limit-wrapper{\n              display: flex;\n              align-items: center;\n              justify-content: space-between;\n              .stats-wrapper{\n                display: flex;\n                align-items: center;\n                gap: 10px;\n                padding: 4px;\n                word-break:break-all;\n              }\n              .options-wrapper{\n                display:none;\n                gap:8px;\n                background: lightskyblue;\n                padding: 8px;\n                cursor: pointer;\n                border-radius: 8px;\n                .edit_limit,.delete_limit{\n                  img{\n                    height: 20px;\n                    width: 20px;\n                  }\n                }\n            }\n          }\n        }\n    }\n    }\n  }\n"])));
 
 /***/ }),
 

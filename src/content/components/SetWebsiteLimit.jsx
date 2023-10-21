@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { notifyBackgroundPage } from "../message";
+import { OpenPopUp, closePopUp } from "../components/Popup/popup";
+
 export default function SetWebsiteLimit({ website_time_limit }) {
-  const [limitData, setLimitData] = useState({ time: "00:00" });
+  const [limitData, setLimitData] = useState({ url: "", time: "00:00:00" });
   const validateUrl = (url) => {
     const pattern = /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/\S*)?$/;
     return pattern.test(url);
   };
   const setWebiteLimit = () => {
     if (validateUrl(limitData.url) && limitData.time !== "00:00") {
-      console.log(limitData);
       notifyBackgroundPage("addwebsitelimit", limitData);
     }
   };
@@ -21,12 +22,63 @@ export default function SetWebsiteLimit({ website_time_limit }) {
         setLimitData({ ...limitData, url });
       } else {
         e.currentTarget.classList.add("red-border");
+        setLimitData({ ...limitData, url });
       }
       e.currentTarget.style.border = isValidURL;
     } else {
       setLimitData({ ...limitData, time: e.currentTarget.value });
     }
-    console.log(e.currentTarget.value);
+  };
+
+  const editLimit = (data) => {
+    const time_rec = data.time.split(" ");
+    const time_obj = ["00", "00", "00"];
+    time_rec.map((time) => {
+      if (time.slice(-2) == "hr") {
+        time_obj[0] = time.slice(0, -2);
+      } else if (time.slice(-3) == "min") {
+        time_obj[1] = time.slice(0, -3);
+      } else {
+        time_obj[2] = time.slice(0, -3);
+      }
+    });
+    setLimitData({
+      ...limitData,
+      url: "https://" + data.url,
+      time: time_obj.join(":"),
+    });
+
+    const Spinning = [
+      { transform: "rotate(0) scale(1)" },
+      { transform: "rotate(10deg) scale(1)" },
+    ];
+
+    const Timing = {
+      duration: 200,
+      iterations: 1,
+    };
+
+    document.querySelector(".setWebForm").animate(Spinning, Timing);
+  };
+
+  const deleteLimit = (data) => {
+    OpenPopUp({
+      elementID: "limitwebsite",
+
+      textcomponent: {
+        header: "Are you sure,Do you want to remove limit for this site?",
+        yes: "Remove",
+        no: "Cancel",
+        font: "300",
+      },
+      PopupComponent: () => {
+        return <></>;
+      },
+      onYes: () => {
+        notifyBackgroundPage("delete", data.url);
+        // closePopUp();
+      },
+    });
   };
 
   function formTimeDate(time) {
@@ -64,44 +116,9 @@ export default function SetWebsiteLimit({ website_time_limit }) {
     }
     return array;
   }
-  website_time_limit = formArray(website_time_limit);
 
-  //   return (
-  //     <div className="setWebsiteTab-wrapper">
-  //       <div className="setWebForm">
-  //         <input
-  //           id="url"
-  //           type="url"
-  //           pattern=" /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/\S*)?$/"
-  //           placeholder="http://www.example.com"
-  //           onChange={setLimit}
-  //         />
-  //         <div className="time-wrapper">
-  //           <input
-  //             type="time"
-  //             id="time"
-  //             min="00:00"
-  //             max="23:59"
-  //             step="1"
-  //             value={limitData.time}
-  //             onChange={setLimit}
-  //           />
-  //           <button onClick={setWebiteLimit}>SetLimit</button>
-  //         </div>
-  //       </div>
-  //       <div>
-  //         <div>Curernt Limits </div>
-  //         {website_time_limit.map((webdata) => {
-  //           return (
-  //             <div>
-  //               {webdata.url}
-  //               <span>{webdata.time}</span>
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </div>
-  //   );
+  website_time_limit = website_time_limit && formArray(website_time_limit);
+
   return (
     <div className="weblimit-wrapper overflow">
       <div className="setWebsiteTab-wrapper">
@@ -111,7 +128,10 @@ export default function SetWebsiteLimit({ website_time_limit }) {
             type="url"
             pattern=" /^(https?:\/\/)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/\S*)?$/"
             placeholder="http://www.example.com"
-            onChange={setLimit}
+            onChange={(e) => {
+              setLimit(e);
+            }}
+            value={limitData.url}
           />
           <div className="time-wrapper">
             <input
@@ -128,20 +148,38 @@ export default function SetWebsiteLimit({ website_time_limit }) {
         </div>
       </div>
       <div className="head">
-        Website Usage for <span>{new Date().toISOString().split("T")[0]}</span>
+        {website_time_limit ? "Time Remaining" : "Currently no restriction"}
       </div>
-
-      <div className="stats-tab">
-        {website_time_limit.map((data) => {
-          return (
-            data.url && (
-              <div key={data.url} className="stats-wrapper">
-                {data.url}:<span>{data.time}</span>
-              </div>
-            )
-          );
-        })}
-      </div>
+      {website_time_limit && (
+        <div className="stats-tab">
+          {website_time_limit.map((data) => {
+            return (
+              data.url && (
+                <div key={data.url} className="limit-wrapper">
+                  <div className="stats-wrapper">
+                    {data.url}:<span>{data.time}</span>
+                  </div>
+                  <div className="options-wrapper">
+                    <div onClick={() => editLimit(data)} className="edit_limit">
+                      <img
+                        src={chrome.runtime.getURL("assests/images/edit.png")}
+                      ></img>
+                    </div>
+                    <div
+                      onClick={() => deleteLimit(data)}
+                      className="delete_limit"
+                    >
+                      <img
+                        src={chrome.runtime.getURL("assests/images/close.png")}
+                      ></img>
+                    </div>
+                  </div>
+                </div>
+              )
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

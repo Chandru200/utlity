@@ -126,7 +126,7 @@ function removeURLfromAllTabs(url) {
         chrome.tabs.remove(tabs[i].id);
         if (!show_blocked) {
           chrome.tabs.create({
-            url: "chrome-extension://heepebmhlkkpbpebdcfmnbpjgjbgloah/isolatedapps/blocked.html",
+            url: `chrome-extension://heepebmhlkkpbpebdcfmnbpjgjbgloah/isolatedapps/blocked.html?url=${url}`,
           });
         }
         show_blocked = true;

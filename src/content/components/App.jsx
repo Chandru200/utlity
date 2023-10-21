@@ -108,6 +108,7 @@ export function App() {
   };
   const setUpdatedWebLimit = (website_time_limit) => {
     setCanShow({ ...canShowApp, website_time_limit: website_time_limit });
+    closePopUp();
   };
 
   return (

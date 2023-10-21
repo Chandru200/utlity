@@ -162,6 +162,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     setLimit(request.data.limit, sender.tab.id);
   } else if (request.message === "addwebsitelimit") {
     setWebsiteTimeLimit(request.data);
+  } else if (request.message === "delete") {
+    deleteWebsitelimit(request.data);
   }
 });
 
@@ -286,6 +288,22 @@ function setWebsiteTimeLimit(web_info) {
     });
 }
 
+function deleteWebsitelimit(url) {
+  updateCheckwebsites(url, true);
+
+  chrome.storage.local
+    .get(["websites", "website_time_limit"])
+    .then((result) => {
+      delete result.website_time_limit[url];
+      chrome.storage.local.set({
+        websites: result.websites.filter(function (item) {
+          return item !== url;
+        }),
+        website_time_limit: result.website_time_limit,
+      });
+    });
+}
+
 function convertStrTimeToSec(timeString) {
   const timeParts = timeString.split(":");
   const hours = parseInt(timeParts[0]);
@@ -294,9 +312,14 @@ function convertStrTimeToSec(timeString) {
   return hours * 3600 + minutes * 60 + seconds;
 }
 
-function updateCheckwebsites(url) {
+function updateCheckwebsites(url, remove) {
   console.log(check_websites);
-  if (!check_websites.includes(url)) {
+  if (!remove && !check_websites.includes(url)) {
     check_websites.push(url);
+  }
+  if (remove) {
+    check_websites = check_websites.filter(function (item) {
+      return item !== url;
+    });
   }
 }

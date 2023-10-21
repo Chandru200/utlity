@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <style>
+      .container {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      h3 {
+        font-size: 24px;
+      }
+      #details {
+        font-size: 20px;
+        font-weight: 500;
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blocked</title>
   </head>
   <body>
-    <h2>Website Blocked</h2>
+    <div class="container">
+      <h3>Website Blocked</h3>
+      <div id="details"></div>
+    </div>
+    <script src="blocked.js"></script>
   </body>
 </html>

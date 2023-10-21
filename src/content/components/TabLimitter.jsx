@@ -17,7 +17,7 @@ export default function TabLimitter({ canShowApp }) {
       <div className="tabname">Tab Limitter</div>
       <div className="tab-wrapper">
         <div className="tab-form">
-          <input type="number"></input>
+          <input min="1" type="number"></input>
           <button onClick={setTablimit}>Set Tab Limit</button>
         </div>
         <div className="tab-limit">Current Limt:{canShowApp.tablimit}</div>

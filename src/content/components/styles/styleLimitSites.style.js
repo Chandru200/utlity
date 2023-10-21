@@ -69,7 +69,8 @@ export const StyledLS = styled.div`
         height:100%;
         .head{
             font-size: 18px;
-            font-weight: 400;
+            font-weight: 500;
+            text-align:center;
         }
         .stats-tab{
             display: flex;
@@ -79,13 +80,37 @@ export const StyledLS = styled.div`
             overflow: auto;
             height: 100%;
             background: antiquewhite;
-            .stats-wrapper{
+            .limit-wrapper:hover{
+              .options-wrapper{
+                display:flex;
+              }
+            }
+            .limit-wrapper{
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              .stats-wrapper{
                 display: flex;
                 align-items: center;
                 gap: 10px;
                 padding: 4px;
                 word-break:break-all;
+              }
+              .options-wrapper{
+                display:none;
+                gap:8px;
+                background: lightskyblue;
+                padding: 8px;
+                cursor: pointer;
+                border-radius: 8px;
+                .edit_limit,.delete_limit{
+                  img{
+                    height: 20px;
+                    width: 20px;
+                  }
+                }
             }
+          }
         }
     }
     }

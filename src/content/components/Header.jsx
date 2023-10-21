@@ -7,7 +7,7 @@ export default function Header() {
     <StyledHeader>
       <div className="appname">Productivity Master</div>
       <div className="notification">
-        <img src={chrome.runtime.getURL("assests/images/productivity.jpeg")} />
+        <img src={chrome.runtime.getURL("assests/images/productivity.jpg")} />
       </div>
     </StyledHeader>
   );

@@ -5,7 +5,7 @@ import SetWebsiteLimit from "./SetWebsiteLimit";
 export default function LimitWebsite({ canShowApp }) {
   const [options, setOptions] = useState("stats");
   return (
-    <StyledLS>
+    <StyledLS id="limitwebsite">
       <div className="tabname">Limit Website Urls</div>
       <div className="options-wrapper">
         <div
