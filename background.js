@@ -3,7 +3,9 @@ importScripts("jobscheduler.js");
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("message:", request.message);
   console.log("data", request.data);
-  if (request.message === "canShowApp") {
+  if (request.message === "canShowAppButton") {
+    canShowAppButton(sender.tab.id);
+  } else if (request.message === "canShowApp") {
     getRequest("get_todos", (response) => {
       getCurrentWindowTabs().then((tabs) => {
         response["tabs"] = tabs;
@@ -322,4 +324,15 @@ function updateCheckwebsites(url, remove) {
       return item !== url;
     });
   }
+}
+
+function canShowAppButton(tabid) {
+  chrome.storage.local.get(["canShowAppButton"]).then((result) => {
+    if (!result.canShowAppButton) {
+      chrome.storage.local.set({ canShowAppButton: false });
+      sendMessageToAllTabs("canShowAppButton", false);
+    } else {
+      sendMessageToAllTabs("canShowAppButton", result.canShowAppButton);
+    }
+  });
 }

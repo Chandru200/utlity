@@ -88,4 +88,9 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: center;
   margin-top: 126px;
+  gap: 16px;
+}
+.showapp {
+  font-size: 16px;
+  font-weight: 500;
 }

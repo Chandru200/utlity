@@ -111,7 +111,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
       website_time_limit: changes.website_time_limit.newValue,
     });
   } else if (area == "local" && changes.remaining_time) {
-    console.log(changes.remaining_time.newValue[getTodaysDate()][activeUrl]);
     if (changes.remaining_time.newValue[getTodaysDate()][activeUrl] <= 0) {
       removeURLfromAllTabs(activeUrl);
     }

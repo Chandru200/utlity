@@ -17,6 +17,7 @@ export function App() {
     "Task Manager",
   ]);
   const [canShowApp, setCanShow] = useState(false);
+  const [canShowAppButton, setcanShowAppButton] = useState(false);
   const [checkingStatus, setCheckingstatus] = useState(true);
   const [loginError, setLoginError] = useState("");
   const [signin, setSignIn] = useState(true);
@@ -46,6 +47,9 @@ export function App() {
           setCanShow(data);
           setCheckingstatus(false);
           break;
+        case "canShowAppButton":
+          setcanShowAppButton(data);
+          break;
         case "login_error":
           setLoginError(message_name);
           break;
@@ -73,7 +77,9 @@ export function App() {
       }
     }
   }, [message]);
-
+  useEffect(() => {
+    notifyBackgroundPage("canShowAppButton");
+  }, []);
   const addTodo = (id) => {
     setCanShow({
       todos_list: [...canShowApp.todos_list, { ...sharedData, id: id }],
@@ -112,47 +118,51 @@ export function App() {
   };
 
   return (
-    <StyledUtility>
-      {showUtility &&
-        (canShowApp ? (
-          <div className="UtilityWraper">
-            <Header />
-            <Content
-              canShowApp={canShowApp}
-              contents={contents}
-              setContents={setContents}
-              todoOperation={todoOperation}
-              SetTodoOperation={SetTodoOperation}
+    <>
+      {canShowAppButton && (
+        <StyledUtility>
+          {showUtility &&
+            (canShowApp ? (
+              <div className="UtilityWraper">
+                <Header />
+                <Content
+                  canShowApp={canShowApp}
+                  contents={contents}
+                  setContents={setContents}
+                  todoOperation={todoOperation}
+                  SetTodoOperation={SetTodoOperation}
+                />
+                <Footer contents={contents} setContents={setContents} />
+              </div>
+            ) : checkingStatus ? (
+              <div className="UtilityWraper loader-wrapper">
+                <div className="loader"></div>
+                <span>Verifying Your Authenticity...</span>
+              </div>
+            ) : (
+              <Login
+                signin={signin}
+                setSignIn={setSignIn}
+                loginError={loginError}
+              />
+            ))}
+          <div
+            onClick={() => {
+              setShowUtility(!showUtility);
+              !showUtility && notifyBackgroundPage("canShowApp");
+            }}
+            className={`openAppImgWrapper ${showUtility && "showleft"}`}
+          >
+            <img
+              className="openAppImg"
+              src={chrome.runtime.getURL(
+                "assests/images/left-arrow-line-symbol.png"
+              )}
+              alt="U"
             />
-            <Footer contents={contents} setContents={setContents} />
           </div>
-        ) : checkingStatus ? (
-          <div className="UtilityWraper loader-wrapper">
-            <div className="loader"></div>
-            <span>Verifying Your Authenticity...</span>
-          </div>
-        ) : (
-          <Login
-            signin={signin}
-            setSignIn={setSignIn}
-            loginError={loginError}
-          />
-        ))}
-      <div
-        onClick={() => {
-          setShowUtility(!showUtility);
-          !showUtility && notifyBackgroundPage("canShowApp");
-        }}
-        className={`openAppImgWrapper ${showUtility && "showleft"}`}
-      >
-        <img
-          className="openAppImg"
-          src={chrome.runtime.getURL(
-            "assests/images/left-arrow-line-symbol.png"
-          )}
-          alt="U"
-        />
-      </div>
-    </StyledUtility>
+        </StyledUtility>
+      )}
+    </>
   );
 }

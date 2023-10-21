@@ -181,26 +181,30 @@ function App() {
     _useState6 = _slicedToArray(_useState5, 2),
     canShowApp = _useState6[0],
     setCanShow = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState8 = _slicedToArray(_useState7, 2),
-    checkingStatus = _useState8[0],
-    setCheckingstatus = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    canShowAppButton = _useState8[0],
+    setcanShowAppButton = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState10 = _slicedToArray(_useState9, 2),
-    loginError = _useState10[0],
-    setLoginError = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    checkingStatus = _useState10[0],
+    setCheckingstatus = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState12 = _slicedToArray(_useState11, 2),
-    signin = _useState12[0],
-    setSignIn = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    loginError = _useState12[0],
+    setLoginError = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState14 = _slicedToArray(_useState13, 2),
-    message = _useState14[0],
-    setMessage = _useState14[1];
+    signin = _useState14[0],
+    setSignIn = _useState14[1];
   var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState16 = _slicedToArray(_useState15, 2),
-    todoOperation = _useState16[0],
-    SetTodoOperation = _useState16[1];
+    message = _useState16[0],
+    setMessage = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState18 = _slicedToArray(_useState17, 2),
+    todoOperation = _useState18[0],
+    SetTodoOperation = _useState18[1];
   var sharedData = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(function (state) {
     return state.sharedData;
   });
@@ -221,6 +225,9 @@ function App() {
         case "canShowApp":
           setCanShow(data);
           setCheckingstatus(false);
+          break;
+        case "canShowAppButton":
+          setcanShowAppButton(data);
           break;
         case "login_error":
           setLoginError(message_name);
@@ -249,6 +256,9 @@ function App() {
       }
     }
   }, [message]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    (0,_message__WEBPACK_IMPORTED_MODULE_7__.notifyBackgroundPage)("canShowAppButton");
+  }, []);
   var addTodo = function addTodo(id) {
     setCanShow({
       todos_list: [].concat(_toConsumableArray(canShowApp.todos_list), [_objectSpread(_objectSpread({}, sharedData), {}, {
@@ -293,7 +303,7 @@ function App() {
     }));
     (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_8__.closePopUp)();
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_6__.StyledUtility, null, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, canShowAppButton && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_6__.StyledUtility, null, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "UtilityWraper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Content__WEBPACK_IMPORTED_MODULE_2__["default"], {
     canShowApp: canShowApp,
@@ -322,7 +332,7 @@ function App() {
     className: "openAppImg",
     src: chrome.runtime.getURL("assests/images/left-arrow-line-symbol.png"),
     alt: "U"
-  })));
+  }))));
 }
 
 /***/ }),
