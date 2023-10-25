@@ -1,5 +1,9 @@
+const hosturl_production = "http://3.6.112.6/";
+const hosturl_local = "http://127.0.0.1:8000/";
+const host_url = hosturl_production;
+
 function getRequest(url, sucessCallback, errorCallback, stopSync) {
-  let fetchRes = fetch("http://127.0.0.1:8000/" + url, {
+  let fetchRes = fetch(host_url + url, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -32,7 +36,7 @@ function getRequest(url, sucessCallback, errorCallback, stopSync) {
 }
 
 function postRequest(url, data, sucessCallback, errorCallback, stopSync) {
-  let fetchRes = fetch("http://127.0.0.1:8000/" + url, {
+  let fetchRes = fetch(host_url + url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
