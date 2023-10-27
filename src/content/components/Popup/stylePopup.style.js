@@ -16,6 +16,11 @@ export const StyledPopup = styled.div`
     font-weight: 400;
     color: black;
   }
+  .popup-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
   .semibold {
     font-weight: 300 !important;
   }

@@ -7,7 +7,7 @@ export function Popup({ textcomponent, PopupComponent, closePopop, onYes }) {
       <div className={`popup-header ${textcomponent.font && "semibold"}`}>
         {textcomponent.header}
       </div>
-      <PopupComponent />
+      <PopupComponent className="popup-body" />
       <div className="popup-footer">
         <button onClick={closePopop} className="no">
           {textcomponent.no ? textcomponent.no : "Yes"}

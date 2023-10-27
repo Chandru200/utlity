@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Input from "./Input";
 import "jquery-datetimepicker/jquery.datetimepicker.css"; // Import the CSS
 import "jquery-datetimepicker";
 import $ from "jquery";
-function DateTimePicker({ placeholder, ParentState, ChangeParentState }) {
+function DateTimePicker({
+  placeholder,
+  ParentState,
+  ChangeParentState,
+  dontShowTime,
+}) {
   $(document).ready(function () {
     $("#datetimepicker").datetimepicker({
-      format: "d/m/Y h:ia",
+      format: dontShowTime ? "d/m/Y" : "d/m/Y h:ia",
       blank: false,
+      timepicker: !dontShowTime,
       step: 15,
       onChangeDateTime: function (currentDateTime, $input) {
         ChangeParentState({ ...ParentState, duedate: $input.val() });
@@ -21,7 +27,7 @@ function DateTimePicker({ placeholder, ParentState, ChangeParentState }) {
         return [true, ""];
       },
     });
-    $(".xdsoft_datetimepicker").css("z-index", "11111111");
+
     if (ParentState.duedate) {
       $("#datetimepicker").val(ParentState.duedate);
     }

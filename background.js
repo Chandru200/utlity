@@ -166,6 +166,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     setWebsiteTimeLimit(request.data);
   } else if (request.message === "delete") {
     deleteWebsitelimit(request.data);
+  } else if (request.message == "get_usage_details") {
+    getWebsiteUsage(request.data, sender.tab.id);
   }
 });
 
@@ -334,5 +336,18 @@ function canShowAppButton(tabid) {
     } else {
       sendMessageToAllTabs("canShowAppButton", result.canShowAppButton);
     }
+  });
+}
+
+function getWebsiteUsage(data, tabid) {
+  console.log(data);
+  getRequest(`get_view_time?date=${data}`, (response) => {
+    sendMessageToTabs(
+      {
+        message: "setUpdatedWebsitedata",
+        data: response,
+      },
+      tabid
+    );
   });
 }

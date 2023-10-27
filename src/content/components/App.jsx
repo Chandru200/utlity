@@ -51,7 +51,7 @@ export function App() {
           setcanShowAppButton(data);
           break;
         case "login_error":
-          setLoginError(message_name);
+          setLoginError(data);
           break;
         case "showsign":
           setSignIn(true);
@@ -74,6 +74,8 @@ export function App() {
         case "setUpdatedWebLimit":
           setUpdatedWebLimit(data.website_time_limit);
           break;
+        case "setUpdatedWebsitedata":
+          setUpdatedWebsitedata(data);
       }
     }
   }, [message]);
@@ -114,6 +116,11 @@ export function App() {
   };
   const setUpdatedWebLimit = (website_time_limit) => {
     setCanShow({ ...canShowApp, website_time_limit: website_time_limit });
+    closePopUp();
+  };
+
+  const setUpdatedWebsitedata = (newViewTime) => {
+    setCanShow({ ...canShowApp, view_time: newViewTime.view_time });
     closePopUp();
   };
 

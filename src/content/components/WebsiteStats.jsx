@@ -1,5 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import DateTimePicker from "./dateTimePicker";
+import { OpenPopUp } from "../components/Popup/popup";
+import { notifyBackgroundPage } from "../message";
+
 export default function WebsiteStats({ viewTime }) {
+  const [statsDate, setDate] = useState({
+    duedate: new Date().toISOString().split("T")[0].replaceAll("-", "/"),
+  });
+  const [getData, setGetData] = useState(false);
   function toTime(seconds) {
     var date = new Date(null);
     date.setSeconds(seconds);
@@ -35,21 +43,61 @@ export default function WebsiteStats({ viewTime }) {
     return array;
   }
   viewTime = viewTime && formArray(viewTime);
+  useEffect(() => {
+    setGetData(false);
+  }, [viewTime]);
+  useEffect(() => {
+    getData && notifyBackgroundPage("get_usage_details", statsDate.duedate);
+  }, [getData]);
+  const openPopup = (e) => {
+    OpenPopUp({
+      elementID: "limitwebsite",
+      textcomponent: {
+        header: "Select date you want",
+        yes: "Get Stats",
+        no: "Cancel",
+      },
+      PopupComponent: () => {
+        return (
+          <DateTimePicker
+            placeholder="Date"
+            ChangeParentState={setDate}
+            ParentState={statsDate}
+            dontShowTime={true}
+          />
+        );
+      },
+      onYes: () => {
+        setGetData(true);
+      },
+    });
+  };
   return (
     <div className="weblimit-wrapper">
       <div className="head">
-        Website Usage for <span>{new Date().toISOString().split("T")[0]}</span>
+        Website Usage for <span>{statsDate.duedate}</span>
+        <div className="edit-wrap">
+          <img
+            src={chrome.runtime.getURL("assests/images/edit.png")}
+            onClick={openPopup}
+          ></img>
+        </div>
       </div>
+
       <div className="stats-tab">
-        {viewTime.map((data) => {
-          return (
-            data.url && (
-              <div key={data.url} className="stats-wrapper">
-                {data.url}:<span>{data.time}</span>
-              </div>
-            )
-          );
-        })}
+        {viewTime.length > 0 ? (
+          viewTime.map((data) => {
+            return (
+              data.url && (
+                <div key={data.url} className="stats-wrapper">
+                  {data.url}:<span>{data.time}</span>
+                </div>
+              )
+            );
+          })
+        ) : (
+          <div className="emptystate">No data found</div>
+        )}
       </div>
     </div>
   );

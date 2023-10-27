@@ -117,6 +117,9 @@ export const StyledUtility = styled.div`
 
   input::placeholder {
     font-size: 16px;
+    font-weight: bolder;
+    text-align-center;
+}
   }
   textarea {
     height: 140px;
@@ -154,6 +157,8 @@ export const StyledInput = styled.div`
   textarea,
   input::placeholder {
     font-size: 16px;
+    font-weight: bolder;
+}
   }
   textarea {
     height: 140px;
@@ -189,6 +194,13 @@ export const StyledInput = styled.div`
   }
   .required {
     color: red;
+  }
+  #datetimepicker{
+    letter-spacing:1px;
+    text-align: center;
+  }
+  .xdsoft_datetimepicker{
+    z-index:11111111;
   }
 `;
 

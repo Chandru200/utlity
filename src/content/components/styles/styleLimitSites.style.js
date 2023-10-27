@@ -66,11 +66,27 @@ export const StyledLS = styled.div`
       gap: 10px;
     }
     .weblimit-wrapper{
-        height:100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
         .head{
             font-size: 18px;
             font-weight: 500;
             text-align:center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            .edit-wrap{
+              height: 20px;
+              width: 20px;
+              cursor:pointer;
+              img{
+                height:100%;
+                width:100%;
+              }
+            }
         }
         .stats-tab{
             display: flex;
@@ -80,6 +96,16 @@ export const StyledLS = styled.div`
             overflow: auto;
             height: 100%;
             background: antiquewhite;
+            .emptystate{
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 100%;
+              width: 100%;
+              font-size: xx-large;
+              font-weight: 500;
+              color: crimson;
+            }
             .limit-wrapper:hover{
               .options-wrapper{
                 display:flex;

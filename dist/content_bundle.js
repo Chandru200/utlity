@@ -230,7 +230,7 @@ function App() {
           setcanShowAppButton(data);
           break;
         case "login_error":
-          setLoginError(message_name);
+          setLoginError(data);
           break;
         case "showsign":
           setSignIn(true);
@@ -253,6 +253,8 @@ function App() {
         case "setUpdatedWebLimit":
           setUpdatedWebLimit(data.website_time_limit);
           break;
+        case "setUpdatedWebsitedata":
+          setUpdatedWebsitedata(data);
       }
     }
   }, [message]);
@@ -300,6 +302,12 @@ function App() {
   var setUpdatedWebLimit = function setUpdatedWebLimit(website_time_limit) {
     setCanShow(_objectSpread(_objectSpread({}, canShowApp), {}, {
       website_time_limit: website_time_limit
+    }));
+    (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_8__.closePopUp)();
+  };
+  var setUpdatedWebsitedata = function setUpdatedWebsitedata(newViewTime) {
+    setCanShow(_objectSpread(_objectSpread({}, canShowApp), {}, {
+      view_time: newViewTime.view_time
     }));
     (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_8__.closePopUp)();
   };
@@ -733,7 +741,9 @@ function Popup(_ref) {
     onYes = _ref.onYes;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_stylePopup_style__WEBPACK_IMPORTED_MODULE_1__.StyledPopup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "popup-header ".concat(textcomponent.font && "semibold")
-  }, textcomponent.header), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(PopupComponent, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, textcomponent.header), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(PopupComponent, {
+    className: "popup-body"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "popup-footer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     onClick: closePopop,
@@ -811,7 +821,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 26px;\n  max-height: 50%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 20px;\n  overflow: hidden;\n  .popup-header {\n    font-size: 25px;\n    text-align: center;\n    font-weight: 400;\n    color: black;\n  }\n  .semibold {\n    font-weight: 300 !important;\n  }\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n    .yes-loader {\n      font-size: 0;\n      height: 40px;\n    }\n    .yes-loader::after {\n      content: \"\";\n      display: flex;\n      position: relative;\n      width: 16px;\n      height: 16px;\n      top: 0;\n      left: 0;\n      right: 0;\n      bottom: 0;\n      margin: auto;\n      border: 4px solid transparent;\n      border-top-color: #ffffff;\n      border-radius: 50%;\n      animation: button-loading-spinner 1s ease infinite;\n    }\n\n    @keyframes button-loading-spinner {\n      from {\n        transform: rotate(0turn);\n      }\n\n      to {\n        transform: rotate(1turn);\n      }\n    }\n  }\n"])));
+var StyledPopup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  background: burlywood;\n  padding: 26px;\n  max-height: 50%;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n  width: 300px;\n  border-radius: 20px;\n  overflow: hidden;\n  .popup-header {\n    font-size: 25px;\n    text-align: center;\n    font-weight: 400;\n    color: black;\n  }\n  .popup-body {\n    display: flex;\n    flex-direction: column;\n    gap: 12px;\n  }\n  .semibold {\n    font-weight: 300 !important;\n  }\n  .popup-footer {\n    display: flex;\n    align-items: center;\n    justify-content: space-evenly;\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n    }\n    .yes {\n      background: green;\n    }\n    .no {\n      background: red;\n    }\n    .yes-loader {\n      font-size: 0;\n      height: 40px;\n    }\n    .yes-loader::after {\n      content: \"\";\n      display: flex;\n      position: relative;\n      width: 16px;\n      height: 16px;\n      top: 0;\n      left: 0;\n      right: 0;\n      bottom: 0;\n      margin: auto;\n      border: 4px solid transparent;\n      border-top-color: #ffffff;\n      border-radius: 50%;\n      animation: button-loading-spinner 1s ease infinite;\n    }\n\n    @keyframes button-loading-spinner {\n      from {\n        transform: rotate(0turn);\n      }\n\n      to {\n        transform: rotate(1turn);\n      }\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -1500,6 +1510,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _dateTimePicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dateTimePicker */ "./src/content/components/dateTimePicker.jsx");
+/* harmony import */ var _components_Popup_popup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Popup/popup */ "./src/content/components/Popup/popup.js");
+/* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../message */ "./src/content/message.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -1507,8 +1520,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+
+
+
 function WebsiteStats(_ref) {
   var viewTime = _ref.viewTime;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      duedate: new Date().toISOString().split("T")[0].replaceAll("-", "/")
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    statsDate = _useState2[0],
+    setDate = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    getData = _useState4[0],
+    setGetData = _useState4[1];
   function toTime(seconds) {
     var date = new Date(null);
     date.setSeconds(seconds);
@@ -1548,18 +1574,52 @@ function WebsiteStats(_ref) {
     return array;
   }
   viewTime = viewTime && formArray(viewTime);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    setGetData(false);
+  }, [viewTime]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    getData && (0,_message__WEBPACK_IMPORTED_MODULE_3__.notifyBackgroundPage)("get_usage_details", statsDate.duedate);
+  }, [getData]);
+  var openPopup = function openPopup(e) {
+    (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_2__.OpenPopUp)({
+      elementID: "limitwebsite",
+      textcomponent: {
+        header: "Select date you want",
+        yes: "Get Stats",
+        no: "Cancel"
+      },
+      PopupComponent: function PopupComponent() {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_dateTimePicker__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          placeholder: "Date",
+          ChangeParentState: setDate,
+          ParentState: statsDate,
+          dontShowTime: true
+        });
+      },
+      onYes: function onYes() {
+        setGetData(true);
+      }
+    });
+  };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "weblimit-wrapper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "head"
-  }, "Website Usage for ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, new Date().toISOString().split("T")[0])), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "Website Usage for ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, statsDate.duedate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "edit-wrap"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: chrome.runtime.getURL("assests/images/edit.png"),
+    onClick: openPopup
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "stats-tab"
-  }, viewTime.map(function (data) {
+  }, viewTime.length > 0 ? viewTime.map(function (data) {
     return data.url && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
       key: data.url,
       className: "stats-wrapper"
     }, data.url, ":", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, data.time));
-  })));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "emptystate"
+  }, "No data found")));
 }
 
 /***/ }),
@@ -1597,11 +1657,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 function DateTimePicker(_ref) {
   var placeholder = _ref.placeholder,
     ParentState = _ref.ParentState,
-    ChangeParentState = _ref.ChangeParentState;
+    ChangeParentState = _ref.ChangeParentState,
+    dontShowTime = _ref.dontShowTime;
   jquery__WEBPACK_IMPORTED_MODULE_4___default()(document).ready(function () {
     jquery__WEBPACK_IMPORTED_MODULE_4___default()("#datetimepicker").datetimepicker({
-      format: "d/m/Y h:ia",
+      format: dontShowTime ? "d/m/Y" : "d/m/Y h:ia",
       blank: false,
+      timepicker: !dontShowTime,
       step: 15,
       onChangeDateTime: function onChangeDateTime(currentDateTime, $input) {
         ChangeParentState(_objectSpread(_objectSpread({}, ParentState), {}, {
@@ -1617,7 +1679,6 @@ function DateTimePicker(_ref) {
         return [true, ""];
       }
     });
-    jquery__WEBPACK_IMPORTED_MODULE_4___default()(".xdsoft_datetimepicker").css("z-index", "11111111");
     if (ParentState.duedate) {
       jquery__WEBPACK_IMPORTED_MODULE_4___default()("#datetimepicker").val(ParentState.duedate);
     }
@@ -1685,7 +1746,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledLS = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  overflow: auto;\n  .tabname {\n    font-size: 20px;\n    text-align: center;\n  }\n  .options-wrapper {\n    display: flex;\n    justify-content: space-between;\n    font-size: 16px;\n    .options {\n      cursor: pointer;\n      background: blanchedalmond;\n      padding: 12px;\n      border-radius: 8px;\n    }\n    .selected,\n    .options:hover {\n      background-color: burlywood;\n    }\n  }\n  .content-weblimit {\n    height: calc(100% - 140px);\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    span{\n        color: black;\n        font-weight: 500;\n    }\n    .setWebsiteTab-wrapper{\n        .setWebForm{\n            display: flex;\n            justify-content: center;\n            width: 100%;\n            flex-direction: column;\n            gap: 12px;  \n            .red-border{\n                border:2px solid red !important;\n            }\n         }\n         .time-wrapper{\n            display: flex;\n            width: 100%;\n            justify-content: space-around;\n            input{\n              cursor:pointer;\n            }\n         }\n        }\n    }\n    .overflow{\n      overflow:auto;\n      height: 100%;\n      display: flex;\n      flex-direction: column;\n      gap: 10px;\n    }\n    .weblimit-wrapper{\n        height:100%;\n        .head{\n            font-size: 18px;\n            font-weight: 500;\n            text-align:center;\n        }\n        .stats-tab{\n            display: flex;\n            flex-direction: column;\n            gap: 8px;\n            padding: 10px;\n            overflow: auto;\n            height: 100%;\n            background: antiquewhite;\n            .limit-wrapper:hover{\n              .options-wrapper{\n                display:flex;\n              }\n            }\n            .limit-wrapper{\n              display: flex;\n              align-items: center;\n              justify-content: space-between;\n              .stats-wrapper{\n                display: flex;\n                align-items: center;\n                gap: 10px;\n                padding: 4px;\n                word-break:break-all;\n              }\n              .options-wrapper{\n                display:none;\n                gap:8px;\n                background: lightskyblue;\n                padding: 8px;\n                cursor: pointer;\n                border-radius: 8px;\n                .edit_limit,.delete_limit{\n                  img{\n                    height: 20px;\n                    width: 20px;\n                  }\n                }\n            }\n          }\n        }\n    }\n    }\n  }\n"])));
+var StyledLS = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  background: #edeade;\n  height: 100%;\n  width: 100%;\n  padding: 20px;\n  box-sizing: border-box;\n  display: flex;\n  flex-direction: column;\n  gap: 16px;\n  overflow: auto;\n  .tabname {\n    font-size: 20px;\n    text-align: center;\n  }\n  .options-wrapper {\n    display: flex;\n    justify-content: space-between;\n    font-size: 16px;\n    .options {\n      cursor: pointer;\n      background: blanchedalmond;\n      padding: 12px;\n      border-radius: 8px;\n    }\n    .selected,\n    .options:hover {\n      background-color: burlywood;\n    }\n  }\n  .content-weblimit {\n    height: calc(100% - 140px);\n    display: flex;\n    flex-direction: column;\n    gap: 10px;\n    span{\n        color: black;\n        font-weight: 500;\n    }\n    .setWebsiteTab-wrapper{\n        .setWebForm{\n            display: flex;\n            justify-content: center;\n            width: 100%;\n            flex-direction: column;\n            gap: 12px;  \n            .red-border{\n                border:2px solid red !important;\n            }\n         }\n         .time-wrapper{\n            display: flex;\n            width: 100%;\n            justify-content: space-around;\n            input{\n              cursor:pointer;\n            }\n         }\n        }\n    }\n    .overflow{\n      overflow:auto;\n      height: 100%;\n      display: flex;\n      flex-direction: column;\n      gap: 10px;\n    }\n    .weblimit-wrapper{\n      height: 100%;\n      display: flex;\n      flex-direction: column;\n      gap: 12px;\n        .head{\n            font-size: 18px;\n            font-weight: 500;\n            text-align:center;\n            display: flex;\n            align-items: center;\n            justify-content: center;\n            gap: 16px;\n            .edit-wrap{\n              height: 20px;\n              width: 20px;\n              cursor:pointer;\n              img{\n                height:100%;\n                width:100%;\n              }\n            }\n        }\n        .stats-tab{\n            display: flex;\n            flex-direction: column;\n            gap: 8px;\n            padding: 10px;\n            overflow: auto;\n            height: 100%;\n            background: antiquewhite;\n            .emptystate{\n              display: flex;\n              align-items: center;\n              justify-content: center;\n              height: 100%;\n              width: 100%;\n              font-size: xx-large;\n              font-weight: 500;\n              color: crimson;\n            }\n            .limit-wrapper:hover{\n              .options-wrapper{\n                display:flex;\n              }\n            }\n            .limit-wrapper{\n              display: flex;\n              align-items: center;\n              justify-content: space-between;\n              .stats-wrapper{\n                display: flex;\n                align-items: center;\n                gap: 10px;\n                padding: 4px;\n                word-break:break-all;\n              }\n              .options-wrapper{\n                display:none;\n                gap:8px;\n                background: lightskyblue;\n                padding: 8px;\n                cursor: pointer;\n                border-radius: 8px;\n                .edit_limit,.delete_limit{\n                  img{\n                    height: 20px;\n                    width: 20px;\n                  }\n                }\n            }\n          }\n        }\n    }\n    }\n  }\n"])));
 
 /***/ }),
 
@@ -1745,8 +1806,8 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: green;\n    padding: 10px;\n    cursor: pointer;\n    border-radius: 50%;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .loader-wrapper {\n    display: flex;\n    align-items: center !important;\n    justify-content: center !important;\n    gap: 10px;\n    font-size: 20px;\n    font-weight: 500;\n    span {\n      text-align: center;\n    }\n    .loader {\n      border: 16px solid #f3f3f3;\n      border-radius: 50%;\n      border-top: 16px solid #3498db;\n      width: 120px;\n      height: 120px;\n      -webkit-animation: spin 2s linear infinite; /* Safari */\n      animation: spin 2s linear infinite;\n\n      /* Safari */\n      @-webkit-keyframes spin {\n        0% {\n          -webkit-transform: rotate(0deg);\n        }\n        100% {\n          -webkit-transform: rotate(360deg);\n        }\n      }\n\n      @keyframes spin {\n        0% {\n          transform: rotate(0deg);\n        }\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n    }\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 60vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,\n    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;\n\n  input::placeholder {\n    font-size: 16px;\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n  button {\n    color: white;\n    border-radius: 8px;\n    padding: 8px;\n    cursor: pointer;\n    border: none;\n    min-width: 100px;\n    font-size: medium;\n    font-weight: 700;\n    background-color: green;\n  }\n"])));
-var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  input,\n  textarea,\n  input::placeholder {\n    font-size: 16px;\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n\n  input[type=\"checkbox\"] {\n    margin: 0px;\n    height: 20px;\n    width: 20px;\n  }\n\n  .showPass {\n    flex-direction: row-reverse;\n    justify-content: flex-end;\n    align-items: center;\n    cursor: pointer;\n  }\n\n  label {\n    display: flex;\n    gap: 4px;\n  }\n  .required {\n    color: red;\n  }\n"])));
+var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: green;\n    padding: 10px;\n    cursor: pointer;\n    border-radius: 50%;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .loader-wrapper {\n    display: flex;\n    align-items: center !important;\n    justify-content: center !important;\n    gap: 10px;\n    font-size: 20px;\n    font-weight: 500;\n    span {\n      text-align: center;\n    }\n    .loader {\n      border: 16px solid #f3f3f3;\n      border-radius: 50%;\n      border-top: 16px solid #3498db;\n      width: 120px;\n      height: 120px;\n      -webkit-animation: spin 2s linear infinite; /* Safari */\n      animation: spin 2s linear infinite;\n\n      /* Safari */\n      @-webkit-keyframes spin {\n        0% {\n          -webkit-transform: rotate(0deg);\n        }\n        100% {\n          -webkit-transform: rotate(360deg);\n        }\n      }\n\n      @keyframes spin {\n        0% {\n          transform: rotate(0deg);\n        }\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n    }\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 70vh;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 60vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,\n    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;\n\n  input::placeholder {\n    font-size: 16px;\n    font-weight: bolder;\n    text-align-center;\n}\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n  button {\n    color: white;\n    border-radius: 8px;\n    padding: 8px;\n    cursor: pointer;\n    border: none;\n    min-width: 100px;\n    font-size: medium;\n    font-weight: 700;\n    background-color: green;\n  }\n"])));
+var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  input,\n  textarea,\n  input::placeholder {\n    font-size: 16px;\n    font-weight: bolder;\n}\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n\n  input[type=\"checkbox\"] {\n    margin: 0px;\n    height: 20px;\n    width: 20px;\n  }\n\n  .showPass {\n    flex-direction: row-reverse;\n    justify-content: flex-end;\n    align-items: center;\n    cursor: pointer;\n  }\n\n  label {\n    display: flex;\n    gap: 4px;\n  }\n  .required {\n    color: red;\n  }\n  #datetimepicker{\n    letter-spacing:1px;\n    text-align: center;\n  }\n  .xdsoft_datetimepicker{\n    z-index:11111111;\n  }\n"])));
 var StyledError = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  animation: horizontal-shaking 10s infinite;\n  color: brown;\n  font-family: inherit;\n  font-size: 14px;\n  @keyframes horizontal-shaking {\n    25% {\n      transform: translateX(10px);\n    }\n    75% {\n      transform: translateX(100px);\n    }\n  }\n"])));
 var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  text-align: justify;\n  font-weight: 400;\n  font-size: 18px;\n  max-width: 329px;\n  label {\n    display: flex;\n    gap: 4px;\n  }\n"])));
 
@@ -52693,7 +52754,6 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-var __webpack_exports__ = {};
 /*!******************************!*\
   !*** ./src/content/index.js ***!
   \******************************/
@@ -52717,14 +52777,6 @@ var rootInstance = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(
 rootInstance.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_redux__WEBPACK_IMPORTED_MODULE_3__.Provider, {
   store: _content_redux_store__WEBPACK_IMPORTED_MODULE_4__["default"]
 }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_App__WEBPACK_IMPORTED_MODULE_2__.App, null)));
-})();
-
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
-(() => {
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
-
 })();
 
 /******/ })()
