@@ -188,16 +188,15 @@ chrome.tabs.onCreated.addListener(function (tab) {
         if (
           !tabCreated &&
           tab.pendingUrl !==
-            "chrome-extension://heepebmhlkkpbpebdcfmnbpjgjbgloah/isolatedapps/blocked.html"
+            chrome.runtime.getURL("isolatedapps/blocked.html")
         ) {
           chrome.tabs.remove(tab.id);
           chrome.tabs.create({
-            url: "chrome-extension://heepebmhlkkpbpebdcfmnbpjgjbgloah/isolatedapps/blocked.html",
+            url: chrome.runtime.getURL("isolatedapps/blocked.html"),
           });
         } else if (
           tab.pendingUrl ===
-          "chrome-extension://heepebmhlkkpbpebdcfmnbpjgjbgloah/isolatedapps/blocked.html"
-        ) {
+          chrome.runtime.getURL("isolatedapps/blocked.html")) {
           blockTabId = tab.id;
           tabCreated = true;
         } else {
