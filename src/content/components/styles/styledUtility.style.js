@@ -76,7 +76,7 @@ export const StyledUtility = styled.div`
     border-radius: 4px;
     border: 2px solid blue;
     right: -100%;
-    height: 70vh;
+    height: 95%;
   }
   .sign-in {
     background: sandybrown;
@@ -115,37 +115,40 @@ export const StyledUtility = styled.div`
     Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
     Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;
 
-  input::placeholder {
-    font-size: 16px;
-    font-weight: bolder;
-    text-align-center;
-}
+  #utilityAppFromExtension{
+    input::placeholder {
+      font-size: 16px;
+      font-weight: bolder;
+      text-align-center;
+     }
+    }
+    textarea {
+      height: 140px;
+    }
+    input,
+    textarea {
+      padding: 10px;
+      border-radius: 10px;
+      border: 2px solid darkblue !important;
+      background: whitesmoke;
+    }
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: none;
+    }
+    button {
+      color: white;
+      border-radius: 8px;
+      padding: 8px;
+      cursor: pointer;
+      border: none;
+      min-width: 100px;
+      font-size: medium;
+      font-weight: 700;
+      background-color: green;
+    }
   }
-  textarea {
-    height: 140px;
-  }
-  input,
-  textarea {
-    padding: 10px;
-    border-radius: 10px;
-    border: 2px solid darkblue !important;
-    background: whitesmoke;
-  }
-  input:focus-visible,
-  textarea:focus-visible {
-    outline: none;
-  }
-  button {
-    color: white;
-    border-radius: 8px;
-    padding: 8px;
-    cursor: pointer;
-    border: none;
-    min-width: 100px;
-    font-size: medium;
-    font-weight: 700;
-    background-color: green;
-  }
+  
 `;
 
 export const StyledInput = styled.div`
