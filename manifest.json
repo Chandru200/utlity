@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "ProductivityMaster",
   "version": "1.2",
+  "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvOak7ioeVhpxC66mVC2g7MYWddNIq+VVsUs2zut25Z0OzsruUHFPFiQzkICNXfcqVBI+/ykuYlgmKhwHKs9IgXhd7qTAStfTjUBevowewd28eg/T+ELbOueqXH1aKylkvVwg6Vl+5D+ylJK26O1lhQPHG5p8tJcMKP3pAN7dpr47OnZQbaZrrSoP7N9PUpui/UW3DCwDSYIvm15ANkjBalt3wtwWzzyvwOxqHuXLdqWOSSxHEowo9ZXR1SFkx4uaUO/sDLrRyBeu/stVv0z7xd7EHrwqmaytPRkYVcsok92AxLArdmLkdQ+4owE5XtYYAzO2mOefkrwwkMYIOxvGuwIDAQAB",
   "description": "Very useful for day to day works",
   "icons": {
     "16": "images/dog.png",
@@ -24,11 +25,18 @@
       "js": ["dist/content_bundle.js"]
     }
   ],
-  "permissions": ["activeTab", "tabs", "storage"],
+  "permissions": ["activeTab", "tabs", "storage","identity"],
   "web_accessible_resources": [
     {
       "resources": ["*"],
       "matches": ["<all_urls>"]
     }
+  ],
+  "oauth2": {
+    "client_id": "401688149190-g79r37jid6jfh7nhgtl2l3h7f57h9kp4.apps.googleusercontent.com",
+    "scopes":["https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/calendar.events"
   ]
+  }
 }
