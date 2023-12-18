@@ -13,8 +13,7 @@ function sendMessageToAllTabs(message, data) {
     }
   });
 }
-window.onload = function() {
-  document.querySelector('button').addEventListener('click', function() {
+  document.querySelector('.login').addEventListener('click', function() {
     chrome.identity.getAuthToken({interactive: true}, function(token) {
       console.log(token);
       let init = {
@@ -54,7 +53,19 @@ window.onload = function() {
           
     });
   });
-};
+
+
+  document.querySelector('.logout').addEventListener('click', function() {
+    chrome.identity.getAuthToken({interactive: true}, function(token) {
+      console.log(token);
+      var url = 'https://accounts.google.com/o/oauth2/revoke?token=' + token;
+      window.fetch(url);
+      chrome.identity.removeCachedAuthToken({token: token}, function (){
+        alert('signed  out sucessfully');
+      });
+    })
+  });
+
 
 chrome.storage.local.get(["canShowAppButton"]).then((result) => {
   document.getElementById("showcontentbutton").checked =
