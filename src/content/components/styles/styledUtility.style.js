@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledUtility = styled.div`
-  position: fixed;
+  position: absolute;
   top: 0px;
   right: 18px;
   z-index: 11111111;

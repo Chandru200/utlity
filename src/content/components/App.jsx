@@ -6,7 +6,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Login from "./Signin";
 import { StyledUtility } from "./styles/styledUtility.style";
-import { notifyBackgroundPage } from "../message";
+import { notifyBackgroundPage,dragElement } from "../message";
 import { closePopUp } from "../components/Popup/popup";
 
 export function App() {
@@ -82,6 +82,11 @@ export function App() {
   useEffect(() => {
     notifyBackgroundPage("canShowAppButton");
   }, []);
+  document.onreadystatechange = () => {
+    if (document.readyState === "complete") {
+      dragElement(document.getElementById("pmch-draggabele"))
+    }
+  };
   const addTodo = (id) => {
     setCanShow({
       todos_list: [...canShowApp.todos_list, { ...sharedData, id: id }],
@@ -127,7 +132,7 @@ export function App() {
   return (
     <>
       {canShowAppButton && (
-        <StyledUtility>
+        <StyledUtility id="pmch-draggabele">
           {showUtility &&
             (canShowApp ? (
               <div className="UtilityWraper">

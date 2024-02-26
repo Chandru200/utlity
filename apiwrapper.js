@@ -1,6 +1,6 @@
 const hosturl_production = "http://3.6.112.6/";
 const hosturl_local = "http://127.0.0.1:8000/";
-const host_url = hosturl_production;
+const host_url = hosturl_local;
 
 function getRequest(url, sucessCallback, errorCallback, stopSync) {
   let fetchRes = fetch(host_url + url, {

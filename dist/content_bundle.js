@@ -261,6 +261,11 @@ function App() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     (0,_message__WEBPACK_IMPORTED_MODULE_7__.notifyBackgroundPage)("canShowAppButton");
   }, []);
+  document.onreadystatechange = function () {
+    if (document.readyState === "complete") {
+      (0,_message__WEBPACK_IMPORTED_MODULE_7__.dragElement)(document.getElementById("pmch-draggabele"));
+    }
+  };
   var addTodo = function addTodo(id) {
     setCanShow({
       todos_list: [].concat(_toConsumableArray(canShowApp.todos_list), [_objectSpread(_objectSpread({}, sharedData), {}, {
@@ -311,7 +316,9 @@ function App() {
     }));
     (0,_components_Popup_popup__WEBPACK_IMPORTED_MODULE_8__.closePopUp)();
   };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, canShowAppButton && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_6__.StyledUtility, null, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, canShowAppButton && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_styles_styledUtility_style__WEBPACK_IMPORTED_MODULE_6__.StyledUtility, {
+    id: "pmch-draggabele"
+  }, showUtility && (canShowApp ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "UtilityWraper"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Header__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Content__WEBPACK_IMPORTED_MODULE_2__["default"], {
     canShowApp: canShowApp,
@@ -1806,7 +1813,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: fixed;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: green;\n    padding: 10px;\n    cursor: pointer;\n    border-radius: 50%;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .loader-wrapper {\n    display: flex;\n    align-items: center !important;\n    justify-content: center !important;\n    gap: 10px;\n    font-size: 20px;\n    font-weight: 500;\n    span {\n      text-align: center;\n    }\n    .loader {\n      border: 16px solid #f3f3f3;\n      border-radius: 50%;\n      border-top: 16px solid #3498db;\n      width: 120px;\n      height: 120px;\n      -webkit-animation: spin 2s linear infinite; /* Safari */\n      animation: spin 2s linear infinite;\n\n      /* Safari */\n      @-webkit-keyframes spin {\n        0% {\n          -webkit-transform: rotate(0deg);\n        }\n        100% {\n          -webkit-transform: rotate(360deg);\n        }\n      }\n\n      @keyframes spin {\n        0% {\n          transform: rotate(0deg);\n        }\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n    }\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 95%;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 60vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,\n    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;\n\n  #utilityAppFromExtension{\n    input::placeholder {\n      font-size: 16px;\n      font-weight: bolder;\n      text-align-center;\n     }\n    }\n    textarea {\n      height: 140px;\n    }\n    input,\n    textarea {\n      padding: 10px;\n      border-radius: 10px;\n      border: 2px solid darkblue !important;\n      background: whitesmoke;\n    }\n    input:focus-visible,\n    textarea:focus-visible {\n      outline: none;\n    }\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n      background-color: green;\n    }\n  }\n  \n"])));
+var StyledUtility = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  position: absolute;\n  top: 0px;\n  right: 18px;\n  z-index: 11111111;\n  transition: right 0.5s ease;\n  height: 100vh;\n  display: flex;\n  align-items: center;\n  .openAppImgWrapper {\n    display: flex;\n    background: green;\n    padding: 10px;\n    cursor: pointer;\n    border-radius: 50%;\n    .openAppImg {\n      height: 16px;\n      width: 16px;\n    }\n  }\n  .showleft {\n    left: -36px;\n    position: absolute;\n    top: 50%;\n    transform: rotate(180deg);\n  }\n  .loader-wrapper {\n    display: flex;\n    align-items: center !important;\n    justify-content: center !important;\n    gap: 10px;\n    font-size: 20px;\n    font-weight: 500;\n    span {\n      text-align: center;\n    }\n    .loader {\n      border: 16px solid #f3f3f3;\n      border-radius: 50%;\n      border-top: 16px solid #3498db;\n      width: 120px;\n      height: 120px;\n      -webkit-animation: spin 2s linear infinite; /* Safari */\n      animation: spin 2s linear infinite;\n\n      /* Safari */\n      @-webkit-keyframes spin {\n        0% {\n          -webkit-transform: rotate(0deg);\n        }\n        100% {\n          -webkit-transform: rotate(360deg);\n        }\n      }\n\n      @keyframes spin {\n        0% {\n          transform: rotate(0deg);\n        }\n        100% {\n          transform: rotate(360deg);\n        }\n      }\n    }\n  }\n  .UtilityWraper {\n    display: flex;\n    justify-content: space-between;\n    flex-direction: column;\n    align-items: center;\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    height: 95%;\n  }\n  .sign-in {\n    background: sandybrown;\n    width: 400px;\n    height: auto;\n    border-radius: 4px;\n    border: 2px solid blue;\n    right: -100%;\n    padding: 10px;\n    height: 60vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    h2 {\n      margin: 0px;\n      margin-bottom: 10px;\n    }\n    button {\n      margin-top: 8px;\n      border-radius: 8px;\n      cursor: pointer;\n    }\n    .sign-container {\n      display: flex;\n      align-items: center;\n      flex-direction: column;\n      gap: 8px;\n      u {\n        cursor: pointer;\n      }\n    }\n  }\n\n  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,\n    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,\n    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color emoji !important;\n\n  #utilityAppFromExtension{\n    input::placeholder {\n      font-size: 16px;\n      font-weight: bolder;\n      text-align-center;\n     }\n    }\n    textarea {\n      height: 140px;\n    }\n    input,\n    textarea {\n      padding: 10px;\n      border-radius: 10px;\n      border: 2px solid darkblue !important;\n      background: whitesmoke;\n    }\n    input:focus-visible,\n    textarea:focus-visible {\n      outline: none;\n    }\n    button {\n      color: white;\n      border-radius: 8px;\n      padding: 8px;\n      cursor: pointer;\n      border: none;\n      min-width: 100px;\n      font-size: medium;\n      font-weight: 700;\n      background-color: green;\n    }\n  }\n  \n"])));
 var StyledInput = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  position: relative;\n  input,\n  textarea,\n  input::placeholder {\n    font-size: 16px;\n    font-weight: bolder;\n}\n  }\n  textarea {\n    height: 140px;\n  }\n  input,\n  textarea {\n    padding: 10px;\n    border-radius: 10px;\n    border: 2px solid darkblue !important;\n    background: whitesmoke;\n  }\n  input:focus-visible,\n  textarea:focus-visible {\n    outline: none;\n  }\n\n  input[type=\"checkbox\"] {\n    margin: 0px;\n    height: 20px;\n    width: 20px;\n  }\n\n  .showPass {\n    flex-direction: row-reverse;\n    justify-content: flex-end;\n    align-items: center;\n    cursor: pointer;\n  }\n\n  label {\n    display: flex;\n    gap: 4px;\n  }\n  .required {\n    color: red;\n  }\n  #datetimepicker{\n    letter-spacing:1px;\n    text-align: center;\n  }\n  .xdsoft_datetimepicker{\n    z-index:11111111;\n  }\n"])));
 var StyledError = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n  animation: horizontal-shaking 10s infinite;\n  color: brown;\n  font-family: inherit;\n  font-size: 14px;\n  @keyframes horizontal-shaking {\n    25% {\n      transform: translateX(10px);\n    }\n    75% {\n      transform: translateX(100px);\n    }\n  }\n"])));
 var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n  text-align: justify;\n  font-weight: 400;\n  font-size: 18px;\n  max-width: 329px;\n  label {\n    display: flex;\n    gap: 4px;\n  }\n"])));
@@ -1822,6 +1829,7 @@ var StytledLabel = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].spa
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   dragElement: () => (/* binding */ dragElement),
 /* harmony export */   notifyBackgroundPage: () => (/* binding */ notifyBackgroundPage)
 /* harmony export */ });
 function notifyBackgroundPage(message, data) {
@@ -1829,6 +1837,43 @@ function notifyBackgroundPage(message, data) {
     message: message,
     data: data
   });
+}
+function dragElement(elmnt) {
+  console.log(elmnt);
+  if (!elmnt) {
+    return;
+  }
+  var pos1 = 0,
+    pos2 = 0,
+    pos3 = 0,
+    pos4 = 0;
+  if (elmnt) {
+    document.getElementById(elmnt.id).onmousedown = dragMouseDown;
+  } else {
+    document.getElementById(elmnt.id).onmousedown = dragMouseDown;
+  }
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    elmnt.style.top = elmnt.offsetTop - pos2 + "px";
+    elmnt.style.left = elmnt.offsetLeft - pos1 + "px";
+  }
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
 }
 
 /***/ }),
