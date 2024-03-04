@@ -15,7 +15,7 @@ function sendMessageToAllTabs(message, data) {
 }
   document.querySelector('.login').addEventListener('click', function() {
     chrome.identity.getAuthToken({interactive: true}, function(token) {
-      console.log(token);
+      console.log( "AcessToken" , token);
       let init = {
         method: 'GET',
         async: true,
@@ -33,9 +33,8 @@ function sendMessageToAllTabs(message, data) {
 
             console.log(data.items)
           });
-
-
           let accessToken = token;
+          getUserInfo(accessToken)
           let calendarId = 'chandru20001@gmail.com';
           fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`, {
             headers: {
@@ -71,3 +70,25 @@ chrome.storage.local.get(["canShowAppButton"]).then((result) => {
   document.getElementById("showcontentbutton").checked =
     result.canShowAppButton;
 });
+
+
+function getUserInfo(accessToken) {
+  const userInfoURL = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json';
+  const headers = {
+    'Authorization': `Bearer ${accessToken}`,
+    'Content-Type': 'application/json'
+  };
+  const options = {
+    method: 'GET',
+    headers: headers
+  };
+
+  fetch(userInfoURL, options)
+    .then(response => response.json())
+    .then(userInfo => {
+      console.log(userInfo);
+    })
+    .catch(error => {
+      console.error('Error fetching userinfo:', error);
+    });
+}
